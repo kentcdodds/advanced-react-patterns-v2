@@ -1,3 +1,4 @@
+import './switch.styles.css'
 import React from 'react'
 
 function Switch({on, className = '', ...props}) {
