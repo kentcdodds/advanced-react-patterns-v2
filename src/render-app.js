@@ -2,7 +2,12 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 function renderApp(ui) {
-  console.log(process.env.NODE_ENV)
+  if (process.env.NODE_ENV === 'test') {
+    // you wouldn't normally do something like this
+    // in an app, but doing this makes things easier
+    // for our use case in the workshop :)
+    return
+  }
   ReactDOM.render(
     <div
       style={{
