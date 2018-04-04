@@ -1,5 +1,8 @@
 // Rendux
 
+// TODO: improve the provider so it doesn't
+// create a new object on every render
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
@@ -58,7 +61,6 @@ class Rendux extends React.Component {
 }
 
 class RenduxProvider extends React.Component {
-  static channel = '__rendux_channel__'
   render() {
     const {children, ...remainingProps} = this.props
     return (
@@ -75,7 +77,7 @@ class RenduxProvider extends React.Component {
 }
 function ConnectedRendux(props, context) {
   return (
-    <RenduxContext.Consumer channel={RenduxProvider.channel}>
+    <RenduxContext.Consumer>
       {rendux => props.render(rendux)}
     </RenduxContext.Consumer>
   )

@@ -50,6 +50,7 @@ class Toggle extends React.Component {
     })
   }
 }
+
 class App extends React.Component {
   initialState = {timesClicked: 0, on: false}
   state = this.initialState
@@ -78,7 +79,7 @@ class App extends React.Component {
             />
             {timesClicked > 4 ? (
               <div>
-                Whoa, you've clicked too much!
+                Whoa, you clicked too much!
                 <br />
                 <button onClick={toggle.reset}>reset</button>
               </div>

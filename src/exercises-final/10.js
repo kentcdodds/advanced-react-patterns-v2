@@ -13,6 +13,7 @@ class Toggle extends React.Component {
     defaultOn: false,
     onToggle: () => {},
     onReset: () => {},
+    stateReducer: (state, changes) => changes,
   }
   initialState = {on: this.props.defaultOn}
   state = this.initialState
@@ -20,14 +21,30 @@ class Toggle extends React.Component {
     if (this.isOnControlled()) {
       this.props.onReset(!this.props.on)
     } else {
-      this.setState(this.initialState, () => this.props.onReset(this.state.on))
+      this.internalSetState(this.initialState, () =>
+        this.props.onReset(this.state.on),
+      )
     }
+  }
+  internalSetState = (changes, callback) => {
+    this.setState(state => {
+      const stateToSet = [changes]
+        // handle function setState call
+        .map(c => (typeof c === 'function' ? c(state) : c))
+        // apply state reducer
+        .map(c => this.props.stateReducer(state, c))[0]
+      // For more complicated components, you may also
+      // consider having a type property on the changes
+      // to give the state reducer more info.
+      // see downshift for an example of this.
+      return stateToSet
+    }, callback)
   }
   toggle = () => {
     if (this.isOnControlled()) {
       this.props.onToggle(!this.props.on)
     } else {
-      this.setState(
+      this.internalSetState(
         ({on}) => ({on: !on}),
         () => this.props.onToggle(this.state.on),
       )

@@ -24,3 +24,5 @@ function App() {
 }
 
 renderApp(<App />)
+
+export default Toggle

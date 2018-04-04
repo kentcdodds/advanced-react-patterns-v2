@@ -37,6 +37,7 @@ class Toggle extends React.Component {
     })
   }
 }
+
 function App() {
   return (
     <Toggle

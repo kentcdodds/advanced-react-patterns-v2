@@ -7,31 +7,7 @@ import renderApp from '../render-app'
 
 const ToggleContext = React.createContext({on: false, toggle: () => {}})
 
-function ToggleOn({children}) {
-  return (
-    <ToggleContext.Consumer>
-      {({on}) => (on ? children : null)}
-    </ToggleContext.Consumer>
-  )
-}
-function ToggleOff({children}) {
-  return (
-    <ToggleContext.Consumer>
-      {({on}) => (on ? null : children)}
-    </ToggleContext.Consumer>
-  )
-}
-function ToggleButton(props) {
-  return (
-    <ToggleContext.Consumer>
-      {({on, toggle}) => <Switch on={on} onClick={toggle} {...props} />}
-    </ToggleContext.Consumer>
-  )
-}
 class Toggle extends React.Component {
-  static On = ToggleOn
-  static Off = ToggleOff
-  static Button = ToggleButton
   static defaultProps = {onToggle: () => {}}
   toggle = () =>
     this.setState(
@@ -48,13 +24,37 @@ class Toggle extends React.Component {
   }
 }
 
+function ToggleOn({children}) {
+  return (
+    <ToggleContext.Consumer>
+      {({on}) => (on ? children : null)}
+    </ToggleContext.Consumer>
+  )
+}
+
+function ToggleOff({children}) {
+  return (
+    <ToggleContext.Consumer>
+      {({on}) => (on ? null : children)}
+    </ToggleContext.Consumer>
+  )
+}
+
+function ToggleButton(props) {
+  return (
+    <ToggleContext.Consumer>
+      {({on, toggle}) => <Switch on={on} onClick={toggle} {...props} />}
+    </ToggleContext.Consumer>
+  )
+}
+
 function App() {
   return (
     <Toggle onToggle={on => console.log('toggle', on)}>
-      <Toggle.On>The button is on</Toggle.On>
-      <Toggle.Off>The button is off</Toggle.Off>
+      <ToggleOn>The button is on</ToggleOn>
+      <ToggleOff>The button is off</ToggleOff>
       <div>
-        <Toggle.Button />
+        <ToggleButton />
       </div>
     </Toggle>
   )

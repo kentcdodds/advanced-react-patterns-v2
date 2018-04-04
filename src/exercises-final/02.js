@@ -5,19 +5,7 @@ import ReactDOM from 'react-dom'
 import Switch from '../switch'
 import renderApp from '../render-app'
 
-function ToggleOn({on, children}) {
-  return on ? children : null
-}
-function ToggleOff({on, children}) {
-  return on ? null : children
-}
-function ToggleButton({on, toggle, ...props}) {
-  return <Switch on={on} onClick={toggle} {...props} />
-}
 class Toggle extends React.Component {
-  static On = ToggleOn
-  static Off = ToggleOff
-  static Button = ToggleButton
   static defaultProps = {onToggle: () => {}}
   state = {on: false}
   toggle = () =>
@@ -35,12 +23,25 @@ class Toggle extends React.Component {
     return <div>{children}</div>
   }
 }
+
+function ToggleOn({on, children}) {
+  return on ? children : null
+}
+
+function ToggleOff({on, children}) {
+  return on ? null : children
+}
+
+function ToggleButton({on, toggle, ...props}) {
+  return <Switch on={on} onClick={toggle} {...props} />
+}
+
 function App() {
   return (
     <Toggle onToggle={on => console.log('toggle', on)}>
-      <Toggle.On>The button is on</Toggle.On>
-      <Toggle.Off>The button is off</Toggle.Off>
-      <Toggle.Button />
+      <ToggleOn>The button is on</ToggleOn>
+      <ToggleOff>The button is off</ToggleOff>
+      <ToggleButton />
     </Toggle>
   )
 }

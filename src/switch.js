@@ -9,6 +9,7 @@ function Switch({on, className = '', ...props}) {
         className={`${className} toggle-btn ${
           on ? 'toggle-btn-on' : 'toggle-btn-off'
         }`}
+        aria-label="Toggle"
         aria-expanded={on}
         {...props}
       />

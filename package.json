@@ -11,6 +11,7 @@
     "react": "16.3.0",
     "react-dom": "16.3.0",
     "react-scripts": "1.1.1",
+    "react-testing-library": "1.9.4",
     "redux": "3.7.2"
   },
   "devDependencies": {},
