@@ -14,7 +14,7 @@ function renderApp(ui) {
     >
       {ui}
     </div>,
-    document.getElementById('root'),
+    document.getElementById('⚛️'),
   )
 }
 
