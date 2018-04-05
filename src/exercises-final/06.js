@@ -1,14 +1,11 @@
 // prop getters
 
 import React from 'react'
-import ReactDOM from 'react-dom'
-import Switch from '../switch'
-import renderApp from '../render-app'
+import {Switch} from '../switch'
 
 const callAll = (...fns) => (...args) => fns.forEach(fn => fn && fn(...args))
 
 class Toggle extends React.Component {
-  static defaultProps = {onToggle: () => {}}
   state = {on: false}
   toggle = () =>
     this.setState(
@@ -23,7 +20,7 @@ class Toggle extends React.Component {
     }
   }
   render() {
-    return this.props.render({
+    return this.props.children({
       on: this.state.on,
       toggle: this.toggle,
       getTogglerProps: this.getTogglerProps,
@@ -31,26 +28,26 @@ class Toggle extends React.Component {
   }
 }
 
-function App() {
+function Usage(props) {
   return (
-    <Toggle
-      onToggle={on => console.log('toggle', on)}
-      render={({on, toggle, getTogglerProps}) => (
+    <Toggle onToggle={props.onToggle}>
+      {({on, getTogglerProps}) => (
         <div>
           <Switch on={on} {...getTogglerProps()} />
           <hr />
           <button
             {...getTogglerProps({
-              onClick: () => alert('hi'),
-              id: 'hi',
+              'aria-label': 'custom-button',
+              onClick: props.handleCustomButtonClick,
+              id: 'custom-button-id',
             })}
           >
             {on ? 'on' : 'off'}
           </button>
         </div>
       )}
-    />
+    </Toggle>
   )
 }
 
-renderApp(<App />)
+export {Toggle, Usage}

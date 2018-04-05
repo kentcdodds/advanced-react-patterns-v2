@@ -1,12 +1,9 @@
 // prop collections
 
 import React from 'react'
-import ReactDOM from 'react-dom'
-import Switch from '../switch'
-import renderApp from '../render-app'
+import {Switch} from '../switch'
 
 class Toggle extends React.Component {
-  static defaultProps = {onToggle: () => {}}
   state = {on: false}
   toggle = () =>
     this.setState(
@@ -14,7 +11,7 @@ class Toggle extends React.Component {
       () => this.props.onToggle(this.state.on),
     )
   render() {
-    return this.props.render({
+    return this.props.children({
       on: this.state.on,
       toggle: this.toggle,
       togglerProps: {
@@ -25,19 +22,20 @@ class Toggle extends React.Component {
   }
 }
 
-function App() {
+function Usage(props) {
   return (
-    <Toggle
-      onToggle={on => console.log('toggle', on)}
-      render={({on, toggle, togglerProps}) => (
+    <Toggle onToggle={props.onToggle}>
+      {({on, togglerProps}) => (
         <div>
           <Switch on={on} {...togglerProps} />
           <hr />
-          <button {...togglerProps}>{on ? 'on' : 'off'}</button>
+          <button aria-label="custom-button" {...togglerProps}>
+            {on ? 'on' : 'off'}
+          </button>
         </div>
       )}
-    />
+    </Toggle>
   )
 }
 
-renderApp(<App />)
+export {Toggle, Usage}

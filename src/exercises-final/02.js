@@ -1,12 +1,14 @@
 // Compound Components
 
 import React from 'react'
-import ReactDOM from 'react-dom'
-import Switch from '../switch'
-import renderApp from '../render-app'
+import {Switch} from '../switch'
 
 class Toggle extends React.Component {
-  static defaultProps = {onToggle: () => {}}
+  static On = ({on, children}) => (on ? children : null)
+  static Off = ({on, children}) => (on ? null : children)
+  static Button = ({on, toggle, ...props}) => (
+    <Switch on={on} onClick={toggle} {...props} />
+  )
   state = {on: false}
   toggle = () =>
     this.setState(
@@ -24,26 +26,14 @@ class Toggle extends React.Component {
   }
 }
 
-function ToggleOn({on, children}) {
-  return on ? children : null
-}
-
-function ToggleOff({on, children}) {
-  return on ? null : children
-}
-
-function ToggleButton({on, toggle, ...props}) {
-  return <Switch on={on} onClick={toggle} {...props} />
-}
-
-function App() {
+function Usage(props) {
   return (
-    <Toggle onToggle={on => console.log('toggle', on)}>
-      <ToggleOn>The button is on</ToggleOn>
-      <ToggleOff>The button is off</ToggleOff>
-      <ToggleButton />
+    <Toggle onToggle={props.onToggle}>
+      <Toggle.On>The button is on</Toggle.On>
+      <Toggle.Off>The button is off</Toggle.Off>
+      <Toggle.Button />
     </Toggle>
   )
 }
 
-renderApp(<App />)
+export {Toggle, Usage}

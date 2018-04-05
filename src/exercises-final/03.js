@@ -1,14 +1,26 @@
 // Flexible Compound Components with context
 
 import React from 'react'
-import ReactDOM from 'react-dom'
-import Switch from '../switch'
-import renderApp from '../render-app'
+import {Switch} from '../switch'
 
 const ToggleContext = React.createContext({on: false, toggle: () => {}})
 
 class Toggle extends React.Component {
-  static defaultProps = {onToggle: () => {}}
+  static On = ({children}) => (
+    <ToggleContext.Consumer>
+      {({on}) => (on ? children : null)}
+    </ToggleContext.Consumer>
+  )
+  static Off = ({children}) => (
+    <ToggleContext.Consumer>
+      {({on}) => (on ? null : children)}
+    </ToggleContext.Consumer>
+  )
+  static Button = props => (
+    <ToggleContext.Consumer>
+      {({on, toggle}) => <Switch on={on} onClick={toggle} {...props} />}
+    </ToggleContext.Consumer>
+  )
   toggle = () =>
     this.setState(
       ({on}) => ({on: !on}),
@@ -24,40 +36,16 @@ class Toggle extends React.Component {
   }
 }
 
-function ToggleOn({children}) {
+function Usage(props) {
   return (
-    <ToggleContext.Consumer>
-      {({on}) => (on ? children : null)}
-    </ToggleContext.Consumer>
-  )
-}
-
-function ToggleOff({children}) {
-  return (
-    <ToggleContext.Consumer>
-      {({on}) => (on ? null : children)}
-    </ToggleContext.Consumer>
-  )
-}
-
-function ToggleButton(props) {
-  return (
-    <ToggleContext.Consumer>
-      {({on, toggle}) => <Switch on={on} onClick={toggle} {...props} />}
-    </ToggleContext.Consumer>
-  )
-}
-
-function App() {
-  return (
-    <Toggle onToggle={on => console.log('toggle', on)}>
-      <ToggleOn>The button is on</ToggleOn>
-      <ToggleOff>The button is off</ToggleOff>
+    <Toggle onToggle={props.onToggle}>
+      <Toggle.On>The button is on</Toggle.On>
+      <Toggle.Off>The button is off</Toggle.Off>
       <div>
-        <ToggleButton />
+        <Toggle.Button />
       </div>
     </Toggle>
   )
 }
 
-renderApp(<App />)
+export {Usage, Toggle}

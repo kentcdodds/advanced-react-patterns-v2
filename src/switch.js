@@ -17,4 +17,4 @@ function Switch({on, className = '', ...props}) {
   )
 }
 
-export default Switch
+export {Switch}

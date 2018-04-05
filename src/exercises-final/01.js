@@ -1,10 +1,7 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import Switch from '../switch'
-import renderApp from '../render-app'
+import {Switch} from '../switch'
 
 class Toggle extends React.Component {
-  static defaultProps = {onToggle: () => {}}
   state = {on: false}
   toggle = () =>
     this.setState(
@@ -19,10 +16,8 @@ class Toggle extends React.Component {
   }
 }
 
-function App() {
-  return <Toggle onToggle={on => console.log('toggle', on)} />
+function Usage(props) {
+  return <Toggle onToggle={props.onToggle} />
 }
 
-renderApp(<App />)
-
-export default Toggle
+export {Toggle, Usage}

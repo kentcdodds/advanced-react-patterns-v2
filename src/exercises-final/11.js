@@ -4,8 +4,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import hoistNonReactStatics from 'hoist-non-react-statics'
-import Switch from '../switch'
-import renderApp from '../render-app'
+import {Switch} from '../switch'
+import {renderApp} from '../render-app'
 
 const callAll = (...fns) => (...args) => fns.forEach(fn => fn && fn(...args))
 

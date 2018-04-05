@@ -8,8 +8,8 @@ import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 import * as redux from 'redux'
-import Switch from '../switch'
-import renderApp from '../render-app'
+import {Switch} from '../switch'
+import {renderApp} from '../render-app'
 
 const RenduxContext = React.createContext({})
 

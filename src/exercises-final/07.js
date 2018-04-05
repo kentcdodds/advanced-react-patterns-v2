@@ -1,17 +1,13 @@
 // State Initializers
 
 import React from 'react'
-import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
-import Switch from '../switch'
-import renderApp from '../render-app'
+import {Switch} from '../switch'
 
 const callAll = (...fns) => (...args) => fns.forEach(fn => fn && fn(...args))
 
 class Toggle extends React.Component {
   static defaultProps = {
     defaultOn: false,
-    onToggle: () => {},
     onReset: () => {},
   }
   initialState = {on: this.props.defaultOn}
@@ -29,7 +25,7 @@ class Toggle extends React.Component {
     ...props,
   })
   render() {
-    return this.props.render({
+    return this.props.children({
       on: this.state.on,
       toggle: this.toggle,
       reset: this.reset,
@@ -38,13 +34,14 @@ class Toggle extends React.Component {
   }
 }
 
-function App() {
+function Usage(props) {
   return (
     <Toggle
-      defaultOn={true}
-      onToggle={on => console.log('toggle', on)}
-      onReset={on => console.log('reset', on)}
-      render={toggle => (
+      defaultOn={props.defaultOn}
+      onToggle={props.onToggle}
+      onReset={props.onReset}
+    >
+      {toggle => (
         <div>
           <Switch
             {...toggle.getTogglerProps({
@@ -55,8 +52,8 @@ function App() {
           <button onClick={() => toggle.reset()}>Reset</button>
         </div>
       )}
-    />
+    </Toggle>
   )
 }
 
-renderApp(<App />)
+export {Toggle, Usage}
