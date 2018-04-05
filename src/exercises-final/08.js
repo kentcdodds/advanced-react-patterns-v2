@@ -13,8 +13,6 @@ class Toggle extends React.Component {
   }
   initialState = {on: this.props.defaultOn}
   state = this.initialState
-  reset = () =>
-    this.setState(this.initialState, () => this.props.onReset(this.state.on))
   internalSetState = (changes, callback) => {
     this.setState(state => {
       const stateToSet = [changes]
@@ -29,6 +27,10 @@ class Toggle extends React.Component {
       return stateToSet
     }, callback)
   }
+  reset = () =>
+    this.internalSetState(this.initialState, () =>
+      this.props.onReset(this.state.on),
+    )
   toggle = () =>
     this.internalSetState(
       ({on}) => ({on: !on}),

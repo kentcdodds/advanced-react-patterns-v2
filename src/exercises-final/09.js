@@ -1,4 +1,4 @@
-// Control Props
+// state reducer with types
 
 import React from 'react'
 import {Switch} from '../switch'
@@ -8,39 +8,46 @@ const callAll = (...fns) => (...args) => fns.forEach(fn => fn && fn(...args))
 class Toggle extends React.Component {
   static defaultProps = {
     defaultOn: false,
-    onToggle: () => {},
     onReset: () => {},
+    stateReducer: (state, changes) => changes,
+  }
+  static stateChangeTypes = {
+    reset: '__toggle_reset__',
+    toggle: '__toggle_toggle__',
   }
   initialState = {on: this.props.defaultOn}
   state = this.initialState
-  reset = () => {
-    if (this.isOnControlled()) {
-      this.props.onReset(!this.props.on)
-    } else {
-      this.setState(this.initialState, () => this.props.onReset(this.state.on))
-    }
+  internalSetState = (changes, callback) => {
+    this.setState(state => {
+      const stateToSet = [changes]
+        // handle function setState call
+        .map(c => (typeof c === 'function' ? c(state) : c))
+        // apply state reducer
+        .map(c => this.props.stateReducer(state, c))
+        // remove the type so it's not set into state
+        .map(({type: ignoredType, ...c}) => c)[0]
+      return stateToSet
+    }, callback)
   }
-  toggle = () => {
-    if (this.isOnControlled()) {
-      this.props.onToggle(!this.props.on)
-    } else {
-      this.setState(
-        ({on}) => ({on: !on}),
-        () => this.props.onToggle(this.state.on),
-      )
-    }
-  }
+
+  reset = () =>
+    this.internalSetState(
+      {...this.initialState, type: Toggle.stateChangeTypes.reset},
+      () => this.props.onReset(this.state.on),
+    )
+  toggle = ({type = Toggle.stateChangeTypes.toggle} = {}) =>
+    this.internalSetState(
+      ({on}) => ({type, on: !on}),
+      () => this.props.onToggle(this.state.on),
+    )
   getTogglerProps = ({onClick, ...props} = {}) => ({
-    onClick: callAll(onClick, this.toggle),
+    onClick: callAll(onClick, () => this.toggle()),
     'aria-expanded': this.state.on,
     ...props,
   })
-  isOnControlled() {
-    return this.props.on !== undefined
-  }
   render() {
-    return this.props.render({
-      on: this.isOnControlled() ? this.props.on : this.state.on,
+    return this.props.children({
+      on: this.state.on,
       toggle: this.toggle,
       reset: this.reset,
       getTogglerProps: this.getTogglerProps,
@@ -49,21 +56,40 @@ class Toggle extends React.Component {
 }
 
 class Usage extends React.Component {
-  initialState = {timesClicked: 0, on: false}
-  state = this.initialState
-  handleToggle = () => {
-    this.setState(({timesClicked, on}) => ({
-      timesClicked: timesClicked + 1,
-      on: timesClicked >= 4 ? false : !on,
-    }))
+  static defaultProps = {
+    onToggle: () => {},
+    onReset: () => {},
   }
-  handleReset = () => {
+  initialState = {timesClicked: 0}
+  state = this.initialState
+  handleToggle = (...args) => {
+    this.setState(({timesClicked}) => ({
+      timesClicked: timesClicked + 1,
+    }))
+    this.props.onToggle(...args)
+  }
+  handleReset = (...args) => {
     this.setState(this.initialState)
+    this.props.onReset(...args)
+  }
+  toggleStateReducer = (state, changes) => {
+    if (changes.type === 'forced') {
+      return changes
+    }
+    if (this.state.timesClicked >= 4) {
+      return {...changes, on: false}
+    }
+    return changes
   }
   render() {
-    const {timesClicked, on} = this.state
+    const {timesClicked} = this.state
     return (
-      <Toggle on={on} onToggle={this.handleToggle} onReset={this.handleReset}>
+      <Toggle
+        stateReducer={this.toggleStateReducer}
+        onToggle={this.handleToggle}
+        onReset={this.handleReset}
+        ref={this.props.toggleRef}
+      >
         {toggle => (
           <div>
             <Switch
@@ -74,6 +100,10 @@ class Usage extends React.Component {
             {timesClicked > 4 ? (
               <div data-testid="notice">
                 Whoa, you clicked too much!
+                <br />
+                <button onClick={() => toggle.toggle({type: 'forced'})}>
+                  Force Toggle
+                </button>
                 <br />
               </div>
             ) : timesClicked > 0 ? (

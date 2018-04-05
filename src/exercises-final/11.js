@@ -1,9 +1,8 @@
-// Higher Order Components
+// Provider Pattern
 
 import React from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
-import hoistNonReactStatics from 'hoist-non-react-statics'
 import {Switch} from '../switch'
 import {renderApp} from '../render-app'
 
@@ -85,44 +84,6 @@ class ToggleProvider extends React.Component {
   }
 }
 
-function withToggle(Component) {
-  function Wrapper(props, context) {
-    const {innerRef, ...remainingProps} = props
-    return (
-      <ToggleContext.Consumer>
-        {toggle => (
-          <Component {...remainingProps} toggle={toggle} ref={innerRef} />
-        )}
-      </ToggleContext.Consumer>
-    )
-  }
-  Wrapper.displayName = `withToggle(${Component.displayName || Component.name})`
-  // TODO: implement forwardRef
-  Wrapper.propTypes = {innerRef: PropTypes.func}
-  Wrapper.WrappedComponent = Component
-  return hoistNonReactStatics(Wrapper, Component)
-}
-const Subtitle = withToggle(
-  ({toggle}) => (toggle.on ? '👩‍🏫 👉 🕶' : 'Teachers are awesome'),
-)
-function App() {
-  return (
-    <ToggleProvider>
-      <div>
-        <Header />
-        <Post />
-      </div>
-    </ToggleProvider>
-  )
-}
-/*
- *
- *
- * Below here are irrelevant
- * implementation details...
- *
- *
- */
 function Nav() {
   return (
     <ToggleContext.Consumer>
@@ -194,6 +155,13 @@ function Header() {
     </div>
   )
 }
+function Subtitle() {
+  return (
+    <ToggleContext.Consumer>
+      {toggle => (toggle.on ? '👩‍🏫 👉 🕶' : 'Teachers are awesome')}
+    </ToggleContext.Consumer>
+  )
+}
 function Title() {
   return (
     <div>
@@ -235,13 +203,22 @@ function Article() {
     </div>
   )
 }
-
 function Post() {
   return (
     <div>
       <Title />
       <Article />
     </div>
+  )
+}
+function App() {
+  return (
+    <ToggleProvider>
+      <div>
+        <Header />
+        <Post />
+      </div>
+    </ToggleProvider>
   )
 }
 
