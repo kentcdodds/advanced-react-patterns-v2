@@ -5,12 +5,10 @@ import {Usage} from '../exercises-final/10'
 
 test('renders a toggle component', () => {
   const handleToggle = jest.fn()
-  const {assertOn, assertOff, toggle} = renderToggle(
-    <Usage onToggle={handleToggle} />,
-  )
-  assertOff()
+  const {toggleButton, toggle} = renderToggle(<Usage onToggle={handleToggle} />)
+  expect(toggleButton).toBeOff()
   toggle()
-  assertOn()
+  expect(toggleButton).toBeOn()
   expect(handleToggle).toHaveBeenCalledTimes(1)
   expect(handleToggle).toHaveBeenCalledWith(true)
 })
@@ -19,29 +17,28 @@ test('can click too much', () => {
   const handleToggle = jest.fn()
   const handleReset = jest.fn()
   const {
-    assertOn,
-    assertOff,
+    toggleButton,
     toggle,
     getByTestId,
     queryByTestId,
     getByText,
   } = renderToggle(<Usage onToggle={handleToggle} onReset={handleReset} />)
-  assertOff()
+  expect(toggleButton).toBeOff()
   toggle() // 1
-  assertOn()
+  expect(toggleButton).toBeOn()
   toggle() // 2
-  assertOff()
+  expect(toggleButton).toBeOff()
   expect(getByTestId('click-count').textContent).toContain('2')
   toggle() // 3
-  assertOn()
+  expect(toggleButton).toBeOn()
   toggle() // 4
-  assertOff()
+  expect(toggleButton).toBeOff()
   toggle() // 5: Whoa, too many
-  assertOff()
+  expect(toggleButton).toBeOff()
   toggle() // 6
-  assertOff()
+  expect(toggleButton).toBeOff()
   Simulate.click(getByText('Force Toggle')) // 7
-  assertOn()
+  expect(toggleButton).toBeOn()
 
   expect(getByTestId('notice')).not.toBeNull()
   expect(handleToggle).toHaveBeenCalledTimes(7)
@@ -60,9 +57,9 @@ test('can click too much', () => {
   expect(handleReset).toHaveBeenCalledWith(false)
   expect(queryByTestId('notice')).toBeNull()
 
-  assertOff()
+  expect(toggleButton).toBeOff()
   toggle()
-  assertOn()
+  expect(toggleButton).toBeOn()
 
   expect(getByTestId('click-count').textContent).toContain('1')
 })

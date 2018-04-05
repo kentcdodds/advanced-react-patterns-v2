@@ -16,13 +16,12 @@ class Toggle extends React.Component {
       () => this.props.onToggle(this.state.on),
     )
   render() {
-    const children = React.Children.map(this.props.children, child =>
+    return React.Children.map(this.props.children, child =>
       React.cloneElement(child, {
         on: this.state.on,
         toggle: this.toggle,
       }),
     )
-    return <div>{children}</div>
   }
 }
 

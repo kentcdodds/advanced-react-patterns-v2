@@ -5,24 +5,22 @@ import {Usage} from '../exercises-final/07'
 
 test('renders a toggle component', () => {
   const handleToggle = jest.fn()
-  const {assertOn, assertOff, toggle} = renderToggle(
-    <Usage onToggle={handleToggle} />,
-  )
-  assertOff()
+  const {toggleButton, toggle} = renderToggle(<Usage onToggle={handleToggle} />)
+  expect(toggleButton).toBeOff()
   toggle()
-  assertOn()
+  expect(toggleButton).toBeOn()
   expect(handleToggle).toHaveBeenCalledTimes(1)
   expect(handleToggle).toHaveBeenCalledWith(true)
 })
 
 test('can reset the state of the toggle', () => {
   const handleReset = jest.fn()
-  const {assertOff, toggle, getByText} = renderToggle(
+  const {toggleButton, toggle, getByText} = renderToggle(
     <Usage onToggle={() => {}} onReset={handleReset} />,
   )
   toggle()
   Simulate.click(getByText('Reset'))
-  assertOff()
+  expect(toggleButton).toBeOff()
   expect(handleReset).toHaveBeenCalledTimes(1)
   expect(handleReset).toHaveBeenCalledWith(false)
 })

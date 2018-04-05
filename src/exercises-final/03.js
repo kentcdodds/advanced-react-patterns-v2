@@ -30,7 +30,7 @@ class Toggle extends React.Component {
   render() {
     return (
       <ToggleContext.Provider value={this.state}>
-        <div>{this.props.children}</div>
+        {this.props.children}
       </ToggleContext.Provider>
     )
   }

@@ -1,70 +1,53 @@
-import assert from 'assert'
+import 'react-testing-library/extend-expect'
 import {render, Simulate, wait} from 'react-testing-library'
+import chalk from 'chalk'
+import React from 'react'
+import {
+  findAllInRenderedTree,
+  isCompositeComponentWithType,
+} from 'react-dom/test-utils'
+import {Switch} from '../src/switch'
+import {extensions} from './extensions'
+
+expect.extend(extensions)
+
+// this only exists so we can search for an instance of the Switch
+// and make some assertions to give more helpful error messages.
+class Root extends React.Component {
+  render() {
+    return this.props.children
+  }
+}
 
 function renderToggle(ui) {
-  const utils = render(ui)
+  let rootInstance
+  const utils = render(<Root ref={i => (rootInstance = i)}>{ui}</Root>)
+  const switchInstance = findAllInRenderedTree(rootInstance, c =>
+    isCompositeComponentWithType(c, Switch),
+  )[0]
+  if (!switchInstance) {
+    throw new Error(
+      chalk.red(
+        `Unable to find the Switch component. Make sure you're rendering that!`,
+      ),
+    )
+  }
+  try {
+    expect(switchInstance.props).toMatchObject({
+      on: expect.any(Boolean),
+      onClick: expect.any(Function),
+      // it can also have aria-expanded...
+    })
+  } catch (error) {
+    console.log(
+      chalk.red(
+        '🚨  The Switch component is not being passed the right props. 🚨',
+      ),
+    )
+    throw error
+  }
   const toggleButton = utils.getByLabelText('Toggle')
-  const input = utils.getByTestId('toggle-checkbox')
-  const isOn = () => {
-    const expanded = toggleButton.getAttribute('aria-expanded')
-    if (expanded !== 'true') {
-      return new Error(
-        `The aria-expanded attribute on the switch button is ${JSON.stringify(
-          expanded,
-        )} but should be "true".`,
-      )
-    }
-    const {classList} = toggleButton
-    if (!classList.contains('toggle-btn-on')) {
-      return new Error(
-        `The classList on the switch button does not contain "toggle-btn-on" but it should. It is "${classList}".`,
-      )
-    }
-    if (!input.checked) {
-      return new Error(
-        `The switch input does not have its "checked" property set to true, but it should be. It is ${
-          input.checked
-        }.`,
-      )
-    }
-  }
-  const isOff = () => {
-    const expanded = toggleButton.getAttribute('aria-expanded')
-    if (expanded === 'true') {
-      return new Error(
-        `The aria-expanded attribute on the switch button is ${JSON.stringify(
-          expanded,
-        )} but should not be.`,
-      )
-    }
-    const {classList} = toggleButton
-    if (!classList.contains('toggle-btn-off')) {
-      return new Error(
-        `The classList on the switch button does not contain "toggle-btn-off" but it should. It is "${classList}".`,
-      )
-    }
-    if (input.checked) {
-      return new Error(
-        `The switch input does not have its "checked" property set to false, but it should be. It is ${
-          input.checked
-        }.`,
-      )
-    }
-  }
   return {
-    isOn,
-    assertOn: () => {
-      const error = isOn()
-      if (error) {
-        throw error
-      }
-    },
-    assertOff: () => {
-      const error = isOff()
-      if (error) {
-        throw error
-      }
-    },
     toggle: () => Simulate.click(utils.getByLabelText('Toggle')),
     toggleButton,
     ...utils,

@@ -5,12 +5,12 @@ import {Usage} from '../exercises-final/03'
 
 test('renders a toggle component', () => {
   const handleToggle = jest.fn()
-  const {assertOn, assertOff, toggle} = renderToggle(
+  const {toggleButton, toggle} = renderToggle(
     <Usage onToggle={handleToggle} />,
   )
-  assertOff()
+  expect(toggleButton).toBeOff()
   toggle()
-  assertOn()
+  expect(toggleButton).toBeOn()
   expect(handleToggle).toHaveBeenCalledTimes(1)
   expect(handleToggle).toHaveBeenCalledWith(true)
 })
