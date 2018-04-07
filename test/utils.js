@@ -1,4 +1,3 @@
-import 'react-testing-library/extend-expect'
 import {render, Simulate, wait} from 'react-testing-library'
 import chalk from 'chalk'
 import React from 'react'
