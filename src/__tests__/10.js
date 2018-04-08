@@ -28,7 +28,7 @@ test('can click too much', () => {
   expect(toggleButton).toBeOn()
   toggle() // 2
   expect(toggleButton).toBeOff()
-  expect(getByTestId('click-count').textContent).toContain('2')
+  expect(getByTestId('click-count')).toHaveTextContent('2')
   toggle() // 3
   expect(toggleButton).toBeOn()
   toggle() // 4
@@ -61,5 +61,5 @@ test('can click too much', () => {
   toggle()
   expect(toggleButton).toBeOn()
 
-  expect(getByTestId('click-count').textContent).toContain('1')
+  expect(getByTestId('click-count')).toHaveTextContent('1')
 })
