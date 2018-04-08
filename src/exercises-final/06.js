@@ -12,13 +12,11 @@ class Toggle extends React.Component {
       ({on}) => ({on: !on}),
       () => this.props.onToggle(this.state.on),
     )
-  getTogglerProps = ({onClick, ...props} = {}) => {
-    return {
-      'aria-expanded': this.state.on,
-      onClick: callAll(onClick, this.toggle),
-      ...props,
-    }
-  }
+  getTogglerProps = ({onClick, ...props} = {}) => ({
+    'aria-expanded': this.state.on,
+    onClick: callAll(onClick, this.toggle),
+    ...props,
+  })
   render() {
     return this.props.children({
       on: this.state.on,

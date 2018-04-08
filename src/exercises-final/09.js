@@ -17,7 +17,7 @@ class Toggle extends React.Component {
   }
   initialState = {on: this.props.initialOn}
   state = this.initialState
-  internalSetState = (changes, callback) => {
+  internalSetState(changes, callback) {
     this.setState(state => {
       const stateToSet = [changes]
         // handle function setState call

@@ -5,34 +5,44 @@ import {Switch} from '../switch'
 
 const callAll = (...fns) => (...args) => fns.forEach(fn => fn && fn(...args))
 
+// Render props allow users to be in control over the UI based on state.
+// State reducers allow users to be in control over logic based on actions.
+// This idea is similar to redux, but only coincidentally.
+//
+// The basic idea is that any time there's an internal change in state, we
+// first call a stateReducer prop with the current state and the changes.
+// Whatever is returned is what we use in our setState call.
+// This allows users of the component to return the changes they received
+// or to modify the changes as they need.
+//
+// What this means for our implementation is that we can create a single
+// function that does all the work before calling setState. Then we can
+// replace all calls to setState with that function.
+
 class Toggle extends React.Component {
   static defaultProps = {
     initialOn: false,
     onReset: () => {},
-    stateReducer: (state, changes) => changes,
   }
   initialState = {on: this.props.initialOn}
   state = this.initialState
-  internalSetState(changes, callback) {
-    this.setState(state => {
-      const stateToSet = [changes]
-        // handle function setState call
-        .map(c => (typeof c === 'function' ? c(state) : c))
-        // apply state reducer
-        .map(c => this.props.stateReducer(state, c))[0]
-      // For more complicated components, you may also
-      // consider having a type property on the changes
-      // to give the state reducer more info.
-      // see downshift for an example of this.
-      return stateToSet
-    }, callback)
-  }
+  // let's add a method here called `internalSetState`. It will simulate
+  // the same API as `setState(updates, callback)`:
+  // - updater: (changes object or function that returns the changes object)
+  // - callback: Function called after the state has been updated
+  //
+  // This will call setState with an updater function (afunction that receives the state).
+  // If the changes are a function, then call that function with the state to get the actual changes
+  // Call this.props.stateReducer with the state and changes to get the user changes.
+  // Then return that from your updater function.
+  // Pass the callback to the 2nd argument to this.setState
+  //
+  // Finally, update all pre-existing instances of this.setState
+  // to this.internalSetState
   reset = () =>
-    this.internalSetState(this.initialState, () =>
-      this.props.onReset(this.state.on),
-    )
+    this.setState(this.initialState, () => this.props.onReset(this.state.on))
   toggle = () =>
-    this.internalSetState(
+    this.setState(
       ({on}) => ({on: !on}),
       () => this.props.onToggle(this.state.on),
     )
