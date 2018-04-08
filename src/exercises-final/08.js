@@ -7,11 +7,11 @@ const callAll = (...fns) => (...args) => fns.forEach(fn => fn && fn(...args))
 
 class Toggle extends React.Component {
   static defaultProps = {
-    defaultOn: false,
+    initialOn: false,
     onReset: () => {},
     stateReducer: (state, changes) => changes,
   }
-  initialState = {on: this.props.defaultOn}
+  initialState = {on: this.props.initialOn}
   state = this.initialState
   internalSetState = (changes, callback) => {
     this.setState(state => {

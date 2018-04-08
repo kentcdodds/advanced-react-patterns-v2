@@ -7,7 +7,7 @@ const callAll = (...fns) => (...args) => fns.forEach(fn => fn && fn(...args))
 
 class Toggle extends React.Component {
   static defaultProps = {
-    defaultOn: false,
+    initialOn: false,
     onReset: () => {},
     onToggle: () => {},
     onStateChange: () => {},
@@ -17,7 +17,7 @@ class Toggle extends React.Component {
     reset: '__toggle_reset__',
     toggle: '__toggle_toggle__',
   }
-  initialState = {on: this.props.defaultOn}
+  initialState = {on: this.props.initialOn}
   state = this.initialState
   isControlled(prop) {
     return this.props[prop] !== undefined
