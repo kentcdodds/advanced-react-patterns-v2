@@ -28,14 +28,17 @@ class Toggle extends React.Component {
       ...props,
     }
   }
-  render() {
-    return this.props.children({
+  getStateAndHelpers() {
+    return {
       on: this.state.on,
       toggle: this.toggle,
       // now let's include the reset method here
       // so folks can use that in their implementation.
       getTogglerProps: this.getTogglerProps,
-    })
+    }
+  }
+  render() {
+    return this.props.children(this.getStateAndHelpers())
   }
 }
 

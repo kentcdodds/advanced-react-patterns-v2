@@ -1,4 +1,4 @@
-// Control Props (with a state reducer)
+// Control Props + with a state reducer
 
 import React from 'react'
 import {Switch} from '../switch'
@@ -32,7 +32,7 @@ class Toggle extends React.Component {
       return combinedState
     }, {})
   }
-  internalSetState = (changes, callback = () => {}) => {
+  internalSetState(changes, callback = () => {}) {
     let changeType, allChanges
     this.setState(
       state => {

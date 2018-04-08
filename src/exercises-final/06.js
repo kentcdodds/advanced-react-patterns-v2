@@ -17,12 +17,15 @@ class Toggle extends React.Component {
     onClick: callAll(onClick, this.toggle),
     ...props,
   })
-  render() {
-    return this.props.children({
+  getStateAndHelpers() {
+    return {
       on: this.state.on,
       toggle: this.toggle,
       getTogglerProps: this.getTogglerProps,
-    })
+    }
+  }
+  render() {
+    return this.props.children(this.getStateAndHelpers())
   }
 }
 

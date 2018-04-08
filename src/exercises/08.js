@@ -51,13 +51,16 @@ class Toggle extends React.Component {
     'aria-expanded': this.state.on,
     ...props,
   })
-  render() {
-    return this.props.children({
+  getStateAndHelpers() {
+    return {
       on: this.state.on,
       toggle: this.toggle,
       reset: this.reset,
       getTogglerProps: this.getTogglerProps,
-    })
+    }
+  }
+  render() {
+    return this.props.children(this.getStateAndHelpers())
   }
 }
 
