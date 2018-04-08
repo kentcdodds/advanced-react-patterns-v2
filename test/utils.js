@@ -38,11 +38,10 @@ function renderToggle(ui) {
       // it can also have aria-expanded...
     })
   } catch (error) {
-    console.log(
-      chalk.red(
-        '🚨  The Switch component is not being passed the right props. 🚨',
-      ),
+    const helpfulMessage = chalk.red(
+      '🚨  The Switch component is not being passed the right props. 🚨',
     )
+    error.message = `${helpfulMessage}\n\n${error.message}`
     throw error
   }
   const toggleButton = utils.getByLabelText('Toggle')
