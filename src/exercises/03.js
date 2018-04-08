@@ -74,4 +74,4 @@ function Usage(props) {
   )
 }
 
-export {Usage, Toggle}
+export {Toggle, Usage}
