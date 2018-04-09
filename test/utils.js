@@ -10,20 +10,12 @@ import {extensions} from './extensions'
 
 expect.extend(extensions)
 
-// this only exists so we can search for an instance of the Switch
-// and make some assertions to give more helpful error messages.
-class Root extends React.Component {
-  render() {
-    return this.props.children
-  }
-}
-
-function renderToggle(ui) {
-  let rootInstance
-  const utils = render(<Root ref={i => (rootInstance = i)}>{ui}</Root>)
-  const switchInstance = findAllInRenderedTree(rootInstance, c =>
+const findSwitchInstances = rootInstance =>
+  findAllInRenderedTree(rootInstance, c =>
     isCompositeComponentWithType(c, Switch),
-  )[0]
+  )
+
+function validateSwitchInstance(switchInstance) {
   if (!switchInstance) {
     throw new Error(
       chalk.red(
@@ -44,10 +36,27 @@ function renderToggle(ui) {
     error.message = `${helpfulMessage}\n\n${error.message}`
     throw error
   }
+}
+
+// this only exists so we can search for an instance of the Switch
+// and make some assertions to give more helpful error messages.
+class Root extends React.Component {
+  render() {
+    return this.props.children
+  }
+}
+
+function renderToggle(ui) {
+  let rootInstance
+  let rootRef = instance => (rootInstance = instance)
+  const utils = render(<Root ref={rootRef}>{ui}</Root>)
+  const switchInstance = findSwitchInstances(rootInstance)[0]
+  validateSwitchInstance(switchInstance)
   const toggleButton = utils.getByLabelText('Toggle')
   return {
     toggle: () => Simulate.click(utils.getByLabelText('Toggle')),
     toggleButton,
+    rootInstance,
     ...utils,
   }
 }

@@ -1,17 +1,61 @@
 import React from 'react'
+import {
+  findAllInRenderedTree,
+  isCompositeComponentWithType,
+} from 'react-dom/test-utils'
+import chalk from 'chalk'
 import {Simulate, renderToggle} from '../../test/utils'
-import {Usage} from '../exercises-final/10-primer'
-// import {Usage} from '../exercises/10-primer'
+import {Toggle, Usage} from '../exercises-final/10-primer'
+// import {Toggle, Usage} from '../exercises/10-primer'
+
+const findToggleInstances = rootInstance =>
+  findAllInRenderedTree(rootInstance, c =>
+    isCompositeComponentWithType(c, Toggle),
+  )
+
+function validateToggleInstance(instance) {
+  // validate the internal state of the toggle does not change
+  // If it does change then you could trigger an unecessary re-render
+  try {
+    expect(instance.state).toEqual({on: false})
+    expect(instance.state).toEqual({on: false})
+  } catch (error) {
+    const helpfulMessage = chalk.red(
+      `🚨  The toggle should not update its own state when it's controlled  🚨`,
+    )
+    error.message = `${helpfulMessage}\n\n${error.message}`
+    throw error
+  }
+}
 
 test('toggling either toggle toggles both', () => {
   const handleToggle = jest.fn()
-  const {container} = renderToggle(<Usage onToggle={handleToggle} />)
+  const {container, rootInstance} = renderToggle(
+    <Usage onToggle={handleToggle} />,
+  )
+  const [toggleInstance1, toggleInstance2] = findToggleInstances(rootInstance)
   const buttons = container.querySelectorAll('button')
   const [toggleButton1, toggleButton2] = buttons
   Simulate.click(toggleButton1)
   expect(toggleButton1).toBeOn()
   expect(toggleButton2).toBeOn()
+
+  validateToggleInstance(toggleInstance1)
+  validateToggleInstance(toggleInstance2)
+
   Simulate.click(toggleButton2)
   expect(toggleButton1).toBeOff()
   expect(toggleButton2).toBeOff()
+})
+
+test('toggle can still be uncontrolled', () => {
+  const handleToggle = jest.fn()
+  const {toggleButton, toggle} = renderToggle(
+    <Toggle onToggle={handleToggle} />,
+  )
+  expect(toggleButton).toBeOff()
+  toggle()
+  expect(toggleButton).toBeOn()
+  expect(handleToggle).toHaveBeenCalledTimes(1)
+  expect(handleToggle).toHaveBeenCalledWith(true)
 })

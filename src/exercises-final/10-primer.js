@@ -38,10 +38,11 @@ class Usage extends React.Component {
   }
   render() {
     const {bothOn} = this.state
+    const {toggle1Ref, toggle2Ref} = this.props
     return (
       <div>
-        <Toggle on={bothOn} onToggle={this.handleToggle} />
-        <Toggle on={bothOn} onToggle={this.handleToggle} />
+        <Toggle on={bothOn} onToggle={this.handleToggle} ref={toggle1Ref} />
+        <Toggle on={bothOn} onToggle={this.handleToggle} ref={toggle2Ref} />
       </div>
     )
   }
