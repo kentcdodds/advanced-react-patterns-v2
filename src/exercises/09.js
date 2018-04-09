@@ -18,18 +18,20 @@ class Toggle extends React.Component {
       const stateToSet = [changes]
         .map(c => (typeof c === 'function' ? c(state) : c))
         .map(c => this.props.stateReducer(state, c))[0]
-      // in addition to what we've done, add another
+      // 🐨  in addition to what we've done, add another
       // `.map` to remove the `type` (don't forget
       // to move the [0] above to your new map call!)
+      // 💰: to remove the `type`, you can destructure the changes:
+      // `{type, ...c}`
       return stateToSet
     }, callback)
   }
   reset = () =>
-    // add a `type` string property to this call
+    // 🐨 add a `type` string property to this call
     this.internalSetState(this.initialState, () =>
       this.props.onReset(this.state.on),
     )
-  // accept a `type` property here and give it a default value
+  // 🐨 accept a `type` property here and give it a default value
   toggle = () =>
     this.internalSetState(
       // pass the `type` string to this object
@@ -37,7 +39,7 @@ class Toggle extends React.Component {
       () => this.props.onToggle(this.state.on),
     )
   getTogglerProps = ({onClick, ...props} = {}) => ({
-    // change `this.toggle` to `() => this.toggle()`
+    // 🐨 change `this.toggle` to `() => this.toggle()`
     // to avoid passing the click event to this.toggle.
     onClick: callAll(onClick, this.toggle),
     'aria-expanded': this.state.on,

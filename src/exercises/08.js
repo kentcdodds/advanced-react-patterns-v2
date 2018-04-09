@@ -26,7 +26,7 @@ class Toggle extends React.Component {
   }
   initialState = {on: this.props.initialOn}
   state = this.initialState
-  // let's add a method here called `internalSetState`. It will simulate
+  // 🐨 let's add a method here called `internalSetState`. It will simulate
   // the same API as `setState(updates, callback)`:
   // - updater: (changes object or function that returns the changes object)
   // - callback: Function called after the state has been updated
@@ -37,7 +37,7 @@ class Toggle extends React.Component {
   // Then return that from your updater function.
   // Pass the callback to the 2nd argument to this.setState
   //
-  // Finally, update all pre-existing instances of this.setState
+  // 🐨 Finally, update all pre-existing instances of this.setState
   // to this.internalSetState
   reset = () =>
     this.setState(this.initialState, () => this.props.onReset(this.state.on))

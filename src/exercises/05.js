@@ -20,7 +20,7 @@ class Toggle extends React.Component {
       // props applied to the button they render, we can add a collection
       // of props as a convenience for them.
       //
-      // Add a `togglerProps` object that has an `aria-expanded` (should
+      // 🐨 Add a `togglerProps` object that has an `aria-expanded` (should
       // be set to the value of the `on` state), and an `onClick` assigned
       // to the toggle function.
     })

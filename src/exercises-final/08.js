@@ -20,10 +20,6 @@ class Toggle extends React.Component {
         .map(c => (typeof c === 'function' ? c(state) : c))
         // apply state reducer
         .map(c => this.props.stateReducer(state, c))[0]
-      // For more complicated components, you may also
-      // consider having a type property on the changes
-      // to give the state reducer more info.
-      // see downshift for an example of this.
       return stateToSet
     }, callback)
   }

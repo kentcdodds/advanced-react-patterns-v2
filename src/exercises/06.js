@@ -8,11 +8,11 @@ import {Switch} from '../switch'
 // easier to just not use the `togglerProps` prop collection!
 //
 // What if instead we exposed a function which merged props?
-// Let's do that instead. Swap `togglerProps` with a `getTogglerProps`
+// Let's do that instead. 🐨 Swap `togglerProps` with a `getTogglerProps`
 // function. It should accept props and merge the provided props
 // with the ones we need to get our toggle functionality to work
 //
-// Here's a little utility that might come in handy:
+// Here's a little utility that might come in handy 💰:
 // const callAll = (...fns) => (...args) => fns.forEach(fn => fn && fn(...args))
 
 class Toggle extends React.Component {

@@ -26,10 +26,10 @@ import {Switch} from '../switch'
 // </ThemeContext.Consumer>
 // ...
 
-// create a ToggleContext with React.createContext here
+// 🐨 create a ToggleContext with React.createContext here
 
 class Toggle extends React.Component {
-  // each of these compound components will need to be changed to use
+  // TODO: each of these compound components will need to be changed to use
   // ToggleContext.Consumer and rather than getting `on` and `toggle`
   // from props, it'll get it from the ToggleContext.Consumer value.
   static On = ({on, children}) => (on ? children : null)
@@ -37,9 +37,9 @@ class Toggle extends React.Component {
   static Button = ({on, toggle, ...props}) => (
     <Switch on={on} onClick={toggle} {...props} />
   )
-  // Because we'll be passing state into context, we need to add the
+  // Because we'll be passing state into context, we need to 🐨 add the
   // toggle function to state.
-  // TIP: You'll need to move this below the `toggle` function. See
+  // 💰: You'll need to move this below the `toggle` function. See
   // if you can figure out why :)
   toggle = () =>
     this.setState(
@@ -49,7 +49,7 @@ class Toggle extends React.Component {
   state = {on: false}
   render() {
     // Because this.props.children is _immediate_ children only, we need
-    // to remove this map function and render our context provider with
+    // to 🐨 remove this map function and render our context provider with
     // this.props.children as the children of the provider. Then we'll
     // expose the on state and toggle method as properties in the context
     // value (the value prop).

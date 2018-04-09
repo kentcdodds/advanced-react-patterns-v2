@@ -10,7 +10,7 @@ class Toggle extends React.Component {
   // Then that could be used like: <Toggle.Candy />
   // This is handy because it makes the relationship between the
   // parent Toggle component and the child Candy component more explicit
-  // You'll need to create three such components here: On, Off, and Button
+  // 🐨 You'll need to create three such components here: On, Off, and Button
   // The button will be responsible for rendering the <Switch /> (with the right pros)
   state = {on: false}
   toggle = () =>
@@ -28,7 +28,7 @@ class Toggle extends React.Component {
     // 1. React.Children.map: https://reactjs.org/docs/react-api.html#reactchildrenmap
     // 2. React.cloneElement: https://reactjs.org/docs/react-api.html#cloneelement
     //
-    // you'll want to completely replace the code below with the above logic.
+    // 🐨 you'll want to completely replace the code below with the above logic.
     const {on} = this.state
     return <Switch on={on} onClick={this.toggle} />
   }

@@ -9,11 +9,11 @@ class Toggle extends React.Component {
   // We're going to need some static defaultProps here to allow
   // people to pass a `initialOn` prop.
   //
-  // Rather than initializing state to have on as false,
-  // we can set on to this.props.initialOn
+  // 🐨 Rather than initializing state to have on as false,
+  // set on to this.props.initialOn
   state = {on: false}
 
-  // now let's add a reset method here that resets the state
+  // 🐨 now let's add a reset method here that resets the state
   // to the initial state. Then add a callback that calls
   // this.props.onReset with the `on` state.
   toggle = () =>

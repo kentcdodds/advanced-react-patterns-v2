@@ -20,7 +20,7 @@ class Toggle extends React.Component {
   }
   initialState = {on: this.props.initialOn}
   state = this.initialState
-  // let's add an `isControlled` method that accepts a state key
+  // TODO: let's add an `isControlled` method that accepts a state key
   // (string) and returns true if the prop is controlled
   // (this.props[prop] !== undefined)
   //
@@ -33,121 +33,53 @@ class Toggle extends React.Component {
         .map(c => (typeof c === 'function' ? c(state) : c))
         // apply state reducer
         .map(c => this.props.stateReducer(state, c))
-        // remove the type so it's not set into state
+        // now we actually need to store the whole changes
+        // object for use in the callback.
+        // 🐨 create a variable above the `setState` call, then
+        // add another map function here which simply accepts
+        // the changes `c` and assigns `allChanges` to that value.
+        //
+        // Next, 🐨 replace this map function with a new one that's
+        // responsible for taking the changes and returning an object
+        // that only has the changes for things that are not controlled.
+        // 💰 make certain to keep the [0] in place!
         .map(({type: ignoredType, ...c}) => c)[0]
+      // If the `stateToSet` is an empty object, we can avoid an
+      // unecessary re-render by returning null.
+      // 🐨 change this return to return null if the stateToSet is empty.
       return stateToSet
+      // When the state has successfully been set, we need to call the
+      // `onStateChange` prop (so users of the component know when they should
+      // update their controlled state) in addition to the callback.
+      // 🐨 replace the `callback` with a function which calls `onStateChange`
+      // with your `allChanges` variable and then calls the callback
+      // 🐨 in addition, it may be a good idea to default the callback to a
+      // no-op function.
     }, callback)
   }
 
   reset = () =>
     this.internalSetState(
       {...this.initialState, type: Toggle.stateChangeTypes.reset},
+      // 🐨 replace this.state with a call to this.getState()
       () => this.props.onReset(this.state.on),
     )
   toggle = ({type = Toggle.stateChangeTypes.toggle} = {}) =>
     this.internalSetState(
       ({on}) => ({type, on: !on}),
+      // 🐨 replace this.state with a call to this.getState()
       () => this.props.onToggle(this.state.on),
     )
   getTogglerProps = ({onClick, ...props} = {}) => ({
     onClick: callAll(onClick, () => this.toggle()),
+    // 🐨 replace this.state with a call to this.getState()
     'aria-expanded': this.state.on,
     ...props,
   })
   getStateAndHelpers() {
     return {
+      // 🐨 replace this.state with a call to this.getState()
       on: this.state.on,
-      toggle: this.toggle,
-      reset: this.reset,
-      getTogglerProps: this.getTogglerProps,
-    }
-  }
-  render() {
-    return this.props.children(this.getStateAndHelpers())
-  }
-}
-
-class Toggle extends React.Component {
-  static defaultProps = {
-    initialOn: false,
-    onReset: () => {},
-    onToggle: () => {},
-    onStateChange: () => {},
-    stateReducer: (state, changes) => changes,
-  }
-  static stateChangeTypes = {
-    reset: '__toggle_reset__',
-    toggle: '__toggle_toggle__',
-  }
-  initialState = {on: this.props.initialOn}
-  state = this.initialState
-  isControlled(prop) {
-    return this.props[prop] !== undefined
-  }
-  getState(state = this.state) {
-    return Object.entries(state).reduce((combinedState, [key, value]) => {
-      if (this.isControlled(key)) {
-        combinedState[key] = this.props[key]
-      } else {
-        combinedState[key] = value
-      }
-      return combinedState
-    }, {})
-  }
-  internalSetState(changes, callback = () => {}) {
-    let changeType, allChanges
-    this.setState(
-      state => {
-        const combinedState = this.getState(state)
-        const stateToSet = [changes]
-          // handle function setState call
-          .map(c => (typeof c === 'function' ? c(combinedState) : c))
-          // apply state reducer
-          .map(c => this.props.stateReducer(combinedState, c))
-          // remove the type so it's not set into state
-          .map(({type, ...c}) => {
-            changeType = type
-            allChanges = c
-            return c
-          })
-          // remove the controlled props
-          .map(c =>
-            Object.entries(c).reduce((newChanges, [key, value]) => {
-              if (!this.isControlled(key)) {
-                newChanges[key] = value
-              }
-              return newChanges
-            }, {}),
-          )[0]
-        return Object.keys(stateToSet).length ? stateToSet : null
-      },
-      () => {
-        this.props.onStateChange(
-          {type: changeType, ...allChanges},
-          this.getStateAndHelpers(),
-        )
-        callback()
-      },
-    )
-  }
-  reset = () =>
-    this.internalSetState(
-      {...this.initialState, type: Toggle.stateChangeTypes.reset},
-      () => this.props.onReset(this.state.on),
-    )
-  toggle = ({type = Toggle.stateChangeTypes.toggle} = {}) =>
-    this.internalSetState(
-      ({on}) => ({type, on: !on}),
-      () => this.props.onToggle(this.state.on),
-    )
-  getTogglerProps = ({onClick, ...props} = {}) => ({
-    onClick: callAll(onClick, () => this.toggle()),
-    'aria-expanded': this.getState().on,
-    ...props,
-  })
-  getStateAndHelpers() {
-    return {
-      ...this.getState(),
       toggle: this.toggle,
       reset: this.reset,
       getTogglerProps: this.getTogglerProps,
@@ -163,47 +95,49 @@ class Usage extends React.Component {
     onToggle: () => {},
     onReset: () => {},
   }
-  initialState = {timesClicked: 0, on: false}
+  initialState = {timesClicked: 0, toggleOn: false}
   state = this.initialState
   handleStateChange = changes => {
     if (changes.type === 'forced') {
-      this.setState({on: changes.on}, () => this.props.onToggle(this.state.on))
+      this.setState({toggleOn: changes.on}, () =>
+        this.props.onToggle(this.state.toggleOn),
+      )
     } else if (changes.type === Toggle.stateChangeTypes.reset) {
       this.setState(this.initialState, () => {
-        this.props.onReset(this.state.on)
+        this.props.onReset(this.state.toggleOn)
       })
     } else if (changes.type === Toggle.stateChangeTypes.toggle) {
       this.setState(
         ({timesClicked}) => ({
           timesClicked: timesClicked + 1,
-          on: timesClicked >= 4 ? false : changes.on,
+          toggleOn: timesClicked >= 4 ? false : changes.on,
         }),
         () => {
-          this.props.onToggle(this.state.on)
+          this.props.onToggle(this.state.toggleOn)
         },
       )
     }
   }
   render() {
-    const {timesClicked, on} = this.state
+    const {timesClicked, toggleOn} = this.state
     return (
       <Toggle
-        on={on}
+        on={toggleOn}
         onStateChange={this.handleStateChange}
         ref={this.props.toggleRef}
       >
-        {toggle => (
+        {({on, toggle, reset, getTogglerProps}) => (
           <div>
             <Switch
-              {...toggle.getTogglerProps({
-                on: toggle.on,
+              {...getTogglerProps({
+                on: on,
               })}
             />
             {timesClicked > 4 ? (
               <div data-testid="notice">
                 Whoa, you clicked too much!
                 <br />
-                <button onClick={() => toggle.toggle({type: 'forced'})}>
+                <button onClick={() => toggle({type: 'forced'})}>
                   Force Toggle
                 </button>
                 <br />
@@ -211,7 +145,7 @@ class Usage extends React.Component {
             ) : timesClicked > 0 ? (
               <div data-testid="click-count">Click count: {timesClicked}</div>
             ) : null}
-            <button onClick={toggle.reset}>Reset</button>
+            <button onClick={reset}>Reset</button>
           </div>
         )}
       </Toggle>
