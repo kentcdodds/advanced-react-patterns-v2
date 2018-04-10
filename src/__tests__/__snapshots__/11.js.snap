@@ -1,0 +1,139 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a toggle component 1`] = `
+<div>
+  <div>
+    <div
+      style="display: flex;"
+    >
+      <nav>
+        <ul
+          style="display: flex; list-style: none; padding-left: 0px;"
+        >
+          <li>
+            <a
+              href="index.html"
+            >
+              Home
+            </a>
+          </li>
+          <li>
+            <a
+              href="/about/"
+            >
+              About
+            </a>
+          </li>
+          <li>
+            <a
+              href="/blog/"
+            >
+              Blog
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div
+        style="display: flex; text-align: center;"
+      >
+        <div>
+          Enable Emoji
+        </div>
+        <div>
+          <input
+            class="toggle-input"
+            type="checkbox"
+          />
+          <button
+            aria-expanded="false"
+            aria-label="Toggle"
+            class="toggle-btn toggle-btn-off"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div>
+      <h1>
+        Who is awesome?
+      </h1>
+      Teachers are awesome
+    </div>
+    <div>
+      Once, I was in school when I realized something...
+      <hr />
+      Without teachers I wouldn't know anything so thanks teachers!
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders a toggle component 2`] = `
+<div>
+  <div>
+    <div
+      style="display: flex;"
+    >
+      <nav>
+        <ul
+          style="display: flex; list-style: none; padding-left: 0px;"
+        >
+          <li>
+            <a
+              href="index.html"
+            >
+              🏡
+            </a>
+          </li>
+          <li>
+            <a
+              href="/about/"
+            >
+              ❓
+            </a>
+          </li>
+          <li>
+            <a
+              href="/blog/"
+            >
+              📖
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div
+        style="display: flex; text-align: center;"
+      >
+        <div>
+          🦄
+        </div>
+        <div>
+          <input
+            class="toggle-input"
+            type="checkbox"
+          />
+          <button
+            aria-expanded="true"
+            aria-label="Toggle"
+            class="toggle-btn toggle-btn-on"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div>
+      <h1>
+        Who is 🕶❓
+      </h1>
+      👩‍🏫 👉 🕶
+    </div>
+    <div>
+      Once, I was in 🏫‍ when I 🤔 something...
+      <hr />
+      Without 👩‍🏫 I wouldn't know anything so 🙏 👩‍🏫❗️
+    </div>
+  </div>
+</div>
+`;

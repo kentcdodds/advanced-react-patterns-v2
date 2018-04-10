@@ -48,7 +48,9 @@ class Toggle extends React.Component {
           .map(c =>
             Object.keys(state).reduce((newChanges, stateKey) => {
               if (!this.isControlled(stateKey)) {
-                newChanges[stateKey] = c[stateKey]
+                newChanges[stateKey] = c.hasOwnProperty(stateKey)
+                  ? c[stateKey]
+                  : combinedState[stateKey]
               }
               return newChanges
             }, {}),
@@ -153,5 +155,5 @@ class Usage extends React.Component {
   }
 }
 
-// exporting Usage as default for codesandbox module view to work
-export {Toggle, Usage, Usage as default}
+
+export {Toggle, Usage as default}

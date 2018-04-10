@@ -5,8 +5,8 @@ import {
 } from 'react-dom/test-utils'
 import chalk from 'chalk'
 import {Simulate, renderToggle} from '../../test/utils'
-import {Toggle, Usage} from '../exercises-final/10-primer'
-// import {Toggle, Usage} from '../exercises/10-primer'
+import Usage, {Toggle} from '../exercises-final/10-primer'
+// import Usage, {Toggle} from '../exercises/10-primer'
 
 const findToggleInstances = rootInstance =>
   findAllInRenderedTree(rootInstance, c =>

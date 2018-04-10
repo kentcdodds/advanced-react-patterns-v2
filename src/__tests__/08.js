@@ -1,7 +1,7 @@
 import React from 'react'
 import {renderToggle, Simulate} from '../../test/utils'
-import {Usage} from '../exercises-final/08'
-// import {Usage} from '../exercises/08'
+import Usage from '../exercises-final/08'
+// import Usage from '../exercises/08'
 
 test('renders a toggle component', () => {
   const handleToggle = jest.fn()
