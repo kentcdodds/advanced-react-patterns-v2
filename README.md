@@ -1,4 +1,4 @@
-# Adavnce React Patterns v2
+# Advance React Patterns v2
 
 ### Patterns 🔥🔥🔥🔥🔥
    1. [Compound Component](https://codesandbox.io/embed/github/kentcdodds/advanced-react-patterns-v2/tree/master/?module=%2Fsrc%2Fexercises-final%2F02.js)
