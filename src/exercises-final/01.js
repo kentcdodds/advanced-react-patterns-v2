@@ -24,5 +24,4 @@ function Usage(
   return <Toggle onToggle={props.onToggle} />
 }
 
-
 export {Toggle, Usage as default}

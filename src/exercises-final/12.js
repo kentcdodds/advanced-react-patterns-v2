@@ -132,6 +132,7 @@ function Nav() {
     </ToggleContext.Consumer>
   )
 }
+
 function NavSwitch() {
   return (
     <div
@@ -159,6 +160,7 @@ function NavSwitch() {
     </div>
   )
 }
+
 function Header() {
   return (
     <div>
@@ -175,6 +177,7 @@ function Header() {
     </div>
   )
 }
+
 function Title() {
   return (
     <div>
@@ -187,6 +190,7 @@ function Title() {
     </div>
   )
 }
+
 function Article() {
   return (
     <div>
@@ -236,6 +240,5 @@ function Usage() {
     </ToggleProvider>
   )
 }
-
 
 export {Toggle, Usage as default}

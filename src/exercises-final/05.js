@@ -45,5 +45,4 @@ function Usage(
   )
 }
 
-
 export {Toggle, Usage as default}

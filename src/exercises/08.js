@@ -121,5 +121,4 @@ class Usage extends React.Component {
   }
 }
 
-
 export {Toggle, Usage as default}
