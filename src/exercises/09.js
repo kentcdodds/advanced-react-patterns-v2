@@ -63,8 +63,8 @@ class Toggle extends React.Component {
 // You can make all the tests pass by updating the Toggle component.
 class Usage extends React.Component {
   static defaultProps = {
-    onToggle: () => {},
-    onReset: () => {},
+    onToggle: (...args) => console.log('onToggle', ...args),
+    onReset: (...args) => console.log('onReset', ...args),
   }
   initialState = {timesClicked: 0}
   state = this.initialState

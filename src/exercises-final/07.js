@@ -37,7 +37,13 @@ class Toggle extends React.Component {
   }
 }
 
-function Usage(props) {
+function Usage(
+  props = {
+    initialOn: false,
+    onToggle: (...args) => console.log('onToggle', ...args),
+    onReset: (...args) => console.log('onReset', ...args),
+  },
+) {
   return (
     <Toggle
       initialOn={props.initialOn}

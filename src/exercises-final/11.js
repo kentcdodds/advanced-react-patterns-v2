@@ -109,6 +109,7 @@ function Nav() {
     </ToggleContext.Consumer>
   )
 }
+
 function NavSwitch() {
   return (
     <div
@@ -136,6 +137,7 @@ function NavSwitch() {
     </div>
   )
 }
+
 function Header() {
   return (
     <div>
@@ -152,6 +154,7 @@ function Header() {
     </div>
   )
 }
+
 function Subtitle() {
   return (
     <ToggleContext.Consumer>
@@ -159,6 +162,7 @@ function Subtitle() {
     </ToggleContext.Consumer>
   )
 }
+
 function Title() {
   return (
     <div>
@@ -171,6 +175,7 @@ function Title() {
     </div>
   )
 }
+
 function Article() {
   return (
     <div>
@@ -200,6 +205,7 @@ function Article() {
     </div>
   )
 }
+
 function Post() {
   return (
     <div>

@@ -51,6 +51,10 @@ class Toggle extends React.Component {
 }
 
 class Usage extends React.Component {
+  static defaultProps = {
+    onToggle: (...args) => console.log('onToggle', ...args),
+    onReset: (...args) => console.log('onReset', ...args),
+  }
   initialState = {timesClicked: 0}
   state = this.initialState
   handleToggle = (...args) => {

@@ -68,6 +68,10 @@ class Toggle extends React.Component {
 // component is intended to be used and is used in the tests.
 // You can make all the tests pass by updating the Toggle component.
 class Usage extends React.Component {
+  static defaultProps = {
+    onToggle: (...args) => console.log('onToggle', ...args),
+    onReset: (...args) => console.log('onReset', ...args),
+  }
   initialState = {timesClicked: 0}
   state = this.initialState
   handleToggle = (...args) => {
