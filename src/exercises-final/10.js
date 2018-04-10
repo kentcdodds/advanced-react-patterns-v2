@@ -67,12 +67,12 @@ class Toggle extends React.Component {
   reset = () =>
     this.internalSetState(
       {...this.initialState, type: Toggle.stateChangeTypes.reset},
-      () => this.props.onReset(this.getState()),
+      () => this.props.onReset(this.getState().on),
     )
   toggle = ({type = Toggle.stateChangeTypes.toggle} = {}) =>
     this.internalSetState(
       ({on}) => ({type, on: !on}),
-      () => this.props.onToggle(this.getState()),
+      () => this.props.onToggle(this.getState().on),
     )
   getTogglerProps = ({onClick, ...props} = {}) => ({
     onClick: callAll(onClick, () => this.toggle()),
@@ -154,6 +154,5 @@ class Usage extends React.Component {
     )
   }
 }
-
 
 export {Toggle, Usage as default}

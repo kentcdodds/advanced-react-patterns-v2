@@ -3,6 +3,7 @@
 import React from 'react'
 import {Switch} from '../switch'
 
+// 🎁 I made this for you. You're welcome :)
 const ToggleContext = React.createContext({
   on: false,
   toggle: () => {},
@@ -24,27 +25,19 @@ class Toggle extends React.Component {
     reset: '__toggle_reset__',
     toggle: '__toggle_toggle__',
   }
-
-  reset = () =>
-    this.internalSetState(
-      {...this.initialState, type: Toggle.stateChangeTypes.reset},
-      () => this.props.onReset(this.getState()),
-    )
-  toggle = ({type = Toggle.stateChangeTypes.toggle} = {}) =>
-    this.internalSetState(
-      ({on}) => ({type, on: !on}),
-      () => this.props.onToggle(this.getState()),
-    )
-  getTogglerProps = ({onClick, ...props} = {}) => ({
-    onClick: callAll(onClick, () => this.toggle()),
-    'aria-expanded': this.getState().on,
-    ...props,
-  })
   initialState = {
     on: this.props.initialOn,
-    toggle: this.toggle,
-    reset: this.reset,
-    getTogglerProps: this.getTogglerProps,
+    // Ok, just trust me on this one... You're going to need to
+    // put everything into `state` that we want to provide to our consumers.
+    // That means we need to include the `reset`, `toggle`, and `getTogglerProps`
+    // functions in our `state`. I know, it's kinda messed up, but it
+    // will help us avoid unecessary re-renders so it'll be better
+    // in the end.
+    //
+    // 🐨 Move the `reset`, `toggle`, and `getTogglerProps` method assignments
+    // above this `initialState` assignments, and include them here
+    //
+    // 💰 `reset: this.reset` etc...
   }
   state = this.initialState
   isControlled(prop) {
@@ -86,18 +79,48 @@ class Toggle extends React.Component {
         return Object.keys(stateToSet).length ? stateToSet : null
       },
       () => {
+        // We're going to remove the getStateAndHelpers because the state
+        // and helpers all live in the `state` anyway.
+        // 🐨 Replace `this.getStateAndHelpers()` with `this.state`
         // call onStateChange with all the changes (including the type)
-        this.props.onStateChange(allChanges, this.state)
+        this.props.onStateChange(allChanges, this.getStateAndHelpers())
         callback()
       },
     )
   }
-  render() {
-    return (
-      <ToggleContext.Provider value={this.state}>
-        {this.props.children}
-      </ToggleContext.Provider>
+  reset = () =>
+    this.internalSetState(
+      {...this.initialState, type: Toggle.stateChangeTypes.reset},
+      () => this.props.onReset(this.getState()),
     )
+  toggle = ({type = Toggle.stateChangeTypes.toggle} = {}) =>
+    this.internalSetState(
+      ({on}) => ({type, on: !on}),
+      () => this.props.onToggle(this.getState()),
+    )
+  getTogglerProps = ({onClick, ...props} = {}) => ({
+    onClick: callAll(onClick, () => this.toggle()),
+    'aria-expanded': this.getState().on,
+    ...props,
+  })
+  // 🐨 remove `getStateAndHelpers` because all of our state and helpers
+  // are available directly from `state` now.
+  getStateAndHelpers() {
+    return {
+      ...this.getState(),
+      toggle: this.toggle,
+      reset: this.reset,
+      getTogglerProps: this.getTogglerProps,
+    }
+  }
+  render() {
+    // Now we'll be exposing the state and helpers via React's context API.
+    // 1) 🐨 replace this line with a usage of <ToggleContext.Provide> where
+    // the value is `this.state` and the children is `this.props.children`.
+    return this.props.children(this.getStateAndHelpers())
+    // NOTE: this actually breaks the render prop API. We could preserve
+    // it but I didn't want to add any more complexity to this.
+    // 💯 Feel free to try to preserve the existing render prop API if you want.
   }
 }
 

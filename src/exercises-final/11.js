@@ -24,16 +24,17 @@ class Toggle extends React.Component {
     reset: '__toggle_reset__',
     toggle: '__toggle_toggle__',
   }
+  static Consumer = ToggleContext.Consumer
 
   reset = () =>
     this.internalSetState(
       {...this.initialState, type: Toggle.stateChangeTypes.reset},
-      () => this.props.onReset(this.getState()),
+      () => this.props.onReset(this.getState().on),
     )
   toggle = ({type = Toggle.stateChangeTypes.toggle} = {}) =>
     this.internalSetState(
       ({on}) => ({type, on: !on}),
-      () => this.props.onToggle(this.getState()),
+      () => this.props.onToggle(this.getState().on),
     )
   getTogglerProps = ({onClick, ...props} = {}) => ({
     onClick: callAll(onClick, () => this.toggle()),
@@ -93,17 +94,24 @@ class Toggle extends React.Component {
     )
   }
   render() {
+    // here's all you need to do for your solution
+    // return (
+    //   <ToggleContext.Provider value={this.state}>
+    //     {this.props.children}
+    //   </ToggleContext.Provider>
+    // )
+    // here's the bonus material solution that preserves the old API:
+    const {children} = this.props
+    const ui = typeof children === 'function' ? children(this.state) : children
     return (
-      <ToggleContext.Provider value={this.state}>
-        {this.props.children}
-      </ToggleContext.Provider>
+      <ToggleContext.Provider value={this.state}>{ui}</ToggleContext.Provider>
     )
   }
 }
 
 function Nav() {
   return (
-    <ToggleContext.Consumer>
+    <Toggle.Consumer>
       {toggle => (
         <nav style={{flex: 1}}>
           <ul
@@ -126,7 +134,7 @@ function Nav() {
           </ul>
         </nav>
       )}
-    </ToggleContext.Consumer>
+    </Toggle.Consumer>
   )
 }
 
@@ -141,11 +149,11 @@ function NavSwitch() {
       }}
     >
       <div>
-        <ToggleContext.Consumer>
+        <Toggle.Consumer>
           {toggle => (toggle.on ? '🦄' : 'Enable Emoji')}
-        </ToggleContext.Consumer>
+        </Toggle.Consumer>
       </div>
-      <ToggleContext.Consumer>
+      <Toggle.Consumer>
         {toggle => (
           <Switch
             {...toggle.getTogglerProps({
@@ -153,7 +161,7 @@ function NavSwitch() {
             })}
           />
         )}
-      </ToggleContext.Consumer>
+      </Toggle.Consumer>
     </div>
   )
 }
@@ -177,9 +185,9 @@ function Header() {
 
 function Subtitle() {
   return (
-    <ToggleContext.Consumer>
+    <Toggle.Consumer>
       {toggle => (toggle.on ? '👩‍🏫 👉 🕶' : 'Teachers are awesome')}
-    </ToggleContext.Consumer>
+    </Toggle.Consumer>
   )
 }
 
@@ -187,9 +195,9 @@ function Title() {
   return (
     <div>
       <h1>
-        <ToggleContext.Consumer>
+        <Toggle.Consumer>
           {toggle => `Who is ${toggle.on ? '🕶❓' : 'awesome?'}`}
-        </ToggleContext.Consumer>
+        </Toggle.Consumer>
       </h1>
       <Subtitle />
     </div>
@@ -199,7 +207,7 @@ function Title() {
 function Article() {
   return (
     <div>
-      <ToggleContext.Consumer>
+      <Toggle.Consumer>
         {toggle =>
           [
             'Once, I was in',
@@ -209,9 +217,9 @@ function Article() {
             'something...',
           ].join(' ')
         }
-      </ToggleContext.Consumer>
+      </Toggle.Consumer>
       <hr />
-      <ToggleContext.Consumer>
+      <Toggle.Consumer>
         {toggle =>
           [
             'Without',
@@ -221,7 +229,7 @@ function Article() {
             toggle.on ? '👩‍🏫❗️' : 'teachers!',
           ].join(' ')
         }
-      </ToggleContext.Consumer>
+      </Toggle.Consumer>
     </div>
   )
 }
