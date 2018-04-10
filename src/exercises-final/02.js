@@ -26,12 +26,10 @@ class Toggle extends React.Component {
 }
 
 function Usage(
-  props = {
-    onToggle: (...args) => console.log('onToggle', ...args),
-  },
+  { onToggle = (...args) => console.log('onToggle', ...args)},
 ) {
   return (
-    <Toggle onToggle={props.onToggle}>
+    <Toggle onToggle={onToggle}>
       <Toggle.On>The button is on</Toggle.On>
       <Toggle.Off>The button is off</Toggle.Off>
       <Toggle.Button />
