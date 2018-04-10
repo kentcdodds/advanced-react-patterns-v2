@@ -5,80 +5,108 @@ import PropTypes from 'prop-types'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 import {Switch} from '../switch'
 
+const ToggleContext = React.createContext({
+  on: false,
+  toggle: () => {},
+  reset: () => {},
+  getTogglerProps: () => ({}),
+})
+
 const callAll = (...fns) => (...args) => fns.forEach(fn => fn && fn(...args))
 
 class Toggle extends React.Component {
   static defaultProps = {
     initialOn: false,
-    onToggle: () => {},
     onReset: () => {},
+    onToggle: () => {},
+    onStateChange: () => {},
     stateReducer: (state, changes) => changes,
   }
-  initialState = {on: this.props.initialOn}
-  state = this.initialState
-  reset = () => {
-    if (this.isOnControlled()) {
-      this.props.onReset(!this.props.on)
-    } else {
-      this.internalSetState(this.initialState, () =>
-        this.props.onReset(this.state.on),
-      )
-    }
+  static stateChangeTypes = {
+    reset: '__toggle_reset__',
+    toggle: '__toggle_toggle__',
   }
-  internalSetState(changes, callback) {
-    this.setState(state => {
-      const stateToSet = [changes]
-        // handle function setState call
-        .map(c => (typeof c === 'function' ? c(state) : c))
-        // apply state reducer
-        .map(c => this.props.stateReducer(state, c))[0]
-      // For more complicated components, you may also
-      // consider having a type property on the changes
-      // to give the state reducer more info.
-      // see downshift for an example of this.
-      return stateToSet
-    }, callback)
-  }
-  toggle = () => {
-    if (this.isOnControlled()) {
-      this.props.onToggle(!this.props.on)
-    } else {
-      this.internalSetState(
-        ({on}) => ({on: !on}),
-        () => this.props.onToggle(this.state.on),
-      )
-    }
-  }
+  static Consumer = ToggleContext.Consumer
+
+  reset = () =>
+    this.internalSetState(
+      {...this.initialState, type: Toggle.stateChangeTypes.reset},
+      () => this.props.onReset(this.getState().on),
+    )
+  toggle = ({type = Toggle.stateChangeTypes.toggle} = {}) =>
+    this.internalSetState(
+      ({on}) => ({type, on: !on}),
+      () => this.props.onToggle(this.getState().on),
+    )
   getTogglerProps = ({onClick, ...props} = {}) => ({
-    onClick: callAll(onClick, this.toggle),
-    'aria-expanded': this.state.on,
+    onClick: callAll(onClick, () => this.toggle()),
+    'aria-expanded': this.getState().on,
     ...props,
   })
-  isOnControlled() {
-    return this.props.on !== undefined
+  initialState = {
+    on: this.props.initialOn,
+    toggle: this.toggle,
+    reset: this.reset,
+    getTogglerProps: this.getTogglerProps,
+  }
+  state = this.initialState
+  isControlled(prop) {
+    return this.props[prop] !== undefined
+  }
+  getState(state = this.state) {
+    return Object.entries(state).reduce((combinedState, [key, value]) => {
+      if (this.isControlled(key)) {
+        combinedState[key] = this.props[key]
+      } else {
+        combinedState[key] = value
+      }
+      return combinedState
+    }, {})
+  }
+  internalSetState(changes, callback = () => {}) {
+    let allChanges
+    this.setState(
+      state => {
+        const combinedState = this.getState(state)
+        const stateToSet = [changes]
+          // handle function setState call
+          .map(c => (typeof c === 'function' ? c(combinedState) : c))
+          // apply state reducer
+          .map(c => this.props.stateReducer(combinedState, c))
+          // store the whole changes object for use in the callback
+          .map(c => (allChanges = c))
+          // remove the controlled props
+          .map(c =>
+            Object.keys(state).reduce((newChanges, stateKey) => {
+              if (!this.isControlled(stateKey)) {
+                newChanges[stateKey] = c.hasOwnProperty(stateKey)
+                  ? c[stateKey]
+                  : combinedState[stateKey]
+              }
+              return newChanges
+            }, {}),
+          )[0]
+        return Object.keys(stateToSet).length ? stateToSet : null
+      },
+      () => {
+        // call onStateChange with all the changes (including the type)
+        this.props.onStateChange(allChanges, this.state)
+        callback()
+      },
+    )
   }
   render() {
-    return this.props.render({
-      on: this.isOnControlled() ? this.props.on : this.state.on,
-      toggle: this.toggle,
-      reset: this.reset,
-      getTogglerProps: this.getTogglerProps,
-    })
-  }
-}
-
-const ToggleContext = React.createContext({on: false, toggle: () => {}})
-
-class ToggleProvider extends React.Component {
-  render() {
-    const {children, ...remainingProps} = this.props
+    // here's all you need to do for your solution
+    // return (
+    //   <ToggleContext.Provider value={this.state}>
+    //     {this.props.children}
+    //   </ToggleContext.Provider>
+    // )
+    // here's the bonus material solution that preserves the old API:
+    const {children} = this.props
+    const ui = typeof children === 'function' ? children(this.state) : children
     return (
-      <Toggle
-        {...remainingProps}
-        render={toggle => (
-          <ToggleContext.Provider value={toggle} children={children} />
-        )}
-      />
+      <ToggleContext.Provider value={this.state}>{ui}</ToggleContext.Provider>
     )
   }
 }
@@ -87,11 +115,11 @@ function withToggle(Component) {
   function Wrapper(props) {
     const {innerRef, ...remainingProps} = props
     return (
-      <ToggleContext.Consumer>
+      <Toggle.Consumer>
         {toggle => (
           <Component {...remainingProps} toggle={toggle} ref={innerRef} />
         )}
-      </ToggleContext.Consumer>
+      </Toggle.Consumer>
     )
   }
   Wrapper.displayName = `withToggle(${Component.displayName || Component.name})`
@@ -106,7 +134,7 @@ const Subtitle = withToggle(
 
 function Nav() {
   return (
-    <ToggleContext.Consumer>
+    <Toggle.Consumer>
       {toggle => (
         <nav style={{flex: 1}}>
           <ul
@@ -129,7 +157,7 @@ function Nav() {
           </ul>
         </nav>
       )}
-    </ToggleContext.Consumer>
+    </Toggle.Consumer>
   )
 }
 
@@ -144,11 +172,11 @@ function NavSwitch() {
       }}
     >
       <div>
-        <ToggleContext.Consumer>
+        <Toggle.Consumer>
           {toggle => (toggle.on ? '🦄' : 'Enable Emoji')}
-        </ToggleContext.Consumer>
+        </Toggle.Consumer>
       </div>
-      <ToggleContext.Consumer>
+      <Toggle.Consumer>
         {toggle => (
           <Switch
             {...toggle.getTogglerProps({
@@ -156,7 +184,7 @@ function NavSwitch() {
             })}
           />
         )}
-      </ToggleContext.Consumer>
+      </Toggle.Consumer>
     </div>
   )
 }
@@ -182,9 +210,9 @@ function Title() {
   return (
     <div>
       <h1>
-        <ToggleContext.Consumer>
+        <Toggle.Consumer>
           {toggle => `Who is ${toggle.on ? '🕶❓' : 'awesome?'}`}
-        </ToggleContext.Consumer>
+        </Toggle.Consumer>
       </h1>
       <Subtitle />
     </div>
@@ -194,7 +222,7 @@ function Title() {
 function Article() {
   return (
     <div>
-      <ToggleContext.Consumer>
+      <Toggle.Consumer>
         {toggle =>
           [
             'Once, I was in',
@@ -204,9 +232,9 @@ function Article() {
             'something...',
           ].join(' ')
         }
-      </ToggleContext.Consumer>
+      </Toggle.Consumer>
       <hr />
-      <ToggleContext.Consumer>
+      <Toggle.Consumer>
         {toggle =>
           [
             'Without',
@@ -216,7 +244,7 @@ function Article() {
             toggle.on ? '👩‍🏫❗️' : 'teachers!',
           ].join(' ')
         }
-      </ToggleContext.Consumer>
+      </Toggle.Consumer>
     </div>
   )
 }
@@ -232,12 +260,12 @@ function Post() {
 
 function Usage() {
   return (
-    <ToggleProvider>
+    <Toggle>
       <div>
         <Header />
         <Post />
       </div>
-    </ToggleProvider>
+    </Toggle>
   )
 }
 
