@@ -32,6 +32,9 @@ class Toggle extends React.Component {
   }
 }
 
+// Don't make changes to the Usage component. It's here to show you how your
+// component is intended to be used and is used in the tests.
+// You can make all the tests pass by updating the Toggle component.
 class Usage extends React.Component {
   state = {bothOn: false}
   handleToggle = on => {
@@ -49,4 +52,5 @@ class Usage extends React.Component {
   }
 }
 
-export {Toggle, Usage}
+// exporting Usage as default for codesandbox module view to work
+export {Toggle, Usage, Usage as default}

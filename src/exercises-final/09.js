@@ -120,4 +120,5 @@ class Usage extends React.Component {
   }
 }
 
-export {Toggle, Usage}
+// exporting Usage as default for codesandbox module view to work
+export {Toggle, Usage, Usage as default}

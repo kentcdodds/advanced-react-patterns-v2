@@ -4,12 +4,10 @@
 // create a new object on every render
 
 import React from 'react'
-import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 import * as redux from 'redux'
 import {Switch} from '../switch'
-import {renderApp} from '../render-app'
 
 const RenduxContext = React.createContext({})
 
@@ -75,15 +73,18 @@ class RenduxProvider extends React.Component {
     )
   }
 }
-function ConnectedRendux(props, context) {
+function ConnectedRendux(props) {
   return (
     <RenduxContext.Consumer>
       {rendux => props.render(rendux)}
     </RenduxContext.Consumer>
   )
 }
+
+// just here as an example
+// eslint-disable-next-line no-unused-vars
 function withRendux(Component) {
-  function Wrapper(props, context) {
+  function Wrapper(props) {
     const {innerRef, ...remainingProps} = props
     return (
       <ConnectedRendux
@@ -171,7 +172,8 @@ function StatePrinter() {
     />
   )
 }
-function App() {
+
+function Usage() {
   return (
     <RenduxProvider
       initialState={{on: true}}
@@ -201,4 +203,4 @@ function App() {
   )
 }
 
-renderApp(<App />)
+export {Rendux, Usage, Usage as default}

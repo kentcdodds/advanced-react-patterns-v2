@@ -1,11 +1,9 @@
 // Higher Order Components
 
 import React from 'react'
-import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 import {Switch} from '../switch'
-import {renderApp} from '../render-app'
 
 const callAll = (...fns) => (...args) => fns.forEach(fn => fn && fn(...args))
 
@@ -86,7 +84,7 @@ class ToggleProvider extends React.Component {
 }
 
 function withToggle(Component) {
-  function Wrapper(props, context) {
+  function Wrapper(props) {
     const {innerRef, ...remainingProps} = props
     return (
       <ToggleContext.Consumer>
@@ -105,24 +103,7 @@ function withToggle(Component) {
 const Subtitle = withToggle(
   ({toggle}) => (toggle.on ? '👩‍🏫 👉 🕶' : 'Teachers are awesome'),
 )
-function App() {
-  return (
-    <ToggleProvider>
-      <div>
-        <Header />
-        <Post />
-      </div>
-    </ToggleProvider>
-  )
-}
-/*
- *
- *
- * Below here are irrelevant
- * implementation details...
- *
- *
- */
+
 function Nav() {
   return (
     <ToggleContext.Consumer>
@@ -245,4 +226,16 @@ function Post() {
   )
 }
 
-renderApp(<App />)
+function Usage() {
+  return (
+    <ToggleProvider>
+      <div>
+        <Header />
+        <Post />
+      </div>
+    </ToggleProvider>
+  )
+}
+
+// exporting Usage as default for codesandbox module view to work
+export {Toggle, Usage, Usage as default}

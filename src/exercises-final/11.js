@@ -1,10 +1,7 @@
 // Provider Pattern
 
 import React from 'react'
-import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
 import {Switch} from '../switch'
-import {renderApp} from '../render-app'
 
 const callAll = (...fns) => (...args) => fns.forEach(fn => fn && fn(...args))
 
@@ -211,7 +208,8 @@ function Post() {
     </div>
   )
 }
-function App() {
+
+function Usage() {
   return (
     <ToggleProvider>
       <div>
@@ -222,4 +220,5 @@ function App() {
   )
 }
 
-renderApp(<App />)
+// exporting Usage as default for codesandbox module view to work
+export {Toggle, Usage, Usage as default}

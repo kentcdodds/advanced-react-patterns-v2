@@ -1,6 +1,12 @@
-// import './intro'
 import React from 'react'
-import {renderApp} from './render-app'
-import {Usage} from './exercises-final/10'
+import ReactDOM from 'react-dom'
 
-renderApp(<Usage />)
+ReactDOM.render(
+  <div>
+    {`
+      This project isn't quite ready to render as an app.
+      You should open it in codesandbox and use the module preview.
+    `}
+  </div>,
+  document.getElementById('⚛️'),
+)
