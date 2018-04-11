@@ -3,7 +3,7 @@ import React from 'react'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 import {Switch} from '../switch'
 
-/*
+//*
 
 class Toggle extends React.Component {
   state = {on: false}
@@ -33,7 +33,12 @@ class Usage extends React.Component {
       <div>
         <div>
           <label>
-            Sync <input type="checkbox" value={this.state.sync} onChange={this.toggleSync} />
+            Sync{' '}
+            <input
+              type="checkbox"
+              value={this.state.sync}
+              onChange={this.toggleSync}
+            />
           </label>
         </div>
         <Toggle onToggle={this.handleToggle} />
@@ -44,7 +49,7 @@ class Usage extends React.Component {
 }
 /**/
 
-//*
+/*
 
 class Toggle extends React.Component {
   state = {on: false}
