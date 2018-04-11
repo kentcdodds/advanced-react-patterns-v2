@@ -1,4 +1,4 @@
-// control props
+// control props primer
 
 import React from 'react'
 import {Switch} from '../switch'
@@ -20,7 +20,7 @@ class Toggle extends React.Component {
       this.setState(
         ({on}) => ({on: !on}),
         () => {
-          this.props.onToggle(this.state.on)
+          this.props.onToggle(this.getState().on)
         },
       )
     }

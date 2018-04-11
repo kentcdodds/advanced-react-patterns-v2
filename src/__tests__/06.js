@@ -5,7 +5,9 @@ import Usage from '../exercises-final/06'
 
 test('renders a toggle component', () => {
   const handleToggle = jest.fn()
-  const {toggleButton, toggle} = renderToggle(<Usage onToggle={handleToggle} />)
+  const {toggleButton, toggle} = renderToggle(
+    <Usage onButtonClick={() => {}} onToggle={handleToggle} />,
+  )
   expect(toggleButton).toBeOff()
   toggle()
   expect(toggleButton).toBeOn()
@@ -16,7 +18,7 @@ test('renders a toggle component', () => {
 test('can also toggle with the custom button', () => {
   const handleToggle = jest.fn()
   const {toggleButton, getByLabelText} = renderToggle(
-    <Usage onToggle={handleToggle} />,
+    <Usage onButtonClick={() => {}} onToggle={handleToggle} />,
   )
   expect(toggleButton).toBeOff()
   Simulate.click(getByLabelText('custom-button'))
