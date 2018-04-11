@@ -29,14 +29,12 @@ class Toggle extends React.Component {
   }
 }
 
-function Usage(
-  props = {
-    onToggle: (...args) => console.log('onToggle', ...args),
-    onButtonClick: (...args) => console.log('onButtonClick', ...args),
-  },
-) {
+function Usage({
+  onToggle = (...args) => console.log('onToggle', ...args),
+  onButtonClick = (...args) => console.log('onButtonClick', ...args),
+}) {
   return (
-    <Toggle onToggle={props.onToggle}>
+    <Toggle onToggle={onToggle}>
       {({on, getTogglerProps}) => (
         <div>
           <Switch {...getTogglerProps({on})} />
@@ -44,7 +42,7 @@ function Usage(
           <button
             {...getTogglerProps({
               'aria-label': 'custom-button',
-              onClick: props.onButtonClick,
+              onClick: onButtonClick,
               id: 'custom-button-id',
             })}
           >
