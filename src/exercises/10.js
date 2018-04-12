@@ -157,3 +157,14 @@ class Usage extends React.Component {
 }
 
 export {Toggle, Usage as default}
+
+/* eslint
+"no-unused-vars": [
+  "warn",
+  {
+    "argsIgnorePattern": "^_.+|^ignore.+",
+    "varsIgnorePattern": "^_.+|^ignore.+",
+    "args": "after-used"
+  }
+]
+ */
