@@ -155,23 +155,6 @@ ReactDOM.render(
   document.getElementById('⚛️'),
 )
 
-// function routesForExercise(number) {
-//   return (
-//     <Fragment>
-//       <Route
-//         path={`/${number}`}
-//         exact={true}
-//         component={require(`./exercises/${number}`).default}
-//       />
-//       <Route
-//         path={`/${number}-final`}
-//         exact={true}
-//         component={require(`./exercises-final/${number}`).default}
-//       />
-//     </Fragment>
-//   )
-// }
-
 /* eslint
 "no-unused-vars": [
   "warn",
