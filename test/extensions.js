@@ -1,6 +1,6 @@
 import {matcherHint, printReceived, printExpected} from 'jest-matcher-utils'
 import chalk from 'chalk'
-import 'dom-testing-library/extend-expect'
+import 'jest-dom/extend-expect'
 
 const extensions = {
   toBeOn(toggleButton) {

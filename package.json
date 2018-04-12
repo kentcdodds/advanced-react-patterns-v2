@@ -13,10 +13,10 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-testing-library": "^2.1.0",
+    "jest-dom": "^1.0.0",
     "redux": "^3.7.2"
   },
   "devDependencies": {
-    "dom-testing-library": "^1.4.0",
     "husky": "^0.14.3",
     "node": "^8.11.1",
     "npm-run-all": "^4.1.2",
