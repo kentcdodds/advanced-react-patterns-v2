@@ -40,5 +40,6 @@ function Usage({onToggle = (...args) => console.log('onToggle', ...args)}) {
     </Toggle>
   )
 }
+Usage.title = 'Prop Collections'
 
 export {Toggle, Usage as default}

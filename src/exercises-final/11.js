@@ -253,6 +253,7 @@ function Usage() {
     </Toggle>
   )
 }
+Usage.title = 'Provider Pattern'
 
 export {Toggle, Usage as default}
 

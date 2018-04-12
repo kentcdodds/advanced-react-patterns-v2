@@ -47,5 +47,6 @@ class Usage extends React.Component {
     )
   }
 }
+Usage.title = 'Control Props (primer)'
 
 export {Toggle, Usage as default}

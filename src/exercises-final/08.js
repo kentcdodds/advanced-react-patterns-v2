@@ -103,6 +103,7 @@ class Usage extends React.Component {
     )
   }
 }
+Usage.title = 'State Reducers'
 
 export {Toggle, Usage as default}
 

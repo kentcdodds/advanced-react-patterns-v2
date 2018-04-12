@@ -58,12 +58,22 @@ class ExerciseContainer extends React.Component {
       LoadableComponentFinal: loadable({
         loader: () =>
           import(`./exercises-final/${props.match.params.exerciseNumber}`),
+        render(loaded, {onRender, ...props}) {
+          onRender(loaded)
+          return <loaded.default {...props} />
+        },
         loading: () => <div>Loading...</div>,
         timeout: 2000,
       }),
     }
   }
-  state = ExerciseContainer.getLoadables(this.props)
+  handleFinalRender = loaded => {
+    this.setState(
+      ({title}) =>
+        loaded.default.title !== title ? {title: loaded.default.title} : null,
+    )
+  }
+  state = {title: null, ...ExerciseContainer.getLoadables(this.props)}
   render() {
     const current = Number(this.props.match.params.exerciseNumber)
     const previous =
@@ -80,14 +90,19 @@ class ExerciseContainer extends React.Component {
           display: 'grid',
           gridGap: '20px',
           gridTemplateColumns: '1fr 1fr',
-          gridTemplateRows: '1fr 30px',
+          gridTemplateRows: '30px 1fr 30px',
         }}
       >
+        <h1 style={{gridColumn: 'span 2', textAlign: 'center'}}>
+          {this.state.title}
+        </h1>
         <ComponentContainer label="Exercise">
           <this.state.LoadableComponent />
         </ComponentContainer>
         <ComponentContainer label="Final Version">
-          <this.state.LoadableComponentFinal />
+          <this.state.LoadableComponentFinal
+            onRender={this.handleFinalRender}
+          />
         </ComponentContainer>
         <div
           style={{

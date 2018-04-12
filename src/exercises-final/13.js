@@ -202,6 +202,7 @@ function Usage() {
     </RenduxProvider>
   )
 }
+Usage.title = 'Bonus: Rendux'
 
 export {Rendux, Usage, Usage as default}
 

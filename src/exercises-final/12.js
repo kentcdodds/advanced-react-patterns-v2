@@ -281,6 +281,7 @@ function Usage() {
     </Toggle>
   )
 }
+Usage.title = 'Higher Order Components'
 
 export {Toggle, Usage as default}
 

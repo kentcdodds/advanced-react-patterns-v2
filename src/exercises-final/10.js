@@ -154,6 +154,7 @@ class Usage extends React.Component {
     )
   }
 }
+Usage.title = 'Control Props with State Reducers'
 
 export {Toggle, Usage as default}
 
