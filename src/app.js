@@ -2,40 +2,48 @@ import React from 'react'
 import {Route, Switch} from 'react-router'
 import {BrowserRouter, Link} from 'react-router-dom'
 
-function requireAll(requireContext) {
-  return requireContext
-    .keys()
-    .map(filename => ({
-      ...requireContext(filename),
-      filename: filename.slice(2, -3),
-    }))
-    .map((mod, index, allModules) => ({
-      ...mod,
-      previous: allModules[index - 1] && allModules[index - 1].filename,
-      next: allModules[index + 1] && allModules[index + 1].filename,
-    }))
-    .reduce((obj, mod) => {
-      obj[mod.filename] = mod
-      return obj
-    }, {})
-}
+const files = [
+  '01',
+  '02',
+  '03',
+  '04',
+  '05',
+  '06',
+  '07',
+  '08',
+  '09',
+  '10',
+  '10-primer',
+  '11',
+  '12',
+  '13',
+]
 
-const exercises = requireAll(require.context('./exercises', true, /\.js$/))
-const finalsContext = require.context('./exercises-final', true, /\.js$/)
-const finals = requireAll(finalsContext)
-const filesAndTitles = finalsContext.keys().map(filename => ({
-  title: finalsContext(filename).default.title,
-  filename: filename.slice(2, -3),
-}))
-
-const pages = Object.keys(finals).reduce((p, filename) => {
+const pages = files.reduce((p, filename, index, fullArray) => {
+  // const previousFilename = fullArray[index - 1]
+  // const nextFilename = fullArray[index + 1]
+  const final = require(`./exercises-final/${filename}`)
+  Object.assign(final, {
+    previous: fullArray[index - 1],
+    next: fullArray[index + 1],
+  })
+  const exercise = require(`./exercises/${filename}`)
+  Object.assign(exercise, {
+    previous: fullArray[index - 1],
+    next: fullArray[index + 1],
+  })
   p[filename] = {
-    exercise: exercises[filename],
-    final: finals[filename],
-    title: finals[filename].default.title,
+    exercise,
+    final,
+    title: final.default.title,
   }
   return p
 }, {})
+
+const filesAndTitles = files.map(filename => ({
+  title: pages[filename].title,
+  filename,
+}))
 
 class ErrorCatcher extends React.Component {
   static getDerivedStateFromProps() {
