@@ -69,7 +69,7 @@ function MyInput() {
     <Rendux.Consumer>
       {rendux => (
         <input
-          defaultValue={rendux.state.on ? 'on' : 'off'}
+          value={rendux.state.inputValue || (rendux.state.on ? 'on' : 'off')}
           placeholder="Type 'off' or 'on'"
           onChange={event => {
             if (event.target.value === 'on') {
@@ -122,7 +122,9 @@ function MySwitch() {
 const StatePrinter = withRendux(({rendux}) => (
   <div style={{textAlign: 'left'}}>
     state:
-    <pre>{JSON.stringify(rendux.state, null, 2)}</pre>
+    <pre data-testid="printed-state">
+      {JSON.stringify(rendux.state, null, 2)}
+    </pre>
   </div>
 ))
 

@@ -78,7 +78,9 @@ function MySwitch() {
 const StatePrinter = withRendux(({rendux}) => (
   <div style={{textAlign: 'left'}}>
     state:
-    <pre>{JSON.stringify(rendux.state, null, 2)}</pre>
+    <pre data-testid="printed-state">
+      {JSON.stringify(rendux.state, null, 2)}
+    </pre>
   </div>
 ))
 
