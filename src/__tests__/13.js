@@ -3,7 +3,7 @@ import {renderToggle, Simulate} from '../../test/utils'
 import Usage from '../exercises-final/13'
 // import Usage from '../exercises/13'
 
-const renderRendux = () => {
+function renderRendux() {
   const utils = renderToggle(<Usage />)
   const printedState = utils.getByTestId('printed-state')
   const input = utils.getByPlaceholderText('Type')
