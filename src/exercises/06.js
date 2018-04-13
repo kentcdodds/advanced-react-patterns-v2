@@ -64,5 +64,6 @@ function Usage({
     </Toggle>
   )
 }
+Usage.title = 'Prop Getters'
 
 export {Toggle, Usage as default}

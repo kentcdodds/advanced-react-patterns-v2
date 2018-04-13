@@ -66,5 +66,6 @@ function Usage({
     </Toggle>
   )
 }
+Usage.title = 'State Initializers'
 
 export {Toggle, Usage as default}

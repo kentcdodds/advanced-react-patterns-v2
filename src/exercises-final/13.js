@@ -1,10 +1,6 @@
 // Rendux
 
-// TODO: improve the provider so it doesn't
-// create a new object on every render
-
 import React from 'react'
-import PropTypes from 'prop-types'
 import hoistNonReactStatics from 'hoist-non-react-statics'
 import * as redux from 'redux'
 import {Switch} from '../switch'
@@ -12,105 +8,66 @@ import {Switch} from '../switch'
 const RenduxContext = React.createContext({})
 
 class Rendux extends React.Component {
+  static Consumer = RenduxContext.Consumer
   static defaultProps = {
     initialState: {},
     onUpdate: () => {},
     onReset: () => {},
     reducer: state => state,
   }
-  initialState = this.props.initialState
+  initialReduxState = this.props.initialState
   rootReducer = (state, action) => {
     if (action.type === '__RENDUX_RESET__') {
-      return this.initialState
+      return this.initialReduxState
     }
     return this.props.reducer(state, action)
   }
-  store = redux.createStore(this.rootReducer, this.initialState)
-  state = this.initialState
+  store = redux.createStore(this.rootReducer, this.props.initialState)
   reset = () => {
-    if (this.isStateControlled()) {
-      this.props.onReset(this.initialState)
-    } else {
-      this.store.dispatch({
-        type: '__RENDUX_RESET__',
-      })
-    }
+    this.store.dispatch({
+      type: '__RENDUX_RESET__',
+    })
   }
   componentDidMount() {
     this.unsubscribe = this.store.subscribe(() =>
-      this.setState(this.store.getState()),
+      this.setState({
+        state: this.store.getState(),
+      }),
     )
   }
   componentWillUnmount() {
     this.unsubscribe()
   }
-  isStateControlled() {
-    return this.props.state !== undefined
+  initialState = {
+    state: this.props.initialState,
+    dispatch: this.store.dispatch,
+    reset: this.reset,
   }
+  state = this.initialState
   render() {
-    return this.props.render({
-      state: this.isStateControlled()
-        ? this.props.state
-        : this.store.getState(),
-      dispatch: this.store.dispatch,
-      reset: this.reset,
-    })
-  }
-}
-
-class RenduxProvider extends React.Component {
-  render() {
-    const {children, ...remainingProps} = this.props
+    const {children} = this.props
+    const ui = typeof children === 'function' ? children(this.state) : children
     return (
-      <Rendux
-        {...remainingProps}
-        render={rendux => (
-          <RenduxContext.Provider value={rendux}>
-            {children}
-          </RenduxContext.Provider>
-        )}
-      />
+      <RenduxContext.Provider value={this.state}>{ui}</RenduxContext.Provider>
     )
   }
 }
-function ConnectedRendux(props) {
-  return (
-    <RenduxContext.Consumer>
-      {rendux => props.render(rendux)}
-    </RenduxContext.Consumer>
-  )
-}
 
-// just here as an example
-// eslint-disable-next-line no-unused-vars
 function withRendux(Component) {
-  function Wrapper(props) {
-    const {innerRef, ...remainingProps} = props
-    return (
-      <ConnectedRendux
-        render={rendux => (
-          <Component {...remainingProps} rendux={rendux} ref={innerRef} />
-        )}
-      />
-    )
-  }
+  const Wrapper = React.forwardRef((props, ref) => (
+    <Rendux.Consumer>
+      {rendux => <Component {...props} rendux={rendux} ref={ref} />}
+    </Rendux.Consumer>
+  ))
   Wrapper.displayName = `withRendux(${Component.displayName || Component.name})`
-  Wrapper.propTypes = {innerRef: PropTypes.func}
-  Wrapper.WrappedComponent = Component
-  return hoistNonReactStatics(Wrapper, Component)
+  hoistNonReactStatics(Wrapper, Component)
+  return Wrapper
 }
-class UpdateBlocker extends React.Component {
-  shouldComponentUpdate() {
-    return false
-  }
-  render() {
-    return this.props.children
-  }
-}
+
 function MyInput() {
   return (
-    <ConnectedRendux
-      render={rendux => (
+    <Rendux.Consumer>
+      {rendux => (
         <input
           defaultValue={rendux.state.on ? 'on' : 'off'}
           placeholder="Type 'off' or 'on'"
@@ -133,13 +90,14 @@ function MyInput() {
           }}
         />
       )}
-    />
+    </Rendux.Consumer>
   )
 }
+
 function MySwitch() {
   return (
-    <ConnectedRendux
-      render={rendux => (
+    <Rendux.Consumer>
+      {rendux => (
         <div
           style={{
             marginTop: 20,
@@ -157,25 +115,20 @@ function MySwitch() {
           />
         </div>
       )}
-    />
-  )
-}
-function StatePrinter() {
-  return (
-    <ConnectedRendux
-      render={rendux => (
-        <div style={{textAlign: 'left'}}>
-          state:
-          <pre>{JSON.stringify(rendux.state, null, 2)}</pre>
-        </div>
-      )}
-    />
+    </Rendux.Consumer>
   )
 }
 
+const StatePrinter = withRendux(({rendux}) => (
+  <div style={{textAlign: 'left'}}>
+    state:
+    <pre>{JSON.stringify(rendux.state, null, 2)}</pre>
+  </div>
+))
+
 function Usage() {
   return (
-    <RenduxProvider
+    <Rendux
       initialState={{on: true}}
       reducer={(state, action) => {
         switch (action.type) {
@@ -194,12 +147,15 @@ function Usage() {
         }
       }}
     >
-      <UpdateBlocker>
-        <MyInput />
-        <MySwitch />
-        <StatePrinter />
-      </UpdateBlocker>
-    </RenduxProvider>
+      {({reset}) => (
+        <React.Fragment>
+          <MyInput />
+          <MySwitch />
+          <button onClick={reset}>reset</button>
+          <StatePrinter />
+        </React.Fragment>
+      )}
+    </Rendux>
   )
 }
 Usage.title = 'Bonus: Rendux'

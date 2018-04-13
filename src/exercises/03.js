@@ -76,5 +76,6 @@ function Usage({onToggle = (...args) => console.log('onToggle', ...args)}) {
     </Toggle>
   )
 }
+Usage.title = 'Flexible Compound Components'
 
 export {Toggle, Usage as default}

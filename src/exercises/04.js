@@ -44,5 +44,6 @@ function Usage({onToggle = (...args) => console.log('onToggle', ...args)}) {
     </Toggle>
   )
 }
+Usage.title = 'Render Props'
 
 export {Toggle, Usage as default}

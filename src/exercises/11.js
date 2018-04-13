@@ -124,6 +124,12 @@ class Toggle extends React.Component {
   }
 }
 
+/////////////////////////////////////////////////////////
+//
+// You shouldn't have to change anything below this point
+//
+/////////////////////////////////////////////////////////
+
 function Nav() {
   return (
     <ToggleContext.Consumer>
@@ -268,6 +274,7 @@ function Usage() {
     </Toggle>
   )
 }
+Usage.title = 'Provider Pattern'
 
 export {Toggle, Usage as default}
 
