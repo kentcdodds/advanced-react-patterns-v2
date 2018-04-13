@@ -58,8 +58,7 @@ class ErrorCatcher extends React.Component {
   }
 }
 
-function ComponentContainer() {
-  const {label, ...props} = this.props
+function ComponentContainer({label, ...props}) {
   return (
     <div style={{display: 'flex', flexDirection: 'column'}}>
       <h2 style={{textAlign: 'center'}}>{label}</h2>
