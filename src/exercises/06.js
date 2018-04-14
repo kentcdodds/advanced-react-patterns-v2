@@ -42,7 +42,7 @@ class Toggle extends React.Component {
 // You can make all the tests pass by updating the Toggle component.
 function Usage({
   onToggle = (...args) => console.log('onToggle', ...args),
-  onButtonClick = (...args) => console.log('onButtonClick', ...args),
+  onButtonClick = () => console.log('onButtonClick'),
 }) {
   return (
     <Toggle onToggle={onToggle}>

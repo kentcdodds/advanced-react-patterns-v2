@@ -21,6 +21,10 @@ class Toggle extends React.Component {
       {({on, toggle}) => <Switch on={on} onClick={toggle} {...props} />}
     </ToggleContext.Consumer>
   )
+  // 💰 The reason we had to move `toggle` above `state` is because
+  // in our `state` initialization we're _using_ `this.toggle`. So
+  // if `this.toggle` is not defined before state is initialized, then
+  // `state.toggle` will be undefined.
   toggle = () =>
     this.setState(
       ({on}) => ({on: !on}),
