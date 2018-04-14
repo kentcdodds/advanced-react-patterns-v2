@@ -44,15 +44,11 @@ function Usage({
 }) {
   return (
     <Toggle initialOn={initialOn} onToggle={onToggle} onReset={onReset}>
-      {toggle => (
+      {({getTogglerProps, on, reset}) => (
         <div>
-          <Switch
-            {...toggle.getTogglerProps({
-              on: toggle.on,
-            })}
-          />
+          <Switch {...getTogglerProps({on})} />
           <hr />
-          <button onClick={() => toggle.reset()}>Reset</button>
+          <button onClick={() => reset()}>Reset</button>
         </div>
       )}
     </Toggle>

@@ -20,12 +20,12 @@ class Toggle extends React.Component {
   }
   initialState = {on: this.props.initialOn}
   state = this.initialState
-  // TODO: let's add an `isControlled` method that accepts a state key
+  // 🐨 let's add an `isControlled` method that accepts a state key
   // (string) and returns true if the prop is controlled
   // (this.props[prop] !== undefined)
   //
-  // We'll need a `getState` method here that returns a state object
-  // which has properties
+  // 🐨 We'll also need a `getState` method here that returns a
+  // state object which has properties
   internalSetState(changes, callback) {
     this.setState(state => {
       const stateToSet = [changes]

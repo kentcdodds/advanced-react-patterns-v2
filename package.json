@@ -37,6 +37,11 @@
     "validate": "npm-run-all --parallel build test:coverage",
     "precommit": "npm run validate"
   },
+  "jest": {
+    "collectCoverageFrom" : [
+      "src/exercises-final/**/*.js"
+    ]
+  },
   "eslintConfig": {
     "extends": "react-app"
   },
