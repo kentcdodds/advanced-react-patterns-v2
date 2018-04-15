@@ -11,7 +11,7 @@ class Toggle extends React.Component {
     onReset: () => {},
     // Now that a user can use this component effectively without
     // an `onToggle` prop (they can use `onStateChange` instead)
-    // let's provide a default for `onToggle` and `onStateChange`
+    // 🐨 let's provide a default for `onToggle` and `onStateChange`
     stateReducer: (state, changes) => changes,
   }
   static stateChangeTypes = {
