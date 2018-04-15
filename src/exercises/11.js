@@ -31,7 +31,7 @@ class Toggle extends React.Component {
     // put everything into `state` that we want to provide to our consumers.
     // That means we need to include the `reset`, `toggle`, and `getTogglerProps`
     // functions in our `state`. I know, it's kinda messed up, but it
-    // will help us avoid unecessary re-renders so it'll be better
+    // will help us avoid unnecessary re-renders so it'll be better
     // in the end.
     //
     // 🐨 Move the `reset`, `toggle`, and `getTogglerProps` method assignments

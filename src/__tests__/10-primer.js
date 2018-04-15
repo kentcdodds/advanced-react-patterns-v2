@@ -15,7 +15,7 @@ const findToggleInstances = rootInstance =>
 
 function validateToggleInstance(instance) {
   // validate the internal state of the toggle does not change
-  // If it does change then you could trigger an unecessary re-render
+  // If it does change then you could trigger an unnecessary re-render
   try {
     expect(instance.state).toEqual({on: false})
     expect(instance.state).toEqual({on: false})

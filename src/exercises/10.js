@@ -45,7 +45,7 @@ class Toggle extends React.Component {
         // 💰 make certain to keep the [0] in place!
         .map(({type: ignoredType, ...c}) => c)[0]
       // If the `stateToSet` is an empty object, we can avoid an
-      // unecessary re-render by returning null.
+      // unnecessary re-render by returning null.
       // 🐨 change this return to return null if the stateToSet is empty.
       return stateToSet
       // When the state has successfully been set, we need to call the
