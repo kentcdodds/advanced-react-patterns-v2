@@ -31,7 +31,7 @@ class Toggle extends React.Component {
   // - updater: (changes object or function that returns the changes object)
   // - callback: Function called after the state has been updated
   //
-  // This will call setState with an updater function (afunction that receives the state).
+  // This will call setState with an updater function (a function that receives the state).
   // If the changes are a function, then call that function with the state to get the actual changes
   // Call this.props.stateReducer with the state and changes to get the user changes.
   // Then return that from your updater function.
