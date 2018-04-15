@@ -58,9 +58,7 @@ exports[`renders a toggle component 1`] = `
       <h1>
         Who is awesome?
       </h1>
-      <span>
-        Teachers are awesome
-      </span>
+      Teachers are awesome
     </div>
     <div>
       Once, I was in school when I realized something...
@@ -129,9 +127,7 @@ exports[`renders a toggle component 2`] = `
       <h1>
         Who is 🕶❓
       </h1>
-      <span>
-        👩‍🏫 👉 🕶
-      </span>
+      👩‍🏫 👉 🕶
     </div>
     <div>
       Once, I was in 🏫‍ when I 🤔 something...
