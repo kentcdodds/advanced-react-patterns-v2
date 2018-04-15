@@ -115,7 +115,7 @@ class Toggle extends React.Component {
   }
   render() {
     // Now we'll be exposing the state and helpers via React's context API.
-    // 1) 🐨 replace this line with a usage of <ToggleContext.Provide> where
+    // 1) 🐨 replace this line with a usage of <ToggleContext.Provider> where
     // the value is `this.state` and the children is `this.props.children`.
     return this.props.children(this.getStateAndHelpers())
     // NOTE: this actually breaks the render prop API. We could preserve
