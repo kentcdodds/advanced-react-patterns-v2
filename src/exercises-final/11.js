@@ -186,7 +186,7 @@ function Header() {
 function Subtitle() {
   return (
     <Toggle.Consumer>
-      {toggle => <span>{toggle.on ? '👩‍🏫 👉 🕶' : 'Teachers are awesome'}</span>}
+      {toggle => (toggle.on ? '👩‍🏫 👉 🕶' : 'Teachers are awesome')}
     </Toggle.Consumer>
   )
 }
