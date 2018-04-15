@@ -29,6 +29,16 @@
         "bug",
         "ideas"
       ]
+    },
+    {
+      "login": "dlannoye",
+      "name": "David Lannoye",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/1383720?v=4",
+      "profile": "https://github.com/dlannoye",
+      "contributions": [
+        "bug",
+        "doc"
+      ]
     }
   ]
 }
