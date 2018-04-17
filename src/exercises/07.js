@@ -6,7 +6,7 @@ import {Switch} from '../switch'
 const callAll = (...fns) => (...args) => fns.forEach(fn => fn && fn(...args))
 
 class Toggle extends React.Component {
-  // We're going to need some static defaultProps here to allow
+  // 🐨 We're going to need some static defaultProps here to allow
   // people to pass a `initialOn` prop.
   //
   // 🐨 Rather than initializing state to have on as false,
