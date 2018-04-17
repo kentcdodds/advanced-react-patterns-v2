@@ -3,6 +3,10 @@
 import React from 'react'
 import {Switch} from '../switch'
 
+// Here we're going to simplify our component slightly so you
+// can learn the control props pattern in isolation from everything else.
+// Next you'll put the pieces together.
+
 class Toggle extends React.Component {
   state = {on: false}
   // 🐨 let's add a function that can determine whether
