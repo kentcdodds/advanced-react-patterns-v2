@@ -10,8 +10,8 @@ class Toggle extends React.Component {
       ({on}) => ({on: !on}),
       () => this.props.onToggle(this.state.on),
     )
-  render() {
-    return this.props.children({
+  getStateAndHelpers() {
+    return {
       on: this.state.on,
       toggle: this.toggle,
       // In our last usage example, you'll notice that we had some
@@ -23,7 +23,10 @@ class Toggle extends React.Component {
       // 🐨 Add a `togglerProps` object that has an `aria-expanded` (should
       // be set to the value of the `on` state), and an `onClick` assigned
       // to the toggle function.
-    })
+    }
+  }
+  render() {
+    return this.props.children(this.getStateAndHelpers())
   }
 }
 
