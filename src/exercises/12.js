@@ -131,14 +131,6 @@ function withToggle(Component) {
   // 4. 🐨 Use the `hoistNonReactStatics` function (uncomment the imported above)
   //    by calling it with the Wrapper and the Component to forward all the
   //    static properties from the Component to the Wrapper
-  // const Wrapper = React.forwardRef((props, ref) => (
-  //   <Toggle.Consumer>
-  //     {toggle => <Component {...props} toggle={toggle} ref={ref} />}
-  //   </Toggle.Consumer>
-  // ))
-  // Wrapper.displayName = `withToggle(${Component.displayName || Component.name})`
-  // hoistNonReactStatics(Wrapper, Component)
-  // return Wrapper
 }
 
 /////////////////////////////////////////////////////////
