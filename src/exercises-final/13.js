@@ -11,8 +11,6 @@ class Rendux extends React.Component {
   static Consumer = RenduxContext.Consumer
   static defaultProps = {
     initialState: {},
-    onUpdate: () => {},
-    onReset: () => {},
     reducer: state => state,
   }
   initialReduxState = this.props.initialState
@@ -22,7 +20,7 @@ class Rendux extends React.Component {
     }
     return this.props.reducer(state, action)
   }
-  store = redux.createStore(this.rootReducer, this.props.initialState)
+  store = redux.createStore(this.rootReducer, this.initialReduxState)
   reset = () => {
     this.store.dispatch({
       type: '__RENDUX_RESET__',

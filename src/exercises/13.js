@@ -1,8 +1,37 @@
 import React from 'react'
 // import hoistNonReactStatics from 'hoist-non-react-statics'
+import * as redux from 'redux'
 import {Switch} from '../switch'
 
 class Rendux extends React.Component {
+  // I'll give you some of this because it's kinda redux-specific stuff
+  static defaultProps = {
+    initialState: {},
+    reducer: state => state,
+  }
+  initialReduxState = this.props.initialState
+  rootReducer = (state, action) => {
+    if (action.type === '__RENDUX_RESET__') {
+      return this.initialReduxState
+    }
+    return this.props.reducer(state, action)
+  }
+  store = redux.createStore(this.rootReducer, this.initialReduxState)
+  reset = () => {
+    this.store.dispatch({
+      type: '__RENDUX_RESET__',
+    })
+  }
+  componentDidMount() {
+    this.unsubscribe = this.store.subscribe(() =>
+      this.setState({
+        state: this.store.getState(),
+      }),
+    )
+  }
+  componentWillUnmount() {
+    this.unsubscribe()
+  }
   render() {
     // this is your job!
     return 'todo'
