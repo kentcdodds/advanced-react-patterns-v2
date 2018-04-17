@@ -3,13 +3,10 @@
 import React from 'react'
 import {Switch} from '../switch'
 
-// 🎁 I made this for you. You're welcome :)
-const ToggleContext = React.createContext({
-  on: false,
-  toggle: () => {},
-  reset: () => {},
-  getTogglerProps: () => ({}),
-})
+// 🐨 Create a ToggleContext here with React.createContext
+// you'll need to provide a default value. Might I suggest
+// an object with default values for all the properties
+// of our render prop?
 
 const callAll = (...fns) => (...args) => fns.forEach(fn => fn && fn(...args))
 
@@ -25,6 +22,8 @@ class Toggle extends React.Component {
     reset: '__toggle_reset__',
     toggle: '__toggle_toggle__',
   }
+  // 🐨 Let's define another static property here called Consumer
+  // so we don't have to expose the entire ToggleContext object.
   initialState = {
     on: this.props.initialOn,
     // Ok, just trust me on this one... You're going to need to
@@ -132,17 +131,10 @@ class Toggle extends React.Component {
 
 function Nav() {
   return (
-    <ToggleContext.Consumer>
+    <Toggle.Consumer>
       {toggle => (
-        <nav style={{flex: 1}}>
-          <ul
-            style={{
-              display: 'flex',
-              justifyContent: 'space-around',
-              listStyle: 'none',
-              paddingLeft: '0',
-            }}
-          >
+        <nav>
+          <ul>
             <li>
               <a href="index.html">{toggle.on ? '🏡' : 'Home'}</a>
             </li>
@@ -155,26 +147,19 @@ function Nav() {
           </ul>
         </nav>
       )}
-    </ToggleContext.Consumer>
+    </Toggle.Consumer>
   )
 }
 
 function NavSwitch() {
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        textAlign: 'center',
-      }}
-    >
+    <div className="nav-switch">
       <div>
-        <ToggleContext.Consumer>
+        <Toggle.Consumer>
           {toggle => (toggle.on ? '🦄' : 'Enable Emoji')}
-        </ToggleContext.Consumer>
+        </Toggle.Consumer>
       </div>
-      <ToggleContext.Consumer>
+      <Toggle.Consumer>
         {toggle => (
           <Switch
             {...toggle.getTogglerProps({
@@ -182,33 +167,25 @@ function NavSwitch() {
             })}
           />
         )}
-      </ToggleContext.Consumer>
+      </Toggle.Consumer>
     </div>
   )
 }
 
 function Header() {
   return (
-    <div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-around',
-          alignItems: 'center',
-        }}
-      >
-        <Nav />
-        <NavSwitch />
-      </div>
+    <div className="header">
+      <Nav />
+      <NavSwitch />
     </div>
   )
 }
 
 function Subtitle() {
   return (
-    <ToggleContext.Consumer>
+    <Toggle.Consumer>
       {toggle => (toggle.on ? '👩‍🏫 👉 🕶' : 'Teachers are awesome')}
-    </ToggleContext.Consumer>
+    </Toggle.Consumer>
   )
 }
 
@@ -216,9 +193,9 @@ function Title() {
   return (
     <div>
       <h1>
-        <ToggleContext.Consumer>
+        <Toggle.Consumer>
           {toggle => `Who is ${toggle.on ? '🕶❓' : 'awesome?'}`}
-        </ToggleContext.Consumer>
+        </Toggle.Consumer>
       </h1>
       <Subtitle />
     </div>
@@ -228,7 +205,7 @@ function Title() {
 function Article() {
   return (
     <div>
-      <ToggleContext.Consumer>
+      <Toggle.Consumer>
         {toggle =>
           [
             'Once, I was in',
@@ -238,9 +215,9 @@ function Article() {
             'something...',
           ].join(' ')
         }
-      </ToggleContext.Consumer>
+      </Toggle.Consumer>
       <hr />
-      <ToggleContext.Consumer>
+      <Toggle.Consumer>
         {toggle =>
           [
             'Without',
@@ -250,7 +227,7 @@ function Article() {
             toggle.on ? '👩‍🏫❗️' : 'teachers!',
           ].join(' ')
         }
-      </ToggleContext.Consumer>
+      </Toggle.Consumer>
     </div>
   )
 }
@@ -267,7 +244,7 @@ function Post() {
 function Usage() {
   return (
     <Toggle>
-      <div>
+      <div className="friends">
         <Header />
         <Post />
       </div>

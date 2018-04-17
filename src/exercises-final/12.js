@@ -138,15 +138,8 @@ function Nav() {
   return (
     <Toggle.Consumer>
       {toggle => (
-        <nav style={{flex: 1}}>
-          <ul
-            style={{
-              display: 'flex',
-              justifyContent: 'space-around',
-              listStyle: 'none',
-              paddingLeft: '0',
-            }}
-          >
+        <nav>
+          <ul>
             <li>
               <a href="index.html">{toggle.on ? '🏡' : 'Home'}</a>
             </li>
@@ -165,14 +158,7 @@ function Nav() {
 
 function NavSwitch() {
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        textAlign: 'center',
-      }}
-    >
+    <div className="nav-switch">
       <div>
         <Toggle.Consumer>
           {toggle => (toggle.on ? '🦄' : 'Enable Emoji')}
@@ -193,17 +179,9 @@ function NavSwitch() {
 
 function Header() {
   return (
-    <div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-around',
-          alignItems: 'center',
-        }}
-      >
-        <Nav />
-        <NavSwitch />
-      </div>
+    <div className="header">
+      <Nav />
+      <NavSwitch />
     </div>
   )
 }
@@ -274,7 +252,7 @@ function Post() {
 function Usage() {
   return (
     <Toggle>
-      <div>
+      <div className="friends">
         <Header />
         <Post />
       </div>
