@@ -41,12 +41,12 @@ class Toggle extends React.Component {
   // toggle function to state.
   // 💰 You'll need to move this below the `toggle` function. See
   // if you can figure out why :)
+  state = {on: false}
   toggle = () =>
     this.setState(
       ({on}) => ({on: !on}),
       () => this.props.onToggle(this.state.on),
     )
-  state = {on: false}
   render() {
     // Because this.props.children is _immediate_ children only, we need
     // to 🐨 remove this map function and render our context provider with
