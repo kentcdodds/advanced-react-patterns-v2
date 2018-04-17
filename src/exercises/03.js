@@ -29,7 +29,7 @@ import {Switch} from '../switch'
 // 🐨 create a ToggleContext with React.createContext here
 
 class Toggle extends React.Component {
-  // TODO: each of these compound components will need to be changed to use
+  // 🐨 each of these compound components will need to be changed to use
   // ToggleContext.Consumer and rather than getting `on` and `toggle`
   // from props, it'll get it from the ToggleContext.Consumer value.
   static On = ({on, children}) => (on ? children : null)
@@ -39,7 +39,7 @@ class Toggle extends React.Component {
   )
   // Because we'll be passing state into context, we need to 🐨 add the
   // toggle function to state.
-  // 💰: You'll need to move this below the `toggle` function. See
+  // 💰 You'll need to move this below the `toggle` function. See
   // if you can figure out why :)
   toggle = () =>
     this.setState(

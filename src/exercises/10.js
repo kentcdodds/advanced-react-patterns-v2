@@ -27,7 +27,7 @@ class Toggle extends React.Component {
   // 🐨 We'll also need a `getState` method here that returns a
   // state object that has state from both internal state (`this.state`)
   // as well as external state (`this.props`).
-  // 💰: You might consider accepting state as an argument that defaults
+  // 💰 You might consider accepting state as an argument that defaults
   // to `this.state`... You'll use that later on...
   internalSetState(changes, callback) {
     this.setState(state => {

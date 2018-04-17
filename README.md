@@ -73,6 +73,9 @@ npm start
 This should start up your browser. If you're familiar, this is a standard
 [react-scripts](https://github.com/facebook/create-react-app) application.
 
+You can also open
+[the deployment of the app on Netlify](https://advanced-react-patterns.netlify.com/).
+
 ## Running the tests
 
 ```shell
@@ -84,6 +87,13 @@ output and play around with it.
 
 **Your goal will be to go into each test, swap the final version for the
 exercise version in the import, and make the tests pass**
+
+## Helpful Emoji 🐨 💰
+
+Each exercise has comments in it to help you get through the exercise.
+**Kody the Koala Bear** and **Marty the Money Bag** are here to help you.
+**Kody** 🐨 will tell you when there's something specific you should do, and
+**Marty** 💰 will give you specific tips along the way.
 
 ## Troubleshooting
 
@@ -118,9 +128,11 @@ help if I can.
 Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+
 <!-- prettier-ignore -->
 | [<img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;"/><br /><sub><b>Kent C. Dodds</b></sub>](https://kentcdodds.com)<br />[💻](https://github.com/kentcdodds/advanced-component-patterns-v2/commits?author=kentcdodds "Code") [📖](https://github.com/kentcdodds/advanced-component-patterns-v2/commits?author=kentcdodds "Documentation") [🚇](#infra-kentcdodds "Infrastructure (Hosting, Build-Tools, etc)") [⚠️](https://github.com/kentcdodds/advanced-component-patterns-v2/commits?author=kentcdodds "Tests") | [<img src="https://avatars0.githubusercontent.com/u/1250430?v=4" width="100px;"/><br /><sub><b>FWeinb</b></sub>](https://github.com/FWeinb)<br />[🐛](https://github.com/kentcdodds/advanced-component-patterns-v2/issues?q=author%3AFWeinb "Bug reports") [🤔](#ideas-FWeinb "Ideas, Planning, & Feedback") | [<img src="https://avatars2.githubusercontent.com/u/1383720?v=4" width="100px;"/><br /><sub><b>David Lannoye</b></sub>](https://github.com/dlannoye)<br />[🐛](https://github.com/kentcdodds/advanced-component-patterns-v2/issues?q=author%3Adlannoye "Bug reports") [📖](https://github.com/kentcdodds/advanced-component-patterns-v2/commits?author=dlannoye "Documentation") |
 | :---: | :---: | :---: |
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!

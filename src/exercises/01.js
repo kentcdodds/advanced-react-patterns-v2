@@ -1,7 +1,8 @@
 // Building the toggle component
 
 import React from 'react'
-// TODO: this is the switch component. It takes an `onClick` and an `on` prop
+// 🐨 uncomment this import to get the switch component.
+// It takes an `onClick` and an `on` prop
 // import {Switch} from '../switch'
 
 class Toggle extends React.Component {
