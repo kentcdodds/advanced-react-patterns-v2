@@ -11,7 +11,11 @@ class Toggle extends React.Component {
   // This is handy because it makes the relationship between the
   // parent Toggle component and the child Candy component more explicit
   // 🐨 You'll need to create three such components here: On, Off, and Button
-  // The button will be responsible for rendering the <Switch /> (with the right props)
+  //    The button will be responsible for rendering the <Switch /> (with the right props)
+  // 💰 Combined with changes you'll make in the `render` method, these should
+  //    be able to accept `on`, `toggle`, and `children` as props.
+  //    Note that they will _not_ have access to Toggle instance properties
+  //    like `this.state.on` or `this.toggle`.
   state = {on: false}
   toggle = () =>
     this.setState(
