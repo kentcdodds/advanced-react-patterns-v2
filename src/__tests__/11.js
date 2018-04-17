@@ -14,17 +14,32 @@ test('renders a toggle component', () => {
 })
 
 test('can still use the render prop API', () => {
+  jest.spyOn(console, 'error').mockImplementation(() => {})
   const handleToggle = jest.fn()
-  const {toggleButton, toggle} = renderToggle(
-    <Toggle onToggle={handleToggle}>
-      {({on, toggle}) => <Switch on={on} onClick={toggle} />}
-    </Toggle>,
-  )
+  let toggleButton, toggle
+  try {
+    const utils = renderToggle(
+      <Toggle onToggle={handleToggle}>
+        {({on, toggle}) => <Switch on={on} onClick={toggle} />}
+      </Toggle>,
+    )
+    toggleButton = utils.toggleButton
+    toggle = utils.toggle
+  } catch (error) {
+    if (error.message.includes('Unable to find the Switch component.')) {
+      console.log(
+        `💯  If you'd like, go ahead and try to preserve the render prop API.`,
+      )
+      return
+    }
+    throw error
+  }
   expect(toggleButton).toBeOff()
   toggle()
   expect(toggleButton).toBeOn()
   expect(handleToggle).toHaveBeenCalledTimes(1)
   expect(handleToggle).toHaveBeenCalledWith(true)
+  console.error.mockRestore()
 })
 
 //////// Elaboration & Feedback /////////
