@@ -25,29 +25,35 @@ class Toggle extends React.Component {
   // (this.props[prop] !== undefined)
   //
   // 🐨 We'll also need a `getState` method here that returns a
-  // state object which has properties
+  // state object that has state from both internal state (`this.state`)
+  // as well as external state (`this.props`).
+  // 💰: You might consider accepting state as an argument that defaults
+  // to `this.state`... You'll use that later on...
   internalSetState(changes, callback) {
     this.setState(state => {
-      const stateToSet = [changes]
-        // handle function setState call
-        .map(c => (typeof c === 'function' ? c(state) : c))
-        // apply state reducer
-        .map(c => this.props.stateReducer(state, c))
-        // now we actually need to store the whole changes
-        // object for use in the callback.
-        // 🐨 create a variable above the `setState` call, then
-        // add another map function here which simply accepts
-        // the changes `c` and assigns `allChanges` to that value.
-        //
-        // Next, 🐨 replace this map function with a new one that's
-        // responsible for taking the changes and returning an object
-        // that only has the changes for things that are not controlled.
-        // 💰 make certain to keep the [0] in place!
-        .map(({type: ignoredType, ...c}) => c)[0]
-      // If the `stateToSet` is an empty object, we can avoid an
-      // unnecessary re-render by returning null.
-      // 🐨 change this return to return null if the stateToSet is empty.
-      return stateToSet
+      // Now that our state can actually come from two sources,
+      // the `state` we receive from this function is actually only one
+      // side of the story.
+      // 🐨 Call your `this.getState` function with `state` so we can
+      // get a `combinedState` object which we'll use to perform our
+      // operations on here.
+      const changesObject =
+        typeof changes === 'function' ? changes(state) : changes
+      // now we actually need to store the whole changes
+      // object for use in the callback.
+      // 🐨 create a variable (`allChanges`) above the `setState` call,
+      // then rather than creating the reducedChanges variable,
+      // simply assign your new variable to the expression
+      // on the next line:
+      const reducedChanges = this.props.stateReducer(state, changesObject) || {}
+
+      // Next, 🐨 replace this destructuring assignment with a new one that's
+      // responsible for taking the changes and returning an object
+      // that only has the changes for things that are not controlled.
+      // 💰 Use Object.keys(state).reduce!!
+      const {type: ignoredType, ...onlyChanges} = reducedChanges
+      return Object.keys(onlyChanges).length ? onlyChanges : null
+
       // When the state has successfully been set, we need to call the
       // `onStateChange` prop (so users of the component know when they should
       // update their controlled state) in addition to the callback.

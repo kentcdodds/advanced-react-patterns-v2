@@ -34,8 +34,10 @@ class Toggle extends React.Component {
   // This will call setState with an updater function (a function that receives the state).
   // If the changes are a function, then call that function with the state to get the actual changes
   // Call this.props.stateReducer with the state and changes to get the user changes.
-  // Then return that from your updater function.
-  // Pass the callback to the 2nd argument to this.setState
+  // Then, if the returned value exists and has properties, return that from your updater function.
+  // If it does not exist or is an empty object, then return null (avoids an unecessary re-render).
+  //
+  // 🐨 Pass the callback to the 2nd argument to this.setState
   //
   // 🐨 Finally, update all pre-existing instances of this.setState
   // to this.internalSetState

@@ -67,25 +67,32 @@ class Toggle extends React.Component {
     this.setState(
       state => {
         const combinedState = this.getState(state)
-        const stateToSet = [changes]
-          // handle function setState call
-          .map(c => (typeof c === 'function' ? c(combinedState) : c))
-          // apply state reducer
-          .map(c => this.props.stateReducer(combinedState, c))
-          // store the whole changes object for use in the callback
-          .map(c => (allChanges = c))
-          // remove the controlled props
-          .map(c =>
-            Object.keys(state).reduce((newChanges, stateKey) => {
-              if (!this.isControlled(stateKey)) {
-                newChanges[stateKey] = c.hasOwnProperty(stateKey)
-                  ? c[stateKey]
-                  : combinedState[stateKey]
-              }
-              return newChanges
-            }, {}),
-          )[0]
-        return Object.keys(stateToSet).length ? stateToSet : null
+        // handle function setState call
+        const changesObject =
+          typeof changes === 'function' ? changes(combinedState) : changes
+
+        // apply state reducer
+        allChanges = this.props.stateReducer(combinedState, changesObject) || {}
+
+        // remove the type so it's not set into state
+        const {type: ignoredType, ...onlyChanges} = allChanges
+
+        const nonControlledChanges = Object.keys(combinedState).reduce(
+          (newChanges, stateKey) => {
+            if (!this.isControlled(stateKey)) {
+              newChanges[stateKey] = onlyChanges.hasOwnProperty(stateKey)
+                ? onlyChanges[stateKey]
+                : combinedState[stateKey]
+            }
+            return newChanges
+          },
+          {},
+        )
+
+        // return null if there are no changes to be made
+        return Object.keys(nonControlledChanges || {}).length
+          ? nonControlledChanges
+          : null
       },
       () => {
         // call onStateChange with all the changes (including the type)

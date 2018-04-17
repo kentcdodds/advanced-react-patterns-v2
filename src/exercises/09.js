@@ -15,15 +15,16 @@ class Toggle extends React.Component {
   state = this.initialState
   internalSetState(changes, callback) {
     this.setState(state => {
-      const stateToSet = [changes]
-        .map(c => (typeof c === 'function' ? c(state) : c))
-        .map(c => this.props.stateReducer(state, c))[0]
-      // 🐨  in addition to what we've done, add another
-      // `.map` to remove the `type` (don't forget
-      // to move the [0] above to your new map call!)
+      // handle function setState call
+      const changesObject =
+        typeof changes === 'function' ? changes(state) : changes
+      // apply state reducer
+      const reducedChanges = this.props.stateReducer(state, changesObject) || {}
+      // 🐨  in addition to what we've done, let's pluck off the `type`
+      // property and return an object only of the state changes
       // 💰: to remove the `type`, you can destructure the changes:
       // `{type, ...c}`
-      return stateToSet
+      return Object.keys(reducedChanges).length ? reducedChanges : null
     }, callback)
   }
   reset = () =>
