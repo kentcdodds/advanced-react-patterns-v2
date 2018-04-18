@@ -101,18 +101,18 @@ class Usage extends React.Component {
         onReset={this.handleReset}
         ref={this.props.toggleRef}
       >
-        {toggleUtils => (
+        {({on, toggle, reset, getTogglerProps}) => (
           <div>
             <Switch
-              {...toggleUtils.getTogglerProps({
-                on: toggleUtils.on,
+              {...getTogglerProps({
+                on: on,
               })}
             />
             {timesClicked > 4 ? (
               <div data-testid="notice">
                 Whoa, you clicked too much!
                 <br />
-                <button onClick={() => toggleUtils.toggle({type: 'forced'})}>
+                <button onClick={() => toggle({type: 'forced'})}>
                   Force Toggle
                 </button>
                 <br />
@@ -120,7 +120,7 @@ class Usage extends React.Component {
             ) : timesClicked > 0 ? (
               <div data-testid="click-count">Click count: {timesClicked}</div>
             ) : null}
-            <button onClick={toggleUtils.reset}>Reset</button>
+            <button onClick={reset}>Reset</button>
           </div>
         )}
       </Toggle>
