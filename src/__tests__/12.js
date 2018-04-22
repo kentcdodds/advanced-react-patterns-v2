@@ -32,9 +32,7 @@ test('renders a toggle component', () => {
   }
   const subtitleWrapperFiberNode = getDebugChild(debugInstance)
   try {
-    expect(subtitleWrapperFiberNode.type).toMatchObject({
-      displayName: 'withToggle(Subtitle)',
-    })
+    expect(subtitleWrapperFiberNode.child.type.displayName).toMatch('withToggle(Subtitle)')
   } catch (error) {
     const helpfulMessage = chalk.red(
       `🚨  Make sure you're adding a displayName prop to your Wrapper  🚨`,

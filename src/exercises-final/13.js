@@ -52,14 +52,22 @@ class Rendux extends React.Component {
 }
 
 function withRendux(Component) {
-  const Wrapper = React.forwardRef((props, ref) => (
-    <Rendux.Consumer>
-      {rendux => <Component {...props} rendux={rendux} ref={ref} />}
-    </Rendux.Consumer>
+  class Wrapper extends React.Component {
+    render() {
+      const { forwardedRef, ...rest } = this.props
+      return (
+        <Rendux.Consumer>
+          {rendux => <Component {...rest} rendux={rendux} ref={forwardedRef} />}
+        </Rendux.Consumer>
+      )
+    }
+  }
+  Wrapper.displayName = `withRendux(${Component.displayName ||
+    Component.name})`
+  const forwardRef = React.forwardRef((props, ref) => (
+    <Wrapper {...props} forwardedRef={ref} />
   ))
-  Wrapper.displayName = `withRendux(${Component.displayName || Component.name})`
-  hoistNonReactStatics(Wrapper, Component)
-  return Wrapper
+  return hoistNonReactStatics(forwardRef, Component)
 }
 
 function MyInput() {
@@ -117,14 +125,16 @@ function MySwitch() {
   )
 }
 
-const StatePrinter = withRendux(({rendux}) => (
-  <div style={{textAlign: 'left'}}>
-    state:
-    <pre data-testid="printed-state">
-      {JSON.stringify(rendux.state, null, 2)}
-    </pre>
-  </div>
-))
+const StatePrinter = withRendux(function StatePrinter({rendux}) {
+  return (
+    <div style={{textAlign: 'left'}}>
+      state:
+      <pre data-testid="printed-state">
+        {JSON.stringify(rendux.state, null, 2)}
+      </pre>
+    </div>
+  )
+})
 
 function Usage() {
   return (
