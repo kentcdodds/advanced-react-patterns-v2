@@ -111,14 +111,22 @@ class Toggle extends React.Component {
 }
 
 function withToggle(Component) {
-  const Wrapper = React.forwardRef((props, ref) => (
-    <Toggle.Consumer>
-      {toggle => <Component {...props} toggle={toggle} ref={ref} />}
-    </Toggle.Consumer>
+  class Wrapper extends React.Component {
+    render() {
+      const { forwardedRef, ...rest } = this.props
+      return (
+        <Toggle.Consumer>
+          {toggle => <Component {...rest} toggle={toggle} ref={forwardedRef} />}
+        </Toggle.Consumer>
+      )
+    }
+  }
+  Wrapper.displayName = `withToggle(${Component.displayName ||
+    Component.name})`
+  const forwardRef = React.forwardRef((props, ref) => (
+    <Wrapper {...props} forwardedRef={ref} />
   ))
-  Wrapper.displayName = `withToggle(${Component.displayName || Component.name})`
-  hoistNonReactStatics(Wrapper, Component)
-  return Wrapper
+  return hoistNonReactStatics(forwardRef, Component)
 }
 
 // this Subtitle component could be as simple as:

@@ -39,6 +39,16 @@
         "bug",
         "doc"
       ]
+    },
+    {
+      "login": "colinrcummings",
+      "name": "Colin Cummings",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/9815009?s=460&v=4",
+      "profile": "https://github.com/colinrcummings",
+      "contributions": [
+        "code",
+        "test"
+      ]
     }
   ]
 }
