@@ -13,9 +13,14 @@ class Rendux extends React.Component {
     initialState: {},
     reducer: state => state,
   }
+  static stateChangeTypes = {
+    reset: '__RENDUX_RESET__',
+    toggle: '__RENDUX_TOGGLE__',
+    inputChange: '__RENDUX_INPUT_CHANGE__',
+  }
   initialReduxState = this.props.initialState
   rootReducer = (state, action) => {
-    if (action.type === '__RENDUX_RESET__') {
+    if (action.type === Rendux.stateChangeTypes.reset) {
       return this.initialReduxState
     }
     return this.props.reducer(state, action)
@@ -23,7 +28,7 @@ class Rendux extends React.Component {
   store = redux.createStore(this.rootReducer, this.initialReduxState)
   reset = () => {
     this.store.dispatch({
-      type: '__RENDUX_RESET__',
+      type: Rendux.stateChangeTypes.reset,
     })
   }
   componentDidMount() {
@@ -80,17 +85,17 @@ function MyInput() {
           onChange={event => {
             if (event.target.value === 'on') {
               rendux.dispatch({
-                type: 'toggle',
+                type: Rendux.stateChangeTypes.toggle,
                 value: true,
               })
             } else if (event.target.value === 'off') {
               rendux.dispatch({
-                type: 'toggle',
+                type: Rendux.stateChangeTypes.toggle,
                 value: false,
               })
             }
             rendux.dispatch({
-              type: 'input_change',
+              type: Rendux.stateChangeTypes.inputChange,
               value: event.target.value,
             })
           }}
@@ -114,7 +119,7 @@ function MySwitch() {
             on={rendux.state.on}
             onClick={() =>
               rendux.dispatch({
-                type: 'toggle',
+                type: Rendux.stateChangeTypes.toggle,
                 value: !rendux.state.on,
               })
             }
@@ -142,12 +147,12 @@ function Usage() {
       initialState={{on: true}}
       reducer={(state, action) => {
         switch (action.type) {
-          case 'toggle':
+          case Rendux.stateChangeTypes.toggle:
             return {
               ...state,
               on: action.value,
             }
-          case 'input_change':
+          case Rendux.stateChangeTypes.inputChange:
             return {
               ...state,
               inputValue: action.value,
