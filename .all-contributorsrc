@@ -49,6 +49,15 @@
         "code",
         "test"
       ]
+    },
+    {
+      "login": "bkoltai",
+      "name": "Benji Koltai",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/464764?v=4",
+      "profile": "https://github.com/bkoltai",
+      "contributions": [
+        "doc"
+      ]
     }
   ]
 }
