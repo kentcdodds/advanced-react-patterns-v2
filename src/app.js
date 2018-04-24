@@ -227,7 +227,9 @@ class Isolated extends React.Component {
           justifyContent: 'center',
         }}
       >
-        <this.Component />
+        <div>
+          <this.Component />
+        </div>
       </div>
     )
   }
