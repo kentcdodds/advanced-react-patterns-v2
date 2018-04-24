@@ -18,13 +18,18 @@ class Toggle extends React.Component {
       () => this.props.onToggle(this.state.on),
     )
   reset = () =>
-    this.setState({on: false}, () => this.props.onReset(this.state.on))
+    this.setState({on: false}, () =>
+      this.props.onReset(this.state.on),
+    )
   state = {on: false, toggle: this.toggle, reset: this.reset}
   render() {
     const {children} = this.props
-    const ui = typeof children === 'function' ? children(this.state) : children
+    const ui =
+      typeof children === 'function' ? children(this.state) : children
     return (
-      <ToggleContext.Provider value={this.state}>{ui}</ToggleContext.Provider>
+      <ToggleContext.Provider value={this.state}>
+        {ui}
+      </ToggleContext.Provider>
     )
   }
 }

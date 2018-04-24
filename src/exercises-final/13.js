@@ -44,9 +44,12 @@ class Rendux extends React.Component {
   state = this.initialState
   render() {
     const {children} = this.props
-    const ui = typeof children === 'function' ? children(this.state) : children
+    const ui =
+      typeof children === 'function' ? children(this.state) : children
     return (
-      <RenduxContext.Provider value={this.state}>{ui}</RenduxContext.Provider>
+      <RenduxContext.Provider value={this.state}>
+        {ui}
+      </RenduxContext.Provider>
     )
   }
 }
@@ -54,10 +57,12 @@ class Rendux extends React.Component {
 function withRendux(Component) {
   class Wrapper extends React.Component {
     render() {
-      const { forwardedRef, ...rest } = this.props
+      const {forwardedRef, ...rest} = this.props
       return (
         <Rendux.Consumer>
-          {rendux => <Component {...rest} rendux={rendux} ref={forwardedRef} />}
+          {rendux => (
+            <Component {...rest} rendux={rendux} ref={forwardedRef} />
+          )}
         </Rendux.Consumer>
       )
     }
@@ -75,7 +80,10 @@ function MyInput() {
     <Rendux.Consumer>
       {rendux => (
         <input
-          value={rendux.state.inputValue || (rendux.state.on ? 'on' : 'off')}
+          value={
+            rendux.state.inputValue ||
+            (rendux.state.on ? 'on' : 'off')
+          }
           placeholder="Type 'off' or 'on'"
           onChange={event => {
             if (event.target.value === 'on') {

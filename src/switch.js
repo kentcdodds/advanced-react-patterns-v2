@@ -27,7 +27,11 @@ class Switch extends React.Component {
             // changing is handled by clicking the button
           }}
         />
-        <button className={btnClassName} aria-label="Toggle" {...props} />
+        <button
+          className={btnClassName}
+          aria-label="Toggle"
+          {...props}
+        />
       </div>
     )
   }

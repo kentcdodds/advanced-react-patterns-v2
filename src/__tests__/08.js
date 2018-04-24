@@ -5,7 +5,9 @@ import Usage from '../exercises-final/08'
 
 test('renders a toggle component', () => {
   const handleToggle = jest.fn()
-  const {toggleButton, toggle} = renderToggle(<Usage onToggle={handleToggle} />)
+  const {toggleButton, toggle} = renderToggle(
+    <Usage onToggle={handleToggle} />,
+  )
   expect(toggleButton).toBeOff()
   toggle()
   expect(toggleButton).toBeOn()
@@ -22,7 +24,9 @@ test('can click too much', () => {
     getByTestId,
     queryByTestId,
     getByText,
-  } = renderToggle(<Usage onToggle={handleToggle} onReset={handleReset} />)
+  } = renderToggle(
+    <Usage onToggle={handleToggle} onReset={handleReset} />,
+  )
   expect(toggleButton).toBeOff()
   toggle() // 1
   expect(toggleButton).toBeOn()

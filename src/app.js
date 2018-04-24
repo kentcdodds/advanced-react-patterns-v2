@@ -61,7 +61,9 @@ class ErrorCatcher extends React.Component {
     const {children, ...props} = this.props
     return (
       <div {...props}>
-        {error ? 'There was an error. Edit the code and try again.' : children}
+        {error
+          ? 'There was an error. Edit the code and try again.'
+          : children}
       </div>
     )
   }
@@ -89,9 +91,10 @@ function ComponentContainer({label, ...props}) {
 
 function ExerciseContainer({match}) {
   const {exerciseId} = match.params
-  const {exercise: {default: Exercise}, final: {default: Final}} = pages[
-    exerciseId
-  ]
+  const {
+    exercise: {default: Exercise},
+    final: {default: Final},
+  } = pages[exerciseId]
   return (
     <div
       style={{
@@ -103,7 +106,9 @@ function ExerciseContainer({match}) {
         gridTemplateRows: '30px 1fr 30px',
       }}
     >
-      <h1 style={{gridColumn: 'span 2', textAlign: 'center'}}>{Final.title}</h1>
+      <h1 style={{gridColumn: 'span 2', textAlign: 'center'}}>
+        {Final.title}
+      </h1>
       <ComponentContainer
         label={<Link to={`/${exerciseId}/exercise`}>Exercise</Link>}
       >
@@ -206,7 +211,9 @@ class Isolated extends React.Component {
     loader: () =>
       this.props.type === 'exercise'
         ? import(`./exercises/${this.props.match.params.moduleName}`)
-        : import(`./exercises-final/${this.props.match.params.moduleName}`),
+        : import(`./exercises-final/${
+            this.props.match.params.moduleName
+          }`),
     loading: () => <div>Loading...</div>,
   })
   render() {
@@ -229,7 +236,9 @@ class Isolated extends React.Component {
 function Home() {
   return (
     <div>
-      <h1 style={{textAlign: 'center'}}>Advanced React Component Patterns</h1>
+      <h1 style={{textAlign: 'center'}}>
+        Advanced React Component Patterns
+      </h1>
       <div>
         {filesAndTitles.map(({title, filename}) => {
           return (
@@ -290,8 +299,8 @@ function App() {
               }}
             >
               <div>
-                Sorry... nothing here. To open one of the exercises, go to{' '}
-                <code>{`/exerciseId`}</code>, for example:{' '}
+                Sorry... nothing here. To open one of the exercises,
+                go to <code>{`/exerciseId`}</code>, for example:{' '}
                 <Link to="/01">
                   <code>{`/01`}</code>
                 </Link>

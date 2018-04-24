@@ -3,7 +3,8 @@
 import React from 'react'
 import {Switch} from '../switch'
 
-const callAll = (...fns) => (...args) => fns.forEach(fn => fn && fn(...args))
+const callAll = (...fns) => (...args) =>
+  fns.forEach(fn => fn && fn(...args))
 
 class Toggle extends React.Component {
   // 🐨 We're going to need some static defaultProps here to allow
@@ -51,7 +52,11 @@ function Usage({
   onReset = (...args) => console.log('onReset', ...args),
 }) {
   return (
-    <Toggle initialOn={initialOn} onToggle={onToggle} onReset={onReset}>
+    <Toggle
+      initialOn={initialOn}
+      onToggle={onToggle}
+      onReset={onReset}
+    >
       {({getTogglerProps, on, reset}) => (
         <div>
           <Switch {...getTogglerProps({on})} />

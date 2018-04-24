@@ -5,7 +5,9 @@ import Usage from '../exercises-final/01'
 
 test('renders a toggle component', () => {
   const handleToggle = jest.fn()
-  const {toggleButton, toggle} = renderToggle(<Usage onToggle={handleToggle} />)
+  const {toggleButton, toggle} = renderToggle(
+    <Usage onToggle={handleToggle} />,
+  )
   expect(toggleButton).toBeOff()
   toggle()
   expect(toggleButton).toBeOn()

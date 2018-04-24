@@ -3,7 +3,8 @@
 import React from 'react'
 import {Switch} from '../switch'
 
-const callAll = (...fns) => (...args) => fns.forEach(fn => fn && fn(...args))
+const callAll = (...fns) => (...args) =>
+  fns.forEach(fn => fn && fn(...args))
 
 class Toggle extends React.Component {
   static defaultProps = {
@@ -13,7 +14,9 @@ class Toggle extends React.Component {
   initialState = {on: this.props.initialOn}
   state = this.initialState
   reset = () =>
-    this.setState(this.initialState, () => this.props.onReset(this.state.on))
+    this.setState(this.initialState, () =>
+      this.props.onReset(this.state.on),
+    )
   toggle = () =>
     this.setState(
       ({on}) => ({on: !on}),
@@ -43,7 +46,11 @@ function Usage({
   onReset = (...args) => console.log('onReset', ...args),
 }) {
   return (
-    <Toggle initialOn={initialOn} onToggle={onToggle} onReset={onReset}>
+    <Toggle
+      initialOn={initialOn}
+      onToggle={onToggle}
+      onReset={onReset}
+    >
       {({getTogglerProps, on, reset}) => (
         <div>
           <Switch {...getTogglerProps({on})} />

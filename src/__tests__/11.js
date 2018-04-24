@@ -26,7 +26,9 @@ test('can still use the render prop API', () => {
     toggleButton = utils.toggleButton
     toggle = utils.toggle
   } catch (error) {
-    if (error.message.includes('Unable to find the Switch component.')) {
+    if (
+      error.message.includes('Unable to find the Switch component.')
+    ) {
       console.log(
         `💯  If you'd like, go ahead and try to preserve the render prop API.`,
       )

@@ -29,7 +29,9 @@ const Layer2 = ({on, toggle}) => (
 const Layer3 = ({on, toggle}) => <Layer4 on={on} toggle={toggle} />
 const Layer4 = ({on, toggle}) => <Switch on={on} onClick={toggle} />
 
-function Usage({onToggle = (...args) => console.log('onToggle', ...args)}) {
+function Usage({
+  onToggle = (...args) => console.log('onToggle', ...args),
+}) {
   return (
     <Toggle onToggle={onToggle}>
       {({on, toggle}) => <Layer1 on={on} toggle={toggle} />}

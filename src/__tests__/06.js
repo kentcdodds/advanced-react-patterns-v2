@@ -31,7 +31,10 @@ test('passes custom props to the custom-button', () => {
   const handleCustomButtonClick = jest.fn()
   const handleToggle = jest.fn()
   const {getByLabelText, toggleButton} = renderToggle(
-    <Usage onButtonClick={handleCustomButtonClick} onToggle={handleToggle} />,
+    <Usage
+      onButtonClick={handleCustomButtonClick}
+      onToggle={handleToggle}
+    />,
   )
   const customButton = getByLabelText('custom-button')
   expect(customButton.getAttribute('id')).toBe('custom-button-id')

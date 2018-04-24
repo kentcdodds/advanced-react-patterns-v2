@@ -3,7 +3,8 @@
 import React from 'react'
 import {Switch} from '../switch'
 
-const callAll = (...fns) => (...args) => fns.forEach(fn => fn && fn(...args))
+const callAll = (...fns) => (...args) =>
+  fns.forEach(fn => fn && fn(...args))
 
 class Toggle extends React.Component {
   static defaultProps = {
@@ -45,7 +46,8 @@ class Toggle extends React.Component {
       // then rather than creating the reducedChanges variable,
       // simply assign your new variable to the expression
       // on the next line:
-      const reducedChanges = this.props.stateReducer(state, changesObject) || {}
+      const reducedChanges =
+        this.props.stateReducer(state, changesObject) || {}
 
       // Next, 🐨 replace this destructuring assignment with a new one that's
       // responsible for taking the changes and returning an object
@@ -152,7 +154,9 @@ class Usage extends React.Component {
                 <br />
               </div>
             ) : timesClicked > 0 ? (
-              <div data-testid="click-count">Click count: {timesClicked}</div>
+              <div data-testid="click-count">
+                Click count: {timesClicked}
+              </div>
             ) : null}
             <button onClick={reset}>Reset</button>
           </div>

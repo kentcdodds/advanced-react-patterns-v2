@@ -10,19 +10,28 @@ import Usage, {Debug} from '../exercises-final/12'
 
 const findDebugInstance = (rootInstance, child) =>
   findAllInRenderedTree(rootInstance, c => {
-    return isCompositeComponentWithType(c, Debug) && c.props.child === child
+    return (
+      isCompositeComponentWithType(c, Debug) &&
+      c.props.child === child
+    )
   })[0]
 
-const getDebugChild = debugInstance => debugInstance._reactInternalFiber.child
+const getDebugChild = debugInstance =>
+  debugInstance._reactInternalFiber.child
 
 test('renders a toggle component', () => {
-  const {toggleButton, toggle, container, rootInstance} = renderToggle(
-    <Usage />,
-  )
+  const {
+    toggleButton,
+    toggle,
+    container,
+    rootInstance,
+  } = renderToggle(<Usage />)
   const debugInstance = findDebugInstance(rootInstance, 'subtitle')
   try {
     expect(debugInstance.childInstance.current).not.toBeNull()
-    expect(debugInstance.childInstance.current.instanceProperty).toBe(true)
+    expect(debugInstance.childInstance.current.instanceProperty).toBe(
+      true,
+    )
   } catch (error) {
     const helpfulMessage = chalk.red(
       `🚨  Make sure you're using React.forwardRef and passing the ref property to the rendered Component  🚨`,
@@ -32,7 +41,9 @@ test('renders a toggle component', () => {
   }
   const subtitleWrapperFiberNode = getDebugChild(debugInstance)
   try {
-    expect(subtitleWrapperFiberNode.child.type.displayName).toMatch('withToggle(Subtitle)')
+    expect(subtitleWrapperFiberNode.child.type.displayName).toMatch(
+      'withToggle(Subtitle)',
+    )
   } catch (error) {
     const helpfulMessage = chalk.red(
       `🚨  Make sure you're adding a displayName prop to your Wrapper  🚨`,

@@ -18,9 +18,12 @@ class Toggle extends React.Component {
   state = {on: false, toggle: this.toggle}
   render() {
     const {children} = this.props
-    const ui = typeof children === 'function' ? children(this.state) : children
+    const ui =
+      typeof children === 'function' ? children(this.state) : children
     return (
-      <ToggleContext.Provider value={this.state}>{ui}</ToggleContext.Provider>
+      <ToggleContext.Provider value={this.state}>
+        {ui}
+      </ToggleContext.Provider>
     )
   }
 }
@@ -45,7 +48,9 @@ const Layer4 = () => (
   </Toggle.Consumer>
 )
 
-function Usage({onToggle = (...args) => console.log('onToggle', ...args)}) {
+function Usage({
+  onToggle = (...args) => console.log('onToggle', ...args),
+}) {
   return (
     <Toggle onToggle={onToggle}>
       <Layer1 />

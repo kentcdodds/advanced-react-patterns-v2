@@ -54,7 +54,10 @@ function MyInput() {
     <Rendux.Consumer>
       {rendux => (
         <input
-          value={rendux.state.inputValue || (rendux.state.on ? 'on' : 'off')}
+          value={
+            rendux.state.inputValue ||
+            (rendux.state.on ? 'on' : 'off')
+          }
           placeholder="Type 'off' or 'on'"
           onChange={event => {
             if (event.target.value === 'on') {

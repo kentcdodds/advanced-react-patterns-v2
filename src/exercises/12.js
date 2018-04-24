@@ -11,7 +11,8 @@ const ToggleContext = React.createContext({
   getTogglerProps: () => ({}),
 })
 
-const callAll = (...fns) => (...args) => fns.forEach(fn => fn && fn(...args))
+const callAll = (...fns) => (...args) =>
+  fns.forEach(fn => fn && fn(...args))
 
 class Toggle extends React.Component {
   static defaultProps = {
@@ -53,14 +54,17 @@ class Toggle extends React.Component {
     return this.props[prop] !== undefined
   }
   getState(state = this.state) {
-    return Object.entries(state).reduce((combinedState, [key, value]) => {
-      if (this.isControlled(key)) {
-        combinedState[key] = this.props[key]
-      } else {
-        combinedState[key] = value
-      }
-      return combinedState
-    }, {})
+    return Object.entries(state).reduce(
+      (combinedState, [key, value]) => {
+        if (this.isControlled(key)) {
+          combinedState[key] = this.props[key]
+        } else {
+          combinedState[key] = value
+        }
+        return combinedState
+      },
+      {},
+    )
   }
   internalSetState(changes, callback = () => {}) {
     let allChanges
@@ -69,25 +73,29 @@ class Toggle extends React.Component {
         const combinedState = this.getState(state)
         // handle function setState call
         const changesObject =
-          typeof changes === 'function' ? changes(combinedState) : changes
+          typeof changes === 'function'
+            ? changes(combinedState)
+            : changes
 
         // apply state reducer
-        allChanges = this.props.stateReducer(combinedState, changesObject) || {}
+        allChanges =
+          this.props.stateReducer(combinedState, changesObject) || {}
 
         // remove the type so it's not set into state
         const {type: ignoredType, ...onlyChanges} = allChanges
 
-        const nonControlledChanges = Object.keys(combinedState).reduce(
-          (newChanges, stateKey) => {
-            if (!this.isControlled(stateKey)) {
-              newChanges[stateKey] = onlyChanges.hasOwnProperty(stateKey)
-                ? onlyChanges[stateKey]
-                : combinedState[stateKey]
-            }
-            return newChanges
-          },
-          {},
-        )
+        const nonControlledChanges = Object.keys(
+          combinedState,
+        ).reduce((newChanges, stateKey) => {
+          if (!this.isControlled(stateKey)) {
+            newChanges[stateKey] = onlyChanges.hasOwnProperty(
+              stateKey,
+            )
+              ? onlyChanges[stateKey]
+              : combinedState[stateKey]
+          }
+          return newChanges
+        }, {})
 
         // return null if there are no changes to be made
         return Object.keys(nonControlledChanges || {}).length
@@ -103,9 +111,12 @@ class Toggle extends React.Component {
   }
   render() {
     const {children} = this.props
-    const ui = typeof children === 'function' ? children(this.state) : children
+    const ui =
+      typeof children === 'function' ? children(this.state) : children
     return (
-      <ToggleContext.Provider value={this.state}>{ui}</ToggleContext.Provider>
+      <ToggleContext.Provider value={this.state}>
+        {ui}
+      </ToggleContext.Provider>
     )
   }
 }
@@ -153,7 +164,9 @@ const Subtitle = withToggle(
     instanceProperty = true
     render() {
       return (
-        <span>{this.props.toggle.on ? Subtitle.emoji : Subtitle.text}</span>
+        <span>
+          {this.props.toggle.on ? Subtitle.emoji : Subtitle.text}
+        </span>
       )
     }
   },
@@ -216,7 +229,9 @@ function Header() {
 export class Debug extends React.Component {
   childInstance = React.createRef()
   render() {
-    return React.cloneElement(this.props.children, {ref: this.childInstance})
+    return React.cloneElement(this.props.children, {
+      ref: this.childInstance,
+    })
   }
 }
 

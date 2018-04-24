@@ -3,7 +3,10 @@
 import React from 'react'
 import {Switch} from '../switch'
 
-const ToggleContext = React.createContext({on: false, toggle: () => {}})
+const ToggleContext = React.createContext({
+  on: false,
+  toggle: () => {},
+})
 
 class Toggle extends React.Component {
   static On = ({children}) => (
@@ -18,7 +21,9 @@ class Toggle extends React.Component {
   )
   static Button = props => (
     <ToggleContext.Consumer>
-      {({on, toggle}) => <Switch on={on} onClick={toggle} {...props} />}
+      {({on, toggle}) => (
+        <Switch on={on} onClick={toggle} {...props} />
+      )}
     </ToggleContext.Consumer>
   )
   // 💰 The reason we had to move `toggle` above `state` is because
@@ -40,7 +45,9 @@ class Toggle extends React.Component {
   }
 }
 
-function Usage({onToggle = (...args) => console.log('onToggle', ...args)}) {
+function Usage({
+  onToggle = (...args) => console.log('onToggle', ...args),
+}) {
   return (
     <Toggle onToggle={onToggle}>
       <Toggle.On>The button is on</Toggle.On>

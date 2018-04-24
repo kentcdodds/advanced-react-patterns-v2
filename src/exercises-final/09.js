@@ -3,7 +3,8 @@
 import React from 'react'
 import {Switch} from '../switch'
 
-const callAll = (...fns) => (...args) => fns.forEach(fn => fn && fn(...args))
+const callAll = (...fns) => (...args) =>
+  fns.forEach(fn => fn && fn(...args))
 
 class Toggle extends React.Component {
   static defaultProps = {
@@ -28,7 +29,8 @@ class Toggle extends React.Component {
         typeof changes === 'function' ? changes(state) : changes
 
       // apply state reducer
-      const reducedChanges = this.props.stateReducer(state, changesObject) || {}
+      const reducedChanges =
+        this.props.stateReducer(state, changesObject) || {}
 
       // remove the type so it's not set into state
       const {type: ignoredType, ...onlyChanges} = reducedChanges
@@ -118,7 +120,9 @@ class Usage extends React.Component {
                 <br />
               </div>
             ) : timesClicked > 0 ? (
-              <div data-testid="click-count">Click count: {timesClicked}</div>
+              <div data-testid="click-count">
+                Click count: {timesClicked}
+              </div>
             ) : null}
             <button onClick={reset}>Reset</button>
           </div>

@@ -3,7 +3,8 @@
 import React from 'react'
 import {Switch} from '../switch'
 
-const callAll = (...fns) => (...args) => fns.forEach(fn => fn && fn(...args))
+const callAll = (...fns) => (...args) =>
+  fns.forEach(fn => fn && fn(...args))
 
 // Render props allow users to be in control over the UI based on state.
 // State reducers allow users to be in control over logic based on actions.
@@ -45,7 +46,9 @@ class Toggle extends React.Component {
   // 🐨 Finally, update all pre-existing instances of this.setState
   // to this.internalSetState
   reset = () =>
-    this.setState(this.initialState, () => this.props.onReset(this.state.on))
+    this.setState(this.initialState, () =>
+      this.props.onReset(this.state.on),
+    )
   toggle = () =>
     this.setState(
       ({on}) => ({on: !on}),
@@ -116,7 +119,9 @@ class Usage extends React.Component {
                 <br />
               </div>
             ) : timesClicked > 0 ? (
-              <div data-testid="click-count">Click count: {timesClicked}</div>
+              <div data-testid="click-count">
+                Click count: {timesClicked}
+              </div>
             ) : null}
             <button onClick={toggle.reset}>Reset</button>
           </div>
