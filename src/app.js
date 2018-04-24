@@ -1,6 +1,7 @@
 import React from 'react'
 import {Route, Switch} from 'react-router'
 import {BrowserRouter, Link} from 'react-router-dom'
+import loadable from 'react-loadable'
 
 const files = [
   '01',
@@ -200,6 +201,31 @@ function FullPage({type, match}) {
   )
 }
 
+class Isolated extends React.Component {
+  Component = loadable({
+    loader: () =>
+      this.props.type === 'exercise'
+        ? import(`./exercises/${this.props.match.params.moduleName}`)
+        : import(`./exercises-final/${this.props.match.params.moduleName}`),
+    loading: () => <div>Loading...</div>,
+  })
+  render() {
+    return (
+      <div
+        style={{
+          padding: 30,
+          height: '100%',
+          display: 'grid',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <this.Component />
+      </div>
+    )
+  }
+}
+
 function Home() {
   return (
     <div>
@@ -242,6 +268,16 @@ function App() {
           path={`/:exerciseId/final`}
           render={props => <FullPage {...props} type="final" />}
           exact={true}
+        />
+        <Route
+          path={`/isolated/exercises/:moduleName`}
+          exact={true}
+          render={props => <Isolated {...props} type="exercise" />}
+        />
+        <Route
+          path={`/isolated/exercises-final/:moduleName`}
+          exact={true}
+          render={props => <Isolated {...props} type="final" />}
         />
         <Route
           render={() => (
