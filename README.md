@@ -39,7 +39,7 @@ variable and how to fix it here for [windows][win-path] or
 ## Setup
 
 You may be able to work through the entire workshop in the browser. Go to
-[this codesandbox](https://codesandbox.io/s/github/kentcdodds/advanced-react-patterns-v2)
+[this codesandbox](https://codesandbox.io/s/github/kentcdodds/advanced-react-patterns-v2/tree/frontend-masters)
 and you should be good to go.
 
 If you'd rather be able to work through the workshop on your own computer, then
@@ -51,6 +51,7 @@ should be able to just run a few commands to get set up:
 ```
 git clone https://github.com/kentcdodds/advanced-react-patterns-v2.git
 cd advanced-react-patterns-v2
+git checkout frontend-masters
 npm run setup --silent
 ```
 
@@ -128,9 +129,11 @@ help if I can.
 Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+
 <!-- prettier-ignore -->
 | [<img src="https://avatars.githubusercontent.com/u/1500684?v=3" width="100px;"/><br /><sub><b>Kent C. Dodds</b></sub>](https://kentcdodds.com)<br />[💻](https://github.com/kentcdodds/advanced-component-patterns-v2/commits?author=kentcdodds "Code") [📖](https://github.com/kentcdodds/advanced-component-patterns-v2/commits?author=kentcdodds "Documentation") [🚇](#infra-kentcdodds "Infrastructure (Hosting, Build-Tools, etc)") [⚠️](https://github.com/kentcdodds/advanced-component-patterns-v2/commits?author=kentcdodds "Tests") | [<img src="https://avatars0.githubusercontent.com/u/1250430?v=4" width="100px;"/><br /><sub><b>FWeinb</b></sub>](https://github.com/FWeinb)<br />[🐛](https://github.com/kentcdodds/advanced-component-patterns-v2/issues?q=author%3AFWeinb "Bug reports") [🤔](#ideas-FWeinb "Ideas, Planning, & Feedback") | [<img src="https://avatars2.githubusercontent.com/u/1383720?v=4" width="100px;"/><br /><sub><b>David Lannoye</b></sub>](https://github.com/dlannoye)<br />[🐛](https://github.com/kentcdodds/advanced-component-patterns-v2/issues?q=author%3Adlannoye "Bug reports") [📖](https://github.com/kentcdodds/advanced-component-patterns-v2/commits?author=dlannoye "Documentation") | [<img src="https://avatars2.githubusercontent.com/u/9815009?s=460&v=4" width="100px;"/><br /><sub><b>Colin Cummings</b></sub>](https://github.com/colinrcummings)<br />[💻](https://github.com/kentcdodds/advanced-component-patterns-v2/commits?author=colinrcummings "Code") [⚠️](https://github.com/kentcdodds/advanced-component-patterns-v2/commits?author=colinrcummings "Tests") | [<img src="https://avatars2.githubusercontent.com/u/464764?v=4" width="100px;"/><br /><sub><b>Benji Koltai</b></sub>](https://github.com/bkoltai)<br />[📖](https://github.com/kentcdodds/advanced-component-patterns-v2/commits?author=bkoltai "Documentation") |
 | :---: | :---: | :---: | :---: | :---: |
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!
