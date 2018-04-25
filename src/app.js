@@ -208,12 +208,16 @@ function FullPage({type, match}) {
 
 class Isolated extends React.Component {
   Component = loadable({
-    loader: () =>
-      this.props.type === 'exercise'
-        ? import(`./exercises/${this.props.match.params.moduleName}`)
-        : import(`./exercises-final/${
-            this.props.match.params.moduleName
-          }`),
+    loader: () => {
+      const {moduleName} = this.props.match.params
+      return this.props.type === 'exercise'
+        ? import(`./exercises/${moduleName}`)
+        : this.props.type === 'final'
+          ? import(`./exercises-final/${moduleName}`)
+          : this.props.type === 'why'
+            ? import(`./why/${moduleName}`)
+            : null
+    },
     loading: () => <div>Loading...</div>,
   })
   render() {
@@ -289,6 +293,11 @@ function App() {
           path={`/isolated/exercises-final/:moduleName`}
           exact={true}
           render={props => <Isolated {...props} type="final" />}
+        />
+        <Route
+          path={`/isolated/why/:moduleName`}
+          exact={true}
+          render={props => <Isolated {...props} type="why" />}
         />
         <Route
           render={() => (
