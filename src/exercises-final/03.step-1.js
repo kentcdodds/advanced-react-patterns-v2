@@ -8,21 +8,21 @@ const ToggleContext = React.createContext()
 
 class Toggle extends React.Component {
   static On = ({children}) => (
-    <ToggleContext.Consumers>
+    <ToggleContext.Consumer>
       {({on}) => (on ? children : null)}
-    </ToggleContext.Consumers>
+    </ToggleContext.Consumer>
   )
   static Off = ({children}) => (
-    <ToggleContext.Consumers>
+    <ToggleContext.Consumer>
       {({on}) => (on ? null : children)}
-    </ToggleContext.Consumers>
+    </ToggleContext.Consumer>
   )
   static Button = props => (
-    <ToggleContext.Consumers>
+    <ToggleContext.Consumer>
       {({on, toggle}) => (
         <Switch on={on} onClick={toggle} {...props} />
       )}
-    </ToggleContext.Consumers>
+    </ToggleContext.Consumer>
   )
   state = {on: false}
   toggle = () =>
