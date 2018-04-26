@@ -1,13 +1,11 @@
-// Flexible Compound Components with context
+// Flexible Compound Components with context (step 2)
+// This is just here to help you see the iteration from the first step to the last
 
 import React from 'react'
 import {Switch} from '../switch'
 
 const ToggleContext = React.createContext()
 
-// I added this as a bonus. It wouldn't make any sense to render the compound components
-// without the parent, so we don't provide a default. Then if someone attempts to render
-// one of the compound components outside the provider, they'll get an error.
 function ToggleConsumer(props) {
   return (
     <ToggleContext.Consumer {...props}>
@@ -41,19 +39,17 @@ class Toggle extends React.Component {
       )}
     </ToggleConsumer>
   )
-  // 💰 The reason we had to move `toggle` above `state` is because
-  // in our `state` initialization we're _using_ `this.toggle`. So
-  // if `this.toggle` is not defined before state is initialized, then
-  // `state.toggle` will be undefined.
+  state = {on: false}
   toggle = () =>
     this.setState(
       ({on}) => ({on: !on}),
       () => this.props.onToggle(this.state.on),
     )
-  state = {on: false, toggle: this.toggle}
   render() {
     return (
-      <ToggleContext.Provider value={this.state}>
+      <ToggleContext.Provider
+        value={{on: this.state.on, toggle: this.toggle}}
+      >
         {this.props.children}
       </ToggleContext.Provider>
     )
