@@ -44,8 +44,8 @@ exports[`renders a toggle component 1`] = `
           type="checkbox"
         />
         <button
-          aria-expanded="false"
           aria-label="Toggle"
+          aria-pressed="false"
           class="toggle-btn toggle-btn-off"
         />
       </div>
@@ -111,8 +111,8 @@ exports[`renders a toggle component 2`] = `
           type="checkbox"
         />
         <button
-          aria-expanded="true"
           aria-label="Toggle"
+          aria-pressed="true"
           class="toggle-btn toggle-btn-on"
         />
       </div>

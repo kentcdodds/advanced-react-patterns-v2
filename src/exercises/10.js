@@ -81,7 +81,7 @@ class Toggle extends React.Component {
   getTogglerProps = ({onClick, ...props} = {}) => ({
     onClick: callAll(onClick, () => this.toggle()),
     // 🐨 replace `this.state` with `this.getState()`
-    'aria-expanded': this.state.on,
+    'aria-pressed': this.state.on,
     ...props,
   })
   getStateAndHelpers() {

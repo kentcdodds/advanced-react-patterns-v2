@@ -47,7 +47,7 @@ class Toggle extends React.Component {
     // 🐨 change `this.toggle` to `() => this.toggle()`
     // to avoid passing the click event to this.toggle.
     onClick: callAll(onClick, this.toggle),
-    'aria-expanded': this.state.on,
+    'aria-pressed': this.state.on,
     ...props,
   })
   getStateAndHelpers() {

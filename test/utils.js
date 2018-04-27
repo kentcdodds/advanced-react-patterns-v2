@@ -27,7 +27,7 @@ function validateSwitchInstance(switchInstance) {
     expect(switchInstance.props).toMatchObject({
       on: expect.any(Boolean),
       onClick: expect.any(Function),
-      // it can also have aria-expanded...
+      // it can also have aria-pressed...
     })
   } catch (error) {
     const helpfulMessage = chalk.red(
