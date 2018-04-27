@@ -135,10 +135,13 @@ function withToggle(Component) {
   // 1. 🐨 create and return a function component called "Wrapper" which renders
   //    a <Toggle.Consumer> with a child function that renders <Component />
   //    with the props Wrapper is given as well as a toggle prop
-  // 2. 🐨 Handle `ref`s properly by using React.forwardRef:
-  //    https://reactjs.org/docs/forwarding-refs.html
-  // 3. 🐨 Make it easier to debug using the React DevTools by setting a
+  // 2. 🐨 Make it easier to debug using the React DevTools by setting a
   //    useful `displayName` property on the Wrapper.
+  // 3. 🐨 Handle `ref`s properly by using React.forwardRef:
+  //    https://reactjs.org/docs/forwarding-refs.html
+  //    💰 Make your "Wrapper" accept a second argument called "ref" and pass it
+  //    along to <Component />, your new component is what you get back from
+  //    React.forwardRef.
   // 4. 🐨 Use the `hoistNonReactStatics` function (uncomment the imported above)
   //    by calling it with the Wrapper and the Component to forward all the
   //    static properties from the Component to the Wrapper

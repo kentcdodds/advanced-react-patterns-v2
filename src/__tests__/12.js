@@ -41,7 +41,7 @@ test('renders a toggle component', () => {
   }
   const subtitleWrapperFiberNode = getDebugChild(debugInstance)
   try {
-    expect(subtitleWrapperFiberNode.child.type.displayName).toMatch(
+    expect(subtitleWrapperFiberNode.type.render.displayName).toMatch(
       'withToggle(Subtitle)',
     )
   } catch (error) {

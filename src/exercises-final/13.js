@@ -55,24 +55,16 @@ class Rendux extends React.Component {
 }
 
 function withRendux(Component) {
-  class Wrapper extends React.Component {
-    render() {
-      const {forwardedRef, ...rest} = this.props
-      return (
-        <Rendux.Consumer>
-          {rendux => (
-            <Component {...rest} rendux={rendux} ref={forwardedRef} />
-          )}
-        </Rendux.Consumer>
-      )
-    }
+  function Wrapper(props, ref) {
+    return (
+      <Rendux.Consumer>
+        {rendux => <Component {...props} rendux={rendux} ref={ref} />}
+      </Rendux.Consumer>
+    )
   }
   Wrapper.displayName = `withRendux(${Component.displayName ||
     Component.name})`
-  const forwardRef = React.forwardRef((props, ref) => (
-    <Wrapper {...props} forwardedRef={ref} />
-  ))
-  return hoistNonReactStatics(forwardRef, Component)
+  return hoistNonReactStatics(React.forwardRef(Wrapper), Component)
 }
 
 function MyInput() {
