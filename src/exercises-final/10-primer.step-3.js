@@ -1,5 +1,4 @@
 // control props primer
-// TODO: support stateChangesType
 
 import React from 'react'
 import {Switch} from '../switch'

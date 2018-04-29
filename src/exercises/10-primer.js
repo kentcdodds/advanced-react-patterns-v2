@@ -10,8 +10,10 @@ import {Switch} from '../switch'
 class Toggle extends React.Component {
   state = {on: false}
   // 🐨 let's add a function that can determine whether
-  // the on prop is controlled. Call it `isOnControlled`.
-  // 💰 this.props.on !== undefined
+  // the on prop is controlled. Call it `isControlled`.
+  // It can accept a string called `prop` and should return
+  // true if that prop is controlled
+  // 💰 this.props[prop] !== undefined
   //
   // 🐨 Now let's add a function that can return the state
   // whether it's coming from this.state or this.props
