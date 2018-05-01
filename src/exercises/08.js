@@ -30,7 +30,7 @@ class Toggle extends React.Component {
   initialState = {on: this.props.initialOn}
   state = this.initialState
   // 🐨 let's add a method here called `internalSetState`. It will simulate
-  // the same API as `setState(updates, callback)`:
+  // the same API as `setState(updater, callback)`:
   // - updater: (changes object or function that returns the changes object)
   // - callback: Function called after the state has been updated
   // This will call setState with an updater function (a function that receives the state).
