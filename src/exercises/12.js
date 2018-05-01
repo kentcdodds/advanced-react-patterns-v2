@@ -178,17 +178,17 @@ const Subtitle = withToggle(
 function Nav() {
   return (
     <Toggle.Consumer>
-      {toggle => (
+      {({on}) => (
         <nav>
           <ul>
             <li>
-              <a href="index.html">{toggle.on ? '🏡' : 'Home'}</a>
+              <a href="index.html">{on ? '🏡' : 'Home'}</a>
             </li>
             <li>
-              <a href="/about/">{toggle.on ? '❓' : 'About'}</a>
+              <a href="/about/">{on ? '❓' : 'About'}</a>
             </li>
             <li>
-              <a href="/blog/">{toggle.on ? '📖' : 'Blog'}</a>
+              <a href="/blog/">{on ? '📖' : 'Blog'}</a>
             </li>
           </ul>
         </nav>
@@ -202,14 +202,14 @@ function NavSwitch() {
     <div className="nav-switch">
       <div>
         <Toggle.Consumer>
-          {toggle => (toggle.on ? '🦄' : 'Enable Emoji')}
+          {({on}) => (on ? '🦄' : 'Enable Emoji')}
         </Toggle.Consumer>
       </div>
       <Toggle.Consumer>
-        {toggle => (
+        {({getTogglerProps, on}) => (
           <Switch
-            {...toggle.getTogglerProps({
-              on: toggle.on,
+            {...getTogglerProps({
+              on,
             })}
           />
         )}
@@ -243,7 +243,7 @@ function Title() {
     <div>
       <h1>
         <Toggle.Consumer>
-          {toggle => `Who is ${toggle.on ? '🕶❓' : 'awesome?'}`}
+          {({on}) => `Who is ${on ? '🕶❓' : 'awesome?'}`}
         </Toggle.Consumer>
       </h1>
       <Debug child="subtitle">
@@ -257,25 +257,25 @@ function Article() {
   return (
     <div>
       <Toggle.Consumer>
-        {toggle =>
+        {({on}) =>
           [
             'Once, I was in',
-            toggle.on ? '🏫‍' : 'school',
+            on ? '🏫‍' : 'school',
             'when I',
-            toggle.on ? '🤔' : 'realized',
+            on ? '🤔' : 'realized',
             'something...',
           ].join(' ')
         }
       </Toggle.Consumer>
       <hr />
       <Toggle.Consumer>
-        {toggle =>
+        {({on}) =>
           [
             'Without',
-            toggle.on ? '👩‍🏫' : 'teachers',
+            on ? '👩‍🏫' : 'teachers',
             `I wouldn't know anything so`,
-            toggle.on ? '🙏' : 'thanks',
-            toggle.on ? '👩‍🏫❗️' : 'teachers!',
+            on ? '🙏' : 'thanks',
+            on ? '👩‍🏫❗️' : 'teachers!',
           ].join(' ')
         }
       </Toggle.Consumer>

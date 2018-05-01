@@ -174,16 +174,12 @@ function NavSwitch() {
     <div className="nav-switch">
       <div>
         <Toggle.Consumer>
-          {toggle => (toggle.on ? '🦄' : 'Enable Emoji')}
+          {({on}) => (on ? '🦄' : 'Enable Emoji')}
         </Toggle.Consumer>
       </div>
       <Toggle.Consumer>
-        {toggle => (
-          <Switch
-            {...toggle.getTogglerProps({
-              on: toggle.on,
-            })}
-          />
+        {({getTogglerProps, on}) => (
+          <Switch {...getTogglerProps({on})} />
         )}
       </Toggle.Consumer>
     </div>
@@ -202,7 +198,7 @@ function Header() {
 function Subtitle() {
   return (
     <Toggle.Consumer>
-      {toggle => (toggle.on ? '👩‍🏫 👉 🕶' : 'Teachers are awesome')}
+      {({on}) => (on ? '👩‍🏫 👉 🕶' : 'Teachers are awesome')}
     </Toggle.Consumer>
   )
 }
@@ -212,7 +208,7 @@ function Title() {
     <div>
       <h1>
         <Toggle.Consumer>
-          {toggle => `Who is ${toggle.on ? '🕶❓' : 'awesome?'}`}
+          {({on}) => `Who is ${on ? '🕶❓' : 'awesome?'}`}
         </Toggle.Consumer>
       </h1>
       <Subtitle />
@@ -224,25 +220,25 @@ function Article() {
   return (
     <div>
       <Toggle.Consumer>
-        {toggle =>
+        {({on}) =>
           [
             'Once, I was in',
-            toggle.on ? '🏫‍' : 'school',
+            on ? '🏫‍' : 'school',
             'when I',
-            toggle.on ? '🤔' : 'realized',
+            on ? '🤔' : 'realized',
             'something...',
           ].join(' ')
         }
       </Toggle.Consumer>
       <hr />
       <Toggle.Consumer>
-        {toggle =>
+        {({on}) =>
           [
             'Without',
-            toggle.on ? '👩‍🏫' : 'teachers',
+            on ? '👩‍🏫' : 'teachers',
             `I wouldn't know anything so`,
-            toggle.on ? '🙏' : 'thanks',
-            toggle.on ? '👩‍🏫❗️' : 'teachers!',
+            on ? '🙏' : 'thanks',
+            on ? '👩‍🏫❗️' : 'teachers!',
           ].join(' ')
         }
       </Toggle.Consumer>
