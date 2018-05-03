@@ -31,10 +31,6 @@ import {Switch} from '../switch'
 
 // 🐨 create a ToggleContext with React.createContext here
 
-// 💯 Extra credit: rather than having a default value, make it so the consumer
-// will throw an error if there's no context value to make sure people don't
-// attempt to render one of the compound components outside the Toggle.
-
 class Toggle extends React.Component {
   // 🐨 each of these compound components will need to be changed to use
   // ToggleContext.Consumer and rather than getting `on` and `toggle`
@@ -57,9 +53,6 @@ class Toggle extends React.Component {
     // expose the `on` state and `toggle` method as properties in the context
     // value (the value prop).
 
-    // 💯 Extra credit: avoid unecessary re-renders of the consumers by not
-    // creating a new `value` object ever render and instead passing an object
-    // which only changes when the state changes.
     return React.Children.map(this.props.children, child =>
       React.cloneElement(child, {
         on: this.state.on,
@@ -68,6 +61,13 @@ class Toggle extends React.Component {
     )
   }
 }
+
+// 💯 Extra credit: rather than having a default value, make it so the consumer
+// will throw an error if there's no context value to make sure people don't
+// attempt to render one of the compound components outside the Toggle.
+// 💯 Extra credit: avoid unecessary re-renders of the consumers by not
+// creating a new `value` object ever render and instead passing an object
+// which only changes when the state changes.
 
 // Don't make changes to the Usage component. It's here to show you how your
 // component is intended to be used and is used in the tests.
