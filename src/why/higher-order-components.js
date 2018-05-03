@@ -66,10 +66,13 @@ function Usage({
 function withToggle(Component) {
   const Wrapper = React.forwardRef((props, ref) => (
     <Toggle.Consumer>
-      {toggle => <Component {...props} toggle={toggle} ref={ref} />}
+      {toggleContext => (
+        <Component {...props} toggle={toggleContext} ref={ref} />
+      )}
     </Toggle.Consumer>
   ))
-  Wrapper.displayName = `withToggle(${Component.displayName || Component.name})`
+  Wrapper.displayName = `withToggle(${Component.displayName ||
+    Component.name})`
   hoistNonReactStatics(Wrapper, Component)
   return Wrapper
 }
@@ -86,7 +89,9 @@ const Layer4 = withToggle(({toggle: {on, toggle}}) => (
   <Switch on={on} onClick={toggle} />
 ))
 
-function Usage({onToggle = (...args) => console.log('onToggle', ...args)}) {
+function Usage({
+  onToggle = (...args) => console.log('onToggle', ...args),
+}) {
   return (
     <Toggle onToggle={onToggle}>
       <Layer1 />
