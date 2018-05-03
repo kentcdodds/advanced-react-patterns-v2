@@ -44,10 +44,6 @@ class Toggle extends React.Component {
   static Button = ({on, toggle, ...props}) => (
     <Switch on={on} onClick={toggle} {...props} />
   )
-  // Because we'll be passing state into context, we need to 🐨 add the
-  // toggle function to state.
-  // 💰 You'll need to move this below the `toggle` function. See
-  // if you can figure out why :)
   state = {on: false}
   toggle = () =>
     this.setState(
@@ -58,8 +54,12 @@ class Toggle extends React.Component {
     // Because this.props.children is _immediate_ children only, we need
     // to 🐨 remove this map function and render our context provider with
     // this.props.children as the children of the provider. Then we'll
-    // expose the on state and toggle method as properties in the context
+    // expose the `on` state and `toggle` method as properties in the context
     // value (the value prop).
+
+    // 💯 Extra credit: avoid unecessary re-renders of the consumers by not
+    // creating a new `value` object ever render and instead passing an object
+    // which only changes when the state changes.
     return React.Children.map(this.props.children, child =>
       React.cloneElement(child, {
         on: this.state.on,

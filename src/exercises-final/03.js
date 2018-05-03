@@ -5,55 +5,35 @@ import {Switch} from '../switch'
 
 const ToggleContext = React.createContext()
 
-// I added this as a bonus. It wouldn't make any sense to render the compound components
-// without the parent, so we don't provide a default. Then if someone attempts to render
-// one of the compound components outside the provider, they'll get an error.
-function ToggleConsumer(props) {
-  return (
-    <ToggleContext.Consumer {...props}>
-      {context => {
-        if (!context) {
-          throw new Error(
-            `Toggle compound components cannot be rendered outside the Toggle component`,
-          )
-        }
-        return props.children(context)
-      }}
-    </ToggleContext.Consumer>
-  )
-}
-
 class Toggle extends React.Component {
   static On = ({children}) => (
-    <ToggleConsumer>
+    <ToggleContext.Consumer>
       {({on}) => (on ? children : null)}
-    </ToggleConsumer>
+    </ToggleContext.Consumer>
   )
   static Off = ({children}) => (
-    <ToggleConsumer>
+    <ToggleContext.Consumer>
       {({on}) => (on ? null : children)}
-    </ToggleConsumer>
+    </ToggleContext.Consumer>
   )
   static Button = props => (
-    <ToggleConsumer>
+    <ToggleContext.Consumer>
       {({on, toggle}) => (
         <Switch on={on} onClick={toggle} {...props} />
       )}
-    </ToggleConsumer>
+    </ToggleContext.Consumer>
   )
-  // 💰 The reason we had to move `toggle` above `state` is because
-  // in our `state` initialization we're _using_ `this.toggle`. So
-  // if `this.toggle` is not defined before state is initialized, then
-  // `state.toggle` will be undefined.
+  state = {on: false}
   toggle = () =>
     this.setState(
       ({on}) => ({on: !on}),
       () => this.props.onToggle(this.state.on),
     )
-  state = {on: false, toggle: this.toggle}
   render() {
     return (
-      <ToggleContext.Provider value={this.state}>
+      <ToggleContext.Provider
+        value={{on: this.state.on, toggle: this.toggle}}
+      >
         {this.props.children}
       </ToggleContext.Provider>
     )

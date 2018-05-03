@@ -1,4 +1,5 @@
 // control props primer
+// this makes the `getState` function more flexible
 
 import React from 'react'
 import {Switch} from '../switch'
