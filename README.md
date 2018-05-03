@@ -4,9 +4,12 @@
 workshop repo to teach you about using React Component Patterns to make your
 react components more useful and reusable without sacrificing simplicity.
 
-> NOTE: Are you following along with Frontend Masters? Please go
-> [here](https://github.com/kentcdodds/advanced-react-patterns-v2/blob/frontend-masters/README.md)
-> instead!
+## Following along with Frontend Masters?
+
+This project has been updated since the Frontend Masters recording was made.
+To be able to follow along, Please go to the
+[`frontend-masters` branch](https://github.com/kentcdodds/advanced-react-patterns-v2/blob/frontend-masters/README.md)
+instead.
 
 [![chat-badge][chat-badge]][chat]
 [![Build Status][build-badge]][build]
