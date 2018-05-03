@@ -6,10 +6,9 @@ react components more useful and reusable without sacrificing simplicity.
 
 ## Following along with Frontend Masters?
 
-This project has been updated since the Frontend Masters recording was made.
-To be able to follow along, please go to the
-[`frontend-masters` branch](https://github.com/kentcdodds/advanced-react-patterns-v2/blob/frontend-masters/README.md)
-instead.
+Head to
+[the `frontend-masters` branch](https://github.com/kentcdodds/advanced-react-patterns-v2/tree/frontend-masters)
+to get started!
 
 [![chat-badge][chat-badge]][chat]
 [![Build Status][build-badge]][build]
