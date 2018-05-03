@@ -13,6 +13,9 @@ import {Switch} from '../switch'
 //
 // const defaultValue = 'light'
 // const ThemeContext = React.createContext(defaultValue)
+//   Note: The `defaultValue` can be an object, function, or anything.
+//   It's simply what React will use if the ThemeContext.Consumer is rendered
+//   outside a ThemeContext.Provider
 //
 // ...
 // <ThemeContext.Provider value={this.state}>
@@ -22,11 +25,15 @@ import {Switch} from '../switch'
 //
 // ...
 // <ThemeContext.Consumer>
-//   {value => <div>The current theme is: {value}</div>}
+//   {contextValue => <div>The current theme is: {contextValue}</div>}
 // </ThemeContext.Consumer>
 // ...
 
 // 🐨 create a ToggleContext with React.createContext here
+
+// 💯 Extra credit: rather than having a default value, make it so the consumer
+// will throw an error if there's no context value to make sure people don't
+// attempt to render one of the compound components outside the Toggle.
 
 class Toggle extends React.Component {
   // 🐨 each of these compound components will need to be changed to use

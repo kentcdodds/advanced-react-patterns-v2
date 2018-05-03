@@ -19,6 +19,9 @@ const callAll = (...fns) => (...args) =>
 // What this means for our implementation is that we can create a single
 // function that does all the work before calling setState. Then we can
 // replace all calls to setState with that function.
+//
+// Learn more about the state reducers pattern here:
+// https://blog.kentcdodds.com/b40316cfac57
 
 class Toggle extends React.Component {
   static defaultProps = {
