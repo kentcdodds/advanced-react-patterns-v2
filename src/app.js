@@ -214,9 +214,7 @@ class Isolated extends React.Component {
         ? import(`./exercises/${moduleName}`)
         : this.props.type === 'final'
           ? import(`./exercises-final/${moduleName}`)
-          : this.props.type === 'why'
-            ? import(`./why/${moduleName}`)
-            : null
+          : null
     },
     loading: () => <div>Loading...</div>,
   })
@@ -293,11 +291,6 @@ function App() {
           path={`/isolated/exercises-final/:moduleName`}
           exact={true}
           render={props => <Isolated {...props} type="final" />}
-        />
-        <Route
-          path={`/isolated/why/:moduleName`}
-          exact={true}
-          render={props => <Isolated {...props} type="why" />}
         />
         <Route
           render={() => (

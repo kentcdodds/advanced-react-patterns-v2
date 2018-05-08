@@ -1,71 +1,65 @@
 import React from 'react'
-import {renderToggle, Simulate} from '../../test/utils'
-import Usage from '../exercises-final/10'
-// import Usage from '../exercises/10'
+import {
+  findAllInRenderedTree,
+  isCompositeComponentWithType,
+} from 'react-dom/test-utils'
+import chalk from 'chalk'
+import {Simulate, renderToggle} from '../../test/utils'
+import Usage, {Toggle} from '../exercises-final/10'
+// import Usage, {Toggle} from '../exercises/10'
 
-test('renders a toggle component', () => {
+const findToggleInstances = rootInstance =>
+  findAllInRenderedTree(rootInstance, c =>
+    isCompositeComponentWithType(c, Toggle),
+  )
+
+function validateToggleInstance(instance) {
+  // validate the internal state of the toggle does not change
+  // If it does change then you could trigger an unnecessary re-render
+  try {
+    expect(instance.state).toEqual({on: false})
+    expect(instance.state).toEqual({on: false})
+  } catch (error) {
+    const helpfulMessage = chalk.red(
+      `🚨  The toggle should not update its own state when it's controlled  🚨`,
+    )
+    error.message = `${helpfulMessage}\n\n${error.message}`
+    throw error
+  }
+}
+
+test('toggling either toggle toggles both', () => {
+  const handleToggle = jest.fn()
+  const {getAllByLabelText, rootInstance} = renderToggle(
+    <Usage onToggle={handleToggle} />,
+  )
+  const [toggleInstance1, toggleInstance2] = findToggleInstances(
+    rootInstance,
+  )
+  const buttons = getAllByLabelText('Toggle')
+  const [toggleButton1, toggleButton2] = buttons
+  Simulate.click(toggleButton1)
+  expect(toggleButton1).toBeOn()
+  expect(toggleButton2).toBeOn()
+
+  validateToggleInstance(toggleInstance1)
+  validateToggleInstance(toggleInstance2)
+
+  Simulate.click(toggleButton2)
+  expect(toggleButton1).toBeOff()
+  expect(toggleButton2).toBeOff()
+})
+
+test('toggle can still be uncontrolled', () => {
   const handleToggle = jest.fn()
   const {toggleButton, toggle} = renderToggle(
-    <Usage onToggle={handleToggle} />,
+    <Toggle onToggle={handleToggle} />,
   )
   expect(toggleButton).toBeOff()
   toggle()
   expect(toggleButton).toBeOn()
   expect(handleToggle).toHaveBeenCalledTimes(1)
   expect(handleToggle).toHaveBeenCalledWith(true)
-})
-
-test('can click too much', () => {
-  const handleToggle = jest.fn()
-  const handleReset = jest.fn()
-  const {
-    toggleButton,
-    toggle,
-    getByTestId,
-    queryByTestId,
-    getByText,
-  } = renderToggle(
-    <Usage onToggle={handleToggle} onReset={handleReset} />,
-  )
-  expect(toggleButton).toBeOff()
-  toggle() // 1
-  expect(toggleButton).toBeOn()
-  toggle() // 2
-  expect(toggleButton).toBeOff()
-  expect(getByTestId('click-count')).toHaveTextContent('2')
-  toggle() // 3
-  expect(toggleButton).toBeOn()
-  toggle() // 4
-  expect(toggleButton).toBeOff()
-  toggle() // 5: Whoa, too many
-  expect(toggleButton).toBeOff()
-  toggle() // 6
-  expect(toggleButton).toBeOff()
-  Simulate.click(getByText('Force Toggle')) // 7
-  expect(toggleButton).toBeOn()
-
-  expect(getByTestId('notice')).not.toBeNull()
-  expect(handleToggle).toHaveBeenCalledTimes(7)
-  expect(handleToggle.mock.calls).toEqual([
-    [true], // 1
-    [false], // 2
-    [true], // 3
-    [false], // 4
-    [false], // 5
-    [false], // 6
-    [true], // 7
-  ])
-
-  Simulate.click(getByText('reset'))
-  expect(handleReset).toHaveBeenCalledTimes(1)
-  expect(handleReset).toHaveBeenCalledWith(false)
-  expect(queryByTestId('notice')).toBeNull()
-
-  expect(toggleButton).toBeOff()
-  toggle()
-  expect(toggleButton).toBeOn()
-
-  expect(getByTestId('click-count')).toHaveTextContent('1')
 })
 
 //////// Elaboration & Feedback /////////
@@ -75,7 +69,7 @@ test('can click too much', () => {
 // 3. Change submitted from `false` to `true`
 // 4. And you're all done!
 /*
-http://ws.kcd.im/?ws=react%20patterns&e=10&em=
+http://ws.kcd.im/?ws=react%20patterns&e=10-primer&em=
 */
 test.skip('I submitted my elaboration and feedback', () => {
   const submitted = false // change this when you've submitted!
