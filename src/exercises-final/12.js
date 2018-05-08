@@ -1,12 +1,9 @@
+// higher order components
 import React, {Fragment} from 'react'
-// eslint-disable-next-line
 import hoistNonReactStatics from 'hoist-non-react-statics'
 import {Switch} from '../switch'
 
-const ToggleContext = React.createContext({
-  on: false,
-  toggle: () => {},
-})
+const ToggleContext = React.createContext()
 
 class Toggle extends React.Component {
   static Consumer = ToggleContext.Consumer
@@ -17,64 +14,25 @@ class Toggle extends React.Component {
     )
   state = {on: false, toggle: this.toggle}
   render() {
-    const {children} = this.props
-    const ui =
-      typeof children === 'function' ? children(this.state) : children
     return (
-      <ToggleContext.Provider value={this.state}>
-        {ui}
-      </ToggleContext.Provider>
+      <ToggleContext.Provider value={this.state} {...this.props} />
     )
   }
 }
 
-//*
-
-const Layer1 = () => <Layer2 />
-const Layer2 = () => (
-  <Toggle.Consumer>
-    {({on}) => (
-      <Fragment>
-        {on ? 'The button is on' : 'The button is off'}
-        <Layer3 />
-      </Fragment>
-    )}
-  </Toggle.Consumer>
-)
-const Layer3 = () => <Layer4 />
-const Layer4 = () => (
-  <Toggle.Consumer>
-    {({on, toggle}) => <Switch on={on} onClick={toggle} />}
-  </Toggle.Consumer>
-)
-
-function Usage({
-  onToggle = (...args) => console.log('onToggle', ...args),
-}) {
-  return (
-    <Toggle onToggle={onToggle}>
-      <Layer1 />
-    </Toggle>
-  )
-}
-/**/
-
-// Using that consumer everywhere can make things a bit verbose
-// Higher Order Components can help with that a bit.
-
-/*
 function withToggle(Component) {
-  const Wrapper = React.forwardRef((props, ref) => (
-    <Toggle.Consumer>
-      {toggleContext => (
-        <Component {...props} toggle={toggleContext} ref={ref} />
-      )}
-    </Toggle.Consumer>
-  ))
+  function Wrapper(props, ref) {
+    return (
+      <Toggle.Consumer>
+        {toggleContext => (
+          <Component toggle={toggleContext} {...props} ref={ref} />
+        )}
+      </Toggle.Consumer>
+    )
+  }
   Wrapper.displayName = `withToggle(${Component.displayName ||
     Component.name})`
-  hoistNonReactStatics(Wrapper, Component)
-  return Wrapper
+  return hoistNonReactStatics(React.forwardRef(Wrapper), Component)
 }
 
 const Layer1 = () => <Layer2 />
@@ -98,7 +56,6 @@ function Usage({
     </Toggle>
   )
 }
+Usage.title = 'Higher Order Components'
 
-/**/
-
-export {Toggle, Usage as default}
+export {Toggle, withToggle, Usage as default}
