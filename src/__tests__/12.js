@@ -1,8 +1,8 @@
 import React from 'react'
 import chalk from 'chalk'
 import {renderToggle, render} from '../../test/utils'
-import Usage, {Toggle, withToggle} from '../exercises-final/12'
-// import Usage, {Toggle, withToggle} from '../exercises/12'
+import Usage, {withToggle} from '../exercises-final/12'
+// import Usage, {withToggle} from '../exercises/12'
 
 test('renders a toggle component', () => {
   const handleToggle = jest.fn()
