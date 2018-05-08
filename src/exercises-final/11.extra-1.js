@@ -1,11 +1,27 @@
 // The provider pattern
+// Extra credit: Validate the consumer is rendered within a provider
 import React, {Fragment} from 'react'
 import {Switch} from '../switch'
 
 const ToggleContext = React.createContext()
 
+function ToggleConsumer(props) {
+  return (
+    <ToggleContext.Consumer {...props}>
+      {context => {
+        if (!context) {
+          throw new Error(
+            `Toggle.Consumer cannot be rendered outside the Toggle component`,
+          )
+        }
+        return props.children(context)
+      }}
+    </ToggleContext.Consumer>
+  )
+}
+
 class Toggle extends React.Component {
-  static Consumer = ToggleContext.Consumer
+  static Consumer = ToggleConsumer
   state = {on: false}
   toggle = () =>
     this.setState(

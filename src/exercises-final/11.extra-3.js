@@ -1,23 +1,41 @@
 // The provider pattern
+// Extra credit: support render props
 import React, {Fragment} from 'react'
 import {Switch} from '../switch'
 
 const ToggleContext = React.createContext()
 
+function ToggleConsumer(props) {
+  return (
+    <ToggleContext.Consumer {...props}>
+      {context => {
+        if (!context) {
+          throw new Error(
+            `Toggle.Consumer cannot be rendered outside the Toggle component`,
+          )
+        }
+        return props.children(context)
+      }}
+    </ToggleContext.Consumer>
+  )
+}
+
 class Toggle extends React.Component {
-  static Consumer = ToggleContext.Consumer
-  state = {on: false}
+  static Consumer = ToggleConsumer
   toggle = () =>
     this.setState(
       ({on}) => ({on: !on}),
       () => this.props.onToggle(this.state.on),
     )
+  state = {on: false, toggle: this.toggle}
   render() {
+    const {children, ...rest} = this.props
+    const ui =
+      typeof children === 'function' ? children(this.state) : children
     return (
-      <ToggleContext.Provider
-        value={{on: this.state.on, toggle: this.toggle}}
-        {...this.props}
-      />
+      <ToggleContext.Provider value={this.state} {...rest}>
+        {ui}
+      </ToggleContext.Provider>
     )
   }
 }

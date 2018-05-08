@@ -28,6 +28,16 @@ import {Switch} from '../switch'
 //   {contextValue => <div>The current theme is: {contextValue}</div>}
 // </ThemeContext.Consumer>
 // ...
+//
+// NOTE: Spacing matters!! For example, these are not the same:
+// <Context.Consumer> {val => val} </Context.Consumer>
+// <Context.Consumer>{val => val}</Context.Consumer>
+//
+// To visualize the difference, here's what these would be with a named children prop:
+// <Context.Consumer children={[' ', {val => val}, ' ']} />
+// <Context.Consumer children={val => val} />
+// make sure that you don't have the extra space in there
+//   (newlines are ok, like in the above example)
 
 // 🐨 create a ToggleContext with React.createContext here
 

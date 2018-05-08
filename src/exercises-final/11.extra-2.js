@@ -1,23 +1,36 @@
 // The provider pattern
+// Extra credit: avoid unecessary re-renders by only updating the value when state changes
 import React, {Fragment} from 'react'
 import {Switch} from '../switch'
 
 const ToggleContext = React.createContext()
 
+function ToggleConsumer(props) {
+  return (
+    <ToggleContext.Consumer {...props}>
+      {context => {
+        if (!context) {
+          throw new Error(
+            `Toggle.Consumer cannot be rendered outside the Toggle component`,
+          )
+        }
+        return props.children(context)
+      }}
+    </ToggleContext.Consumer>
+  )
+}
+
 class Toggle extends React.Component {
-  static Consumer = ToggleContext.Consumer
-  state = {on: false}
+  static Consumer = ToggleConsumer
   toggle = () =>
     this.setState(
       ({on}) => ({on: !on}),
       () => this.props.onToggle(this.state.on),
     )
+  state = {on: false, toggle: this.toggle}
   render() {
     return (
-      <ToggleContext.Provider
-        value={{on: this.state.on, toggle: this.toggle}}
-        {...this.props}
-      />
+      <ToggleContext.Provider value={this.state} {...this.props} />
     )
   }
 }
