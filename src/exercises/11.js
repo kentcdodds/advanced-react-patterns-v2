@@ -21,6 +21,16 @@ class Toggle extends React.Component {
   }
 }
 
+// 💯 Extra credit: Add a custom Consumer that validates the
+// ToggleContext.Consumer is rendered within a provider
+//
+// 💯 Extra credit: avoid unecessary re-renders by only updating the value when
+// state changes
+//
+// 💯 Extra credit: support render props as well
+//
+// 💯 Extra credit: support (and expose) compound components!
+
 // Don't make changes to the Usage component. It's here to show you how your
 // component is intended to be used and is used in the tests.
 // You can make all the tests pass by updating the Toggle component.
