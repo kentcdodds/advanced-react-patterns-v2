@@ -1,4 +1,4 @@
-// control props primer
+// control props
 
 import React from 'react'
 import {Switch} from '../switch'
