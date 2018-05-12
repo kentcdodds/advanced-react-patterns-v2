@@ -8,8 +8,17 @@ import React from 'react'
 // your `render` method or the `getTogglerProps` method
 // (if we've gotten to that part)
 class Switch extends React.Component {
+  onChangeHandler = e => {
+    e.preventDefault()
+    this.props.onClick()
+  }
   render() {
-    const {on, className = '', 'aria-label': ariaLabel, onClick, ...props} = this.props
+    const {
+      on,
+      className = '',
+      'aria-label': ariaLabel,
+      ...props
+    } = this.props
     const btnClassName = [
       className,
       'toggle-btn',
@@ -18,18 +27,15 @@ class Switch extends React.Component {
       .filter(Boolean)
       .join(' ')
     return (
-      <label aria-label={ariaLabel || "Toggle"}>
+      <label aria-label={ariaLabel || 'Toggle'}>
         <input
           className="toggle-input"
           type="checkbox"
           checked={on}
-          onChange={onClick}
+          onChange={this.onChangeHandler}
           data-testid="toggle-input"
         />
-        <span
-          className={btnClassName}
-          {...props}
-        />
+        <span className={btnClassName} {...props} />
       </label>
     )
   }
