@@ -8,16 +8,14 @@ import React from 'react'
 // your `render` method or the `getTogglerProps` method
 // (if we've gotten to that part)
 class Switch extends React.Component {
-  onChangeHandler = e => {
-    e.preventDefault()
+  onChangeHandler = () => {
     this.props.onClick()
   }
   render() {
     const {
       on,
       className = '',
-      'aria-label': ariaLabel,
-      ...props
+      'aria-label': ariaLabel
     } = this.props
     const btnClassName = [
       className,
@@ -35,7 +33,7 @@ class Switch extends React.Component {
           onChange={this.onChangeHandler}
           data-testid="toggle-input"
         />
-        <span className={btnClassName} {...props} />
+        <span className={btnClassName} />
       </label>
     )
   }
