@@ -15,7 +15,9 @@ class Switch extends React.Component {
     const {
       on,
       className = '',
-      'aria-label': ariaLabel
+      'aria-label': ariaLabel,
+      onClick,
+      ...props
     } = this.props
     const btnClassName = [
       className,
@@ -33,7 +35,7 @@ class Switch extends React.Component {
           onChange={this.onChangeHandler}
           data-testid="toggle-input"
         />
-        <span className={btnClassName} />
+        <span className={btnClassName} {...props} />
       </label>
     )
   }

@@ -61,7 +61,7 @@ test('can click too much', () => {
     [true], // 7
   ])
 
-  Simulate.click(getByText('reset'))
+  Simulate.click(getByText('Reset'))
   expect(handleReset).toHaveBeenCalledTimes(1)
   expect(handleReset).toHaveBeenCalledWith(false)
   expect(queryByTestId('notice')).toBeNull()
