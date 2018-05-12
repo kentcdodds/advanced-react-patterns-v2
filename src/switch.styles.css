@@ -18,7 +18,7 @@ by Mauricio Allende (https://mallendeo.com/)
   transition: all 0.4s ease;
   border: 2px solid #e8eae9;
 }
-.toggle-btn:focus::after,
+.toggle-input:focus + .toggle-btn::after,
 .toggle-btn:active::after {
   box-sizing: initial;
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1), 0 4px 0 rgba(0, 0, 0, 0.08),
@@ -53,5 +53,14 @@ by Mauricio Allende (https://mallendeo.com/)
   padding-right: 1.6em;
 }
 .toggle-input {
-  display: none;
+  /* visually hidden but still accessible */
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
 }

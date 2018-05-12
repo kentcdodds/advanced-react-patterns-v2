@@ -30,22 +30,22 @@ function validateToggleInstance(instance) {
 
 test('toggling either toggle toggles both', () => {
   const handleToggle = jest.fn()
-  const {getAllByLabelText, rootInstance} = renderToggle(
+  const {getAllByTestId, rootInstance} = renderToggle(
     <Usage onToggle={handleToggle} />,
   )
   const [toggleInstance1, toggleInstance2] = findToggleInstances(
     rootInstance,
   )
-  const buttons = getAllByLabelText('Toggle')
+  const buttons = getAllByTestId('toggle-input')
   const [toggleButton1, toggleButton2] = buttons
-  Simulate.click(toggleButton1)
+  Simulate.change(toggleButton1)
   expect(toggleButton1).toBeOn()
   expect(toggleButton2).toBeOn()
 
   validateToggleInstance(toggleInstance1)
   validateToggleInstance(toggleInstance2)
 
-  Simulate.click(toggleButton2)
+  Simulate.change(toggleButton2)
   expect(toggleButton1).toBeOff()
   expect(toggleButton2).toBeOff()
 })

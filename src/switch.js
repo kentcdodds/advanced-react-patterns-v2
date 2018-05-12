@@ -9,7 +9,7 @@ import React from 'react'
 // (if we've gotten to that part)
 class Switch extends React.Component {
   render() {
-    const {on, className = '', ...props} = this.props
+    const {on, className = '', 'aria-label': ariaLabel, onClick, ...props} = this.props
     const btnClassName = [
       className,
       'toggle-btn',
@@ -18,21 +18,19 @@ class Switch extends React.Component {
       .filter(Boolean)
       .join(' ')
     return (
-      <div>
+      <label aria-label={ariaLabel || "Toggle"}>
         <input
           className="toggle-input"
           type="checkbox"
           checked={on}
-          onChange={() => {
-            // changing is handled by clicking the button
-          }}
+          onChange={onClick}
+          data-testid="toggle-input"
         />
-        <button
+        <span
           className={btnClassName}
-          aria-label="Toggle"
           {...props}
         />
-      </div>
+      </label>
     )
   }
 }

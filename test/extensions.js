@@ -4,21 +4,18 @@ import 'jest-dom/extend-expect'
 
 const extensions = {
   toBeOn(toggleButton) {
-    const on = toggleButton.classList.contains('toggle-btn-on')
+    const on = toggleButton.checked
     if (on) {
       return {
         message: () =>
           [
             `${matcherHint('.not.toBeOn', 'received', '')} ${chalk.dim(
-              '// it does not have the toggle-btn-on class',
+              '// it is not checked',
             )}`,
-            `Expected the given element to not contain the class name:`,
-            `  ${printExpected('toggle-btn-on')}`,
-            `Received element:`,
-            `  ${printReceived(toggleButton)}`,
+            `Expected the given element to not to be checked.`,
             '',
             `Because of this, ${chalk.bold(
-              `the button is in an ${chalk.underline('on')} state`,
+              `the switch is in an ${chalk.underline('on')} state`,
             )}`,
             '',
           ].join('\n'),
@@ -29,16 +26,13 @@ const extensions = {
         message: () =>
           [
             `${matcherHint('.toBeOn', 'received', '')} ${chalk.dim(
-              '// it has the toggle-btn-on class',
+              '// it is checked',
             )}`,
             '',
-            `Expected the given element to contain the class name:`,
-            `  ${printExpected('toggle-btn-on')}`,
-            `Received element:`,
-            `  ${printReceived(toggleButton)}`,
+            `Expected the given element to be checked.`,
             '',
             `Because of this, ${chalk.bold(
-              `the button is in an ${chalk.underline('off')} state`,
+              `the switch is in an ${chalk.underline('off')} state`,
             )}`,
             '',
           ].join('\n'),
@@ -47,21 +41,18 @@ const extensions = {
     }
   },
   toBeOff(toggleButton) {
-    const off = toggleButton.classList.contains('toggle-btn-off')
+    const off = !toggleButton.checked
     if (off) {
       return {
         message: () =>
           [
             `${matcherHint('.not.toBeOff', 'received', '')} ${chalk.dim(
-              '// it does not have the toggle-btn-off class',
+              '// it is checked',
             )}`,
-            `Expected the given element to not contain the class name:`,
-            `  ${printExpected('toggle-btn-off')}`,
-            `Received element:`,
-            `  ${printReceived(toggleButton)}`,
+            `Expected the given element to not be checked.`,
             '',
             `Because of this, ${chalk.bold(
-              `the button is in an ${chalk.underline('off')} state`,
+              `the switch is in an ${chalk.underline('off')} state`,
             )}`,
             '',
           ].join('\n'),
@@ -72,16 +63,13 @@ const extensions = {
         message: () =>
           [
             `${matcherHint('.toBeOff', 'received', '')} ${chalk.dim(
-              '// it has the toggle-btn-off class',
+              '// it is unchecked',
             )}`,
             '',
-            `Expected the given element to contain the class name:`,
-            `  ${printExpected('toggle-btn-off')}`,
-            `Received element:`,
-            `  ${printReceived(toggleButton)}`,
+            `Expected the given element to be unchecked.`,
             '',
             `Because of this, ${chalk.bold(
-              `the button is in an ${chalk.underline('on')} state`,
+              `the switch is in an ${chalk.underline('on')} state`,
             )}`,
             '',
           ].join('\n'),
