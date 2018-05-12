@@ -17,7 +17,6 @@ class Switch extends React.Component {
       on,
       className = '',
       'aria-label': ariaLabel,
-      onClick,
       ...props
     } = this.props
     const btnClassName = [
