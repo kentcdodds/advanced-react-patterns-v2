@@ -8,15 +8,14 @@ import React from 'react'
 // your `render` method or the `getTogglerProps` method
 // (if we've gotten to that part)
 class Switch extends React.Component {
-  onChangeHandler = e => {
+  onChangeHandler = () => {
     this.props.onClick()
   }
   render() {
     const {
       on,
       className = '',
-      'aria-label': ariaLabel,
-      ...props
+      'aria-label': ariaLabel
     } = this.props
     const btnClassName = [
       className,
