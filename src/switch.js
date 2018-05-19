@@ -8,7 +8,8 @@ import React from 'react'
 // your `render` method or the `getTogglerProps` method
 // (if we've gotten to that part)
 class Switch extends React.Component {
-  onChangeHandler = () => {
+  onChangeHandler = e => {
+    e.preventDefault()
     this.props.onClick()
   }
   render() {
