@@ -7,11 +7,13 @@ import React from 'react'
 // problem is probably in your implementation. Tip: Check
 // your `render` method or the `getTogglerProps` method
 // (if we've gotten to that part)
+
+// this is here to fill in for the onChange handler
+// we're not using onChange because it seems to behave
+// differently in codesandbox and locally :shrug:
+const noop = () => {}
+
 class Switch extends React.Component {
-  onChangeHandler = e => {
-    e.preventDefault()
-    this.props.onClick()
-  }
   render() {
     const {
       on,
@@ -33,7 +35,8 @@ class Switch extends React.Component {
           className="toggle-input"
           type="checkbox"
           checked={on}
-          onChange={this.onChangeHandler}
+          onChange={noop}
+          onClick={this.props.onClick}
           data-testid="toggle-input"
         />
         <span className={btnClassName} {...props} />

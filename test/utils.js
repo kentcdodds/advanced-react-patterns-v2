@@ -55,7 +55,7 @@ function renderToggle(ui) {
   const toggleButton = utils.getByTestId('toggle-input')
 
   return {
-    toggle: () => Simulate.change(utils.getByTestId('toggle-input')),
+    toggle: () => Simulate.click(utils.getByTestId('toggle-input')),
     toggleButton,
     rootInstance,
     ...utils,
