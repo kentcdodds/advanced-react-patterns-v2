@@ -36,7 +36,7 @@ class Switch extends React.Component {
           type="checkbox"
           checked={on}
           onChange={noop}
-          onClick={this.props.onClick}
+          onClick={onClick}
           data-testid="toggle-input"
         />
         <span className={btnClassName} {...props} />
