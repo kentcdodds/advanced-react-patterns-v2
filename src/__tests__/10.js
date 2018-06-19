@@ -4,7 +4,7 @@ import {
   isCompositeComponentWithType,
 } from 'react-dom/test-utils'
 import chalk from 'chalk'
-import {Simulate, renderToggle} from '../../test/utils'
+import {fireEvent, renderToggle} from '../../test/utils'
 import Usage, {Toggle} from '../exercises-final/10'
 // import Usage, {Toggle} from '../exercises/10'
 
@@ -38,14 +38,14 @@ test('toggling either toggle toggles both', () => {
   )
   const buttons = getAllByTestId('toggle-input')
   const [toggleButton1, toggleButton2] = buttons
-  Simulate.click(toggleButton1)
+  fireEvent.click(toggleButton1)
   expect(toggleButton1).toBeOn()
   expect(toggleButton2).toBeOn()
 
   validateToggleInstance(toggleInstance1)
   validateToggleInstance(toggleInstance2)
 
-  Simulate.click(toggleButton2)
+  fireEvent.click(toggleButton2)
   expect(toggleButton1).toBeOff()
   expect(toggleButton2).toBeOff()
 })

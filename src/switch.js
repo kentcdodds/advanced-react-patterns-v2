@@ -30,7 +30,10 @@ class Switch extends React.Component {
       .filter(Boolean)
       .join(' ')
     return (
-      <label aria-label={ariaLabel || 'Toggle'}>
+      <label
+        aria-label={ariaLabel || 'Toggle'}
+        style={{display: 'block'}}
+      >
         <input
           className="toggle-input"
           type="checkbox"

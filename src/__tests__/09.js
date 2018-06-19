@@ -1,5 +1,5 @@
 import React from 'react'
-import {renderToggle, Simulate} from '../../test/utils'
+import {renderToggle, fireEvent} from '../../test/utils'
 import Usage from '../exercises-final/09'
 // import Usage from '../exercises/09'
 
@@ -46,7 +46,7 @@ test('can click too much', () => {
   expect(toggleButton).toBeOff()
   toggle() // 6
   expect(toggleButton).toBeOff()
-  Simulate.click(getByText('Force Toggle')) // 7
+  fireEvent.click(getByText('Force Toggle')) // 7
   expect(toggleButton).toBeOn()
 
   expect(getByTestId('notice')).not.toBeNull()
@@ -61,7 +61,7 @@ test('can click too much', () => {
     [true], // 7
   ])
 
-  Simulate.click(getByText('Reset'))
+  fireEvent.click(getByText('Reset'))
   expect(handleReset).toHaveBeenCalledTimes(1)
   expect(handleReset).toHaveBeenCalledWith(false)
   expect(queryByTestId('notice')).toBeNull()

@@ -1,5 +1,5 @@
 import React from 'react'
-import {renderToggle, Simulate} from '../../test/utils'
+import {renderToggle, fireEvent} from '../../test/utils'
 import Usage from '../exercises-final/07'
 // import Usage from '../exercises/07'
 
@@ -21,7 +21,7 @@ test('can reset the state of the toggle', () => {
     <Usage onToggle={() => {}} onReset={handleReset} />,
   )
   toggle()
-  Simulate.click(getByText('Reset'))
+  fireEvent.click(getByText('Reset'))
   expect(toggleButton).toBeOff()
   expect(handleReset).toHaveBeenCalledTimes(1)
   expect(handleReset).toHaveBeenCalledWith(false)

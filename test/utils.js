@@ -1,4 +1,5 @@
-import {render, Simulate, wait} from 'react-testing-library'
+import 'react-testing-library/cleanup-after-each'
+import {render, fireEvent, wait} from 'react-testing-library'
 import chalk from 'chalk'
 import React from 'react'
 import {
@@ -55,11 +56,11 @@ function renderToggle(ui) {
   const toggleButton = utils.getByTestId('toggle-input')
 
   return {
-    toggle: () => Simulate.click(utils.getByTestId('toggle-input')),
+    toggle: () => fireEvent.click(utils.getByTestId('toggle-input')),
     toggleButton,
     rootInstance,
     ...utils,
   }
 }
 
-export {render, Simulate, wait, renderToggle}
+export {render, fireEvent, wait, renderToggle}
