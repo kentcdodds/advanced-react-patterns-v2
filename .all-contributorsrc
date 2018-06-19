@@ -76,6 +76,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "sethbergman",
+      "name": "Seth Bergman",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/8031689?v=4",
+      "profile": "https://SethBergman.com",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ]
 }
