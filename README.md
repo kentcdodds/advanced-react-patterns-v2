@@ -94,12 +94,14 @@ output and play around with it.
 **Your goal will be to go into each test, swap the final version for the
 exercise version in the import, and make the tests pass**
 
-## Helpful Emoji 🐨 💰
+## Helpful Emoji 🐨 💰 💯
 
 Each exercise has comments in it to help you get through the exercise.
 **Kody the Koala Bear** and **Marty the Money Bag** are here to help you.
 **Kody** 🐨 will tell you when there's something specific you should do, and
-**Marty** 💰 will give you specific tips along the way.
+**Marty** 💰 will give you specific tips along the way. Should you finish
+early, **Hannah the Hundred Points Symbol** 💯 will give you some additional
+challenges that you can try!
 
 ## Troubleshooting
 
