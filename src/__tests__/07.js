@@ -27,6 +27,11 @@ test('can reset the state of the toggle', () => {
   expect(handleReset).toHaveBeenCalledWith(false)
 })
 
+test('toggle uses default props', () => {
+  expect(typeof Toggle.defaultProps.initialOn).toBe('boolean')
+  expect(typeof Toggle.defaultProps.onReset).toBe('function')
+})
+
 //////// Elaboration & Feedback /////////
 // When you've finished with the exercises:
 // 1. Copy the URL below into your browser and fill out the form
