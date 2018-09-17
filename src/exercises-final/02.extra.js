@@ -3,6 +3,18 @@
 import React from 'react'
 import {Switch} from '../switch'
 
+function componentHasChild(child) {
+  for (const property in Toggle) {
+    if (Toggle.hasOwnProperty(property)) {
+      if (child.type === Toggle[property]) {
+        return true
+      }
+    }
+  }
+  return false
+}
+
+
 class Toggle extends React.Component {
   static On = ({on, children}) => (on ? children : null)
   static Off = ({on, children}) => (on ? null : children)
@@ -15,17 +27,9 @@ class Toggle extends React.Component {
       ({on}) => ({on: !on}),
       () => this.props.onToggle(this.state.on),
     )
-  componentHasChild = child => {
-    for (const property in Toggle) {
-      if (Toggle.hasOwnProperty(property)) {
-        if (child.type === Toggle[property]) return true
-      }
-    }
-    return false
-  }
   render() {
     return React.Children.map(this.props.children, child => {
-      if (this.componentHasChild(child)) {
+      if (componentHasChild(child)) {
         return React.cloneElement(child, {
           on: this.state.on,
           toggle: this.toggle,
