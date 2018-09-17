@@ -15,18 +15,28 @@ class Toggle extends React.Component {
       ({on}) => ({on: !on}),
       () => this.props.onToggle(this.state.on),
     )
+  componentHasChild = child => {
+    for (const property in Toggle) {
+      if (Toggle.hasOwnProperty(property)) {
+        if (child.type === Toggle[property]) return true
+      }
+    }
+    return false
+  }
   render() {
     return React.Children.map(this.props.children, child => {
-      if (typeof child.type === 'function')
+      if (this.componentHasChild(child)) {
         return React.cloneElement(child, {
           on: this.state.on,
           toggle: this.toggle,
         })
+      }
       return child
     })
   }
 }
 
+const Hi = () => <h4>Hi</h4>
 function Usage({
   onToggle = (...args) => console.log('onToggle', ...args),
 }) {
@@ -36,6 +46,7 @@ function Usage({
       <Toggle.Off>The button is off</Toggle.Off>
       <Toggle.Button />
       <span>Hello</span>
+      <Hi />
     </Toggle>
   )
 }
