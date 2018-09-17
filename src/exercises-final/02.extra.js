@@ -14,7 +14,6 @@ function componentHasChild(child) {
   return false
 }
 
-
 class Toggle extends React.Component {
   static On = ({on, children}) => (on ? children : null)
   static Off = ({on, children}) => (on ? null : children)
