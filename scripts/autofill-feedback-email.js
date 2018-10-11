@@ -40,7 +40,7 @@ if (isCI) {
     const options = {
       files: [path.join(__dirname, '..', 'src/**/*.js')],
       from: `&em=${EOL}`,
-      to: `&em=${email}${EOL}`,
+      to: `&em=${encodeURIComponent(email)}${EOL}`,
     }
 
     replace(options).then(
