@@ -102,6 +102,15 @@ function MyInput() {
               value: event.target.value,
             })
           }}
+          onBlur={event => {
+            const {value} = event.target
+            if (value !== 'on' && value !== 'off') {
+              rendux.dispatch({
+                type: 'input_change',
+                value: rendux.state.on ? 'on' : 'off',
+              })
+            }
+          }}
         />
       )}
     </Rendux.Consumer>
@@ -120,12 +129,19 @@ function MySwitch() {
         >
           <Switch
             on={rendux.state.on}
-            onClick={() =>
+            onClick={() => {
               rendux.dispatch({
                 type: 'toggle',
                 value: !rendux.state.on,
               })
-            }
+
+              if (rendux.state.inputValue) {
+                rendux.dispatch({
+                  type: 'input_change',
+                  value: !rendux.state.on ? 'on' : 'off',
+                })
+              }
+            }}
           />
         </div>
       )}
