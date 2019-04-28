@@ -1,5 +1,5 @@
 {
-  "projectName": "advanced-component-patterns-v2",
+  "projectName": "advanced-react-patterns-v2",
   "projectOwner": "kentcdodds",
   "repoType": "github",
   "files": [
@@ -85,6 +85,17 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "rahildar",
+      "name": "rahildar",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/16776182?v=4",
+      "profile": "https://github.com/rahildar",
+      "contributions": [
+        "code"
+      ]
     }
-  ]
+  ],
+  "repoHost": "https://github.com",
+  "contributorsPerLine": 7
 }
