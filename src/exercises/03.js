@@ -79,7 +79,7 @@ class Toggle extends React.Component {
 // 💯 Extra credit: rather than having a default value, make it so the consumer
 // will throw an error if there's no context value to make sure people don't
 // attempt to render one of the compound components outside the Toggle.
-// 💯 Extra credit: avoid unecessary re-renders of the consumers by not
+// 💯 Extra credit: avoid unnecessary re-renders of the consumers by not
 // creating a new `value` object ever render and instead passing an object
 // which only changes when the state changes.
 
