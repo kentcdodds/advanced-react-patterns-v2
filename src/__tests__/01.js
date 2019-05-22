@@ -15,6 +15,18 @@ test('renders a toggle component', () => {
   expect(handleToggle).toHaveBeenCalledWith(true)
 })
 
+test('can toggle back and forth', () => {
+  const handleToggle = jest.fn()
+  const {toggleButton, toggle} = renderToggle(
+    <Usage onToggle={handleToggle} />,
+  )
+  expect(toggleButton).toBeOff()
+  toggle()
+  expect(toggleButton).toBeOn()
+  toggle()
+  expect(toggleButton).toBeOff()
+})
+
 //////// Elaboration & Feedback /////////
 // When you've finished with the exercises:
 // 1. Copy the URL below into your browser and fill out the form
