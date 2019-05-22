@@ -103,6 +103,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "norchow",
+      "name": "Nicolas Orchow",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/7334576?v=4",
+      "profile": "https://www.linkedin.com/in/nicolas-orchow/",
+      "contributions": [
+        "test"
+      ]
     }
   ],
   "repoHost": "https://github.com",
